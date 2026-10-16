@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">特征子空间到相似对角化</title>
+  <desc id="desc">每个特征值对应特征子空间，从各特征子空间选取线性无关特征向量组成矩阵P，再得到对角矩阵Lambda。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker></defs>
+  <rect width="900" height="300" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <rect x="30" y="75" width="175" height="85" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+    <text x="117" y="108" font-size="18" fill="#1E3A8A">特征值 λᵢ</text>
+    <text x="117" y="136" font-size="14" fill="#475569">|A−λᵢI|=0</text>
+    <line x1="210" y1="117" x2="292" y2="117" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="297" y="75" width="185" height="85" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+    <text x="389" y="108" font-size="18" fill="#166534">特征子空间 Eλᵢ</text>
+    <text x="389" y="136" font-size="14" fill="#475569">ker(A−λᵢI)</text>
+    <line x1="487" y1="117" x2="569" y2="117" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="574" y="75" width="155" height="85" rx="8" fill="#FDF4FF" stroke="#9333EA" stroke-width="2"/>
+    <text x="651" y="108" font-size="18" fill="#7E22CE">选无关特征向量</text>
+    <text x="651" y="136" font-size="14" fill="#475569">组成 P 的列</text>
+    <line x1="734" y1="117" x2="813" y2="117" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="818" y="75" width="65" height="85" rx="8" fill="#FFF7ED" stroke="#CA8A04" stroke-width="2"/>
+    <text x="850" y="108" font-size="17" fill="#92400E">Λ</text>
+    <text x="850" y="136" font-size="13" fill="#475569">对角</text>
+  </g>
+  <text x="450" y="235" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" text-anchor="middle" fill="#DC2626">只有选出的特征向量总数达到 n，P 才可逆，A 才能相似对角化</text>
+</svg>

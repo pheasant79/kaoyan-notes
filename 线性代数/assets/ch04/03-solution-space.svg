@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">齐次解空间与非齐次解集</title>
+  <desc id="desc">齐次方程组的解集是经过原点的线性空间，非齐次方程组的解集是一个特解加上齐次解空间得到的平移集合。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker></defs>
+  <rect width="900" height="300" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif">
+    <line x1="95" y1="235" x2="420" y2="235" stroke="#94A3B8" stroke-width="2"/>
+    <line x1="160" y1="270" x2="160" y2="55" stroke="#94A3B8" stroke-width="2"/>
+    <line x1="420" y1="235" x2="660" y2="235" stroke="#94A3B8" stroke-width="2"/>
+    <line x1="520" y1="270" x2="520" y2="55" stroke="#94A3B8" stroke-width="2"/>
+    <line x1="95" y1="235" x2="300" y2="110" stroke="#2563EB" stroke-width="4"/>
+    <circle cx="160" cy="235" r="5" fill="#2563EB"/>
+    <text x="105" y="45" font-size="17" fill="#1E3A8A">齐次解空间 ker(A)</text>
+    <text x="105" y="75" font-size="14" fill="#475569">经过原点的线性空间</text>
+    <line x1="300" y1="110" x2="480" y2="110" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="350" y="96" font-size="14" fill="#166534">平移 x₀</text>
+    <line x1="455" y1="235" x2="745" y2="235" stroke="#9333EA" stroke-width="4"/>
+    <circle cx="520" cy="235" r="5" fill="#9333EA"/>
+    <text x="590" y="45" font-size="17" fill="#7E22CE">非齐次解集 x₀ + ker(A)</text>
+    <text x="590" y="75" font-size="14" fill="#475569">与 ker(A) 平行，通常不经过原点</text>
+    <text x="435" y="275" font-size="14" fill="#DC2626">解集结构：一个特解 + 齐次方向</text>
+  </g>
+</svg>

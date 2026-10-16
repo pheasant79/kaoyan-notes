@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img" aria-labelledby="title desc">
+  <title id="title">向量组、主元列与向量组秩</title>
+  <desc id="desc">向量组按列组成矩阵，行化简确定主元位置和主元数量，主元位置回到原矩阵取列得到极大无关组，主元数量就是向量组秩。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748B"/></marker></defs>
+  <rect width="960" height="280" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <rect x="25" y="70" width="170" height="88" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+    <text x="110" y="105" font-size="19" fill="#1E3A8A">向量组</text>
+    <text x="110" y="133" font-size="14" fill="#475569">α₁, α₂, …, αₛ</text>
+    <line x1="199" y1="114" x2="277" y2="114" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="282" y="70" width="180" height="88" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/>
+    <text x="372" y="105" font-size="19" fill="#334155">列矩阵 A</text>
+    <text x="372" y="133" font-size="14" fill="#475569">A=(α₁,…,αₛ)</text>
+    <line x1="466" y1="114" x2="544" y2="114" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="549" y="70" width="175" height="88" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+    <text x="636" y="105" font-size="18" fill="#166534">行化简</text>
+    <text x="636" y="133" font-size="14" fill="#475569">主元位置与数量</text>
+    <line x1="728" y1="95" x2="815" y2="66" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="728" y1="135" x2="815" y2="176" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="820" y="28" width="115" height="76" rx="8" fill="#FDF4FF" stroke="#9333EA" stroke-width="2"/>
+    <text x="877" y="59" font-size="16" fill="#7E22CE">回原矩阵</text>
+    <text x="877" y="84" font-size="14" fill="#475569">极大无关组</text>
+
+    <rect x="820" y="145" width="115" height="76" rx="8" fill="#FFF7ED" stroke="#CA8A04" stroke-width="2"/>
+    <text x="877" y="176" font-size="17" fill="#92400E">主元数量</text>
+    <text x="877" y="201" font-size="14" fill="#475569">向量组秩</text>
+  </g>
+  <text x="480" y="252" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="14" text-anchor="middle" fill="#DC2626">主元位置用于选列；极大无关组的具体向量不能直接取行化简后的列</text>
+</svg>

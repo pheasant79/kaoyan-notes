@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多存储体：连续编址与交叉编址</title>
+<style>
+  :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#222240;--text:#d8d8e8;--dim:#8d8daa;--line:#2a2a45;--red:#ff6b6b;--cyan:#4ecdc4;--yellow:#ffe66d;--purple:#a37ef0;--blue:#5dade2;--green:#58d68d;--orange:#f0a050}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;padding:42px 52px}
+  main{max-width:1120px;margin:0 auto}
+  h1{font-size:2.1rem;color:white;margin-bottom:.35rem}h1 span{color:var(--cyan)}
+  .subtitle{color:var(--dim);margin-bottom:2rem}
+  section{border-top:1px solid var(--line);padding-top:2rem;margin-top:2.8rem}
+  section:first-of-type{border-top:0;margin-top:0}
+  h2{font-size:1.45rem;color:white;margin-bottom:1rem}
+  h3{font-size:1.14rem;color:white;margin:1.2rem 0 .5rem}
+  p{margin-bottom:1rem}
+  strong{color:white}
+  em{font-style:normal;color:var(--yellow)}
+  code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .box{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:8px;padding:16px 20px;margin:1.1rem 0}
+  .ok{background:#17251d;border-left-color:var(--green)}
+  .warn{background:#2a1a1a;border-color:#ff6b6b55;border-left-color:var(--red)}
+  .note{background:#1f1f18;border-left-color:var(--yellow)}
+  .label{display:block;font-weight:800;font-size:.9rem;margin-bottom:7px;color:var(--cyan)}
+  .ok .label{color:var(--green)}.warn .label{color:var(--red)}.note .label{color:var(--yellow)}
+  table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.92rem}
+  th{background:var(--surface2);color:white;text-align:left;border-bottom:2px solid var(--line);padding:11px 13px}
+  td{border-bottom:1px solid var(--line);padding:11px 13px;vertical-align:top}
+  tr:nth-child(even) td{background:#141428}
+  .formula{font-family:"Cascadia Code","Consolas",monospace;background:#121224;border:1px solid var(--line);border-radius:8px;padding:12px 16px;color:var(--yellow);margin:1rem 0}
+  .good{color:var(--green)}.bad{color:var(--red)}.mid{color:var(--yellow)}
+  svg{display:block;max-width:100%;margin:1.2rem auto}
+</style>
+</head>
+<body>
+<main>
+<h1>多存储体：<span>连续编址</span> 与 <span>交叉编址</span></h1>
+<p class="subtitle">专门解释王道计组里的多体并行存储器：高位交叉编址，也叫连续编址；低位交叉编址，也叫交叉编址。</p>
+
+<section>
+<h2>1. 先定住概念：多存储体是什么？</h2>
+<p>多存储体就是把主存分成多个可以相对独立工作的存储模块，例如 <strong>4 个存储体 M0、M1、M2、M3</strong>。CPU 访问主存时，地址不仅要说明“体内哪个单元”，还要说明“在哪个存储体”。</p>
+<div class="formula">主存地址 = 存储体编号 + 体内地址</div>
+<p>关键区别在于：<strong>存储体编号用地址的高位还是低位来表示</strong>。</p>
+<table>
+  <tr><th>方式</th><th>也叫</th><th>存储体编号来自</th><th>连续地址分布</th></tr>
+  <tr><td>高位交叉编址</td><td>连续编址 / 顺序编址</td><td>地址高位</td><td>连续地址集中在同一个存储体</td></tr>
+  <tr><td>低位交叉编址</td><td>交叉编址 / 交叉存储</td><td>地址低位</td><td>连续地址轮流分布到不同存储体</td></tr>
+</table>
+<div class="box ok">
+  <span class="label">一句话</span>
+  <p>高位交叉像“先装满 M0，再装 M1”；低位交叉像“第0个放 M0，第1个放 M1，第2个放 M2，第3个放 M3，然后再回 M0”。</p>
+</div>
+</section>
+
+<section>
+<h2>2. 连续编址：高位交叉</h2>
+<p>假设有 4 个存储体，每个存储体有 8 个存储单元，总共 32 个地址。连续编址时，地址分布如下：</p>
+<div class="formula">高位表示存储体编号，低位表示体内地址</div>
+<svg viewBox="0 0 1050 430" xmlns="http://www.w3.org/2000/svg">
+  <text x="525" y="28" text-anchor="middle" fill="#ffe66d" font-size="18" font-weight="bold">连续编址 / 高位交叉：连续地址集中在同一个存储体</text>
+  <g font-family="monospace" font-size="12" text-anchor="middle">
+    <rect x="70" y="70" width="200" height="285" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+    <text x="170" y="100" fill="#ffe66d" font-size="16" font-weight="bold">M0</text>
+    <rect x="100" y="120" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="138" fill="#ffe66d">地址 0</text>
+    <rect x="100" y="145" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="163" fill="#ffe66d">地址 1</text>
+    <rect x="100" y="170" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="188" fill="#ffe66d">地址 2</text>
+    <rect x="100" y="195" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="213" fill="#ffe66d">地址 3</text>
+    <rect x="100" y="220" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="238" fill="#ffe66d">地址 4</text>
+    <rect x="100" y="245" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="263" fill="#ffe66d">地址 5</text>
+    <rect x="100" y="270" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="288" fill="#ffe66d">地址 6</text>
+    <rect x="100" y="295" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="313" fill="#ffe66d">地址 7</text>
+
+    <rect x="310" y="70" width="200" height="285" rx="8" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+    <text x="410" y="100" fill="#5dade2" font-size="16" font-weight="bold">M1</text>
+    <rect x="340" y="120" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="138" fill="#5dade2">地址 8</text>
+    <rect x="340" y="145" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="163" fill="#5dade2">地址 9</text>
+    <rect x="340" y="170" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="188" fill="#5dade2">地址 10</text>
+    <rect x="340" y="195" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="213" fill="#5dade2">地址 11</text>
+    <rect x="340" y="220" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="238" fill="#5dade2">地址 12</text>
+    <rect x="340" y="245" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="263" fill="#5dade2">地址 13</text>
+    <rect x="340" y="270" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="288" fill="#5dade2">地址 14</text>
+    <rect x="340" y="295" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="313" fill="#5dade2">地址 15</text>
+
+    <rect x="550" y="70" width="200" height="285" rx="8" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/>
+    <text x="650" y="100" fill="#58d68d" font-size="16" font-weight="bold">M2</text>
+    <rect x="580" y="120" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="138" fill="#58d68d">地址 16</text>
+    <rect x="580" y="145" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="163" fill="#58d68d">地址 17</text>
+    <rect x="580" y="170" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="188" fill="#58d68d">地址 18</text>
+    <rect x="580" y="195" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="213" fill="#58d68d">地址 19</text>
+    <rect x="580" y="220" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="238" fill="#58d68d">地址 20</text>
+    <rect x="580" y="245" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="263" fill="#58d68d">地址 21</text>
+    <rect x="580" y="270" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="288" fill="#58d68d">地址 22</text>
+    <rect x="580" y="295" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="313" fill="#58d68d">地址 23</text>
+
+    <rect x="790" y="70" width="200" height="285" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/>
+    <text x="890" y="100" fill="#a37ef0" font-size="16" font-weight="bold">M3</text>
+    <rect x="820" y="120" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="138" fill="#a37ef0">地址 24</text>
+    <rect x="820" y="145" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="163" fill="#a37ef0">地址 25</text>
+    <rect x="820" y="170" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="188" fill="#a37ef0">地址 26</text>
+    <rect x="820" y="195" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="213" fill="#a37ef0">地址 27</text>
+    <rect x="820" y="220" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="238" fill="#a37ef0">地址 28</text>
+    <rect x="820" y="245" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="263" fill="#a37ef0">地址 29</text>
+    <rect x="820" y="270" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="288" fill="#a37ef0">地址 30</text>
+    <rect x="820" y="295" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="313" fill="#a37ef0">地址 31</text>
+  </g>
+  <text x="525" y="395" text-anchor="middle" fill="#aaa" font-size="13">连续访问 0,1,2,3 时，全都落在 M0，不能充分并行</text>
+</svg>
+<table>
+  <tr><th>地址</th><th>存储体</th><th>体内地址</th></tr>
+  <tr><td>0 ~ 7</td><td>M0</td><td>0 ~ 7</td></tr>
+  <tr><td>8 ~ 15</td><td>M1</td><td>0 ~ 7</td></tr>
+  <tr><td>16 ~ 23</td><td>M2</td><td>0 ~ 7</td></tr>
+  <tr><td>24 ~ 31</td><td>M3</td><td>0 ~ 7</td></tr>
+</table>
+<div class="box warn">
+  <span class="label">特点</span>
+  <p>连续编址便于扩容和管理，但连续访问时容易集中访问同一个存储体。比如读地址 0、1、2、3，全在 M0，M1/M2/M3 可能闲着。</p>
+</div>
+</section>
+
+<section>
+<h2>3. 交叉编址：低位交叉</h2>
+<p>低位交叉编址时，地址的低位决定存储体编号。因此连续地址会轮流分布到不同存储体。</p>
+<div class="formula">存储体编号 = 地址 mod 存储体个数<br>体内地址 = 地址 ÷ 存储体个数</div>
+<svg viewBox="0 0 1050 430" xmlns="http://www.w3.org/2000/svg">
+  <text x="525" y="28" text-anchor="middle" fill="#4ecdc4" font-size="18" font-weight="bold">交叉编址 / 低位交叉：连续地址轮流进入不同存储体</text>
+  <g font-family="monospace" font-size="12" text-anchor="middle">
+    <rect x="70" y="70" width="200" height="285" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+    <text x="170" y="100" fill="#ffe66d" font-size="16" font-weight="bold">M0</text>
+    <rect x="100" y="120" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="138" fill="#ffe66d">地址 0</text>
+    <rect x="100" y="145" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="163" fill="#ffe66d">地址 4</text>
+    <rect x="100" y="170" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="188" fill="#ffe66d">地址 8</text>
+    <rect x="100" y="195" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="213" fill="#ffe66d">地址 12</text>
+    <rect x="100" y="220" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="238" fill="#ffe66d">地址 16</text>
+    <rect x="100" y="245" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="263" fill="#ffe66d">地址 20</text>
+    <rect x="100" y="270" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="288" fill="#ffe66d">地址 24</text>
+    <rect x="100" y="295" width="140" height="25" fill="#3a3012" stroke="#ffe66d"/><text x="170" y="313" fill="#ffe66d">地址 28</text>
+
+    <rect x="310" y="70" width="200" height="285" rx="8" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+    <text x="410" y="100" fill="#5dade2" font-size="16" font-weight="bold">M1</text>
+    <rect x="340" y="120" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="138" fill="#5dade2">地址 1</text>
+    <rect x="340" y="145" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="163" fill="#5dade2">地址 5</text>
+    <rect x="340" y="170" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="188" fill="#5dade2">地址 9</text>
+    <rect x="340" y="195" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="213" fill="#5dade2">地址 13</text>
+    <rect x="340" y="220" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="238" fill="#5dade2">地址 17</text>
+    <rect x="340" y="245" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="263" fill="#5dade2">地址 21</text>
+    <rect x="340" y="270" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="288" fill="#5dade2">地址 25</text>
+    <rect x="340" y="295" width="140" height="25" fill="#102a38" stroke="#5dade2"/><text x="410" y="313" fill="#5dade2">地址 29</text>
+
+    <rect x="550" y="70" width="200" height="285" rx="8" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/>
+    <text x="650" y="100" fill="#58d68d" font-size="16" font-weight="bold">M2</text>
+    <rect x="580" y="120" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="138" fill="#58d68d">地址 2</text>
+    <rect x="580" y="145" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="163" fill="#58d68d">地址 6</text>
+    <rect x="580" y="170" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="188" fill="#58d68d">地址 10</text>
+    <rect x="580" y="195" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="213" fill="#58d68d">地址 14</text>
+    <rect x="580" y="220" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="238" fill="#58d68d">地址 18</text>
+    <rect x="580" y="245" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="263" fill="#58d68d">地址 22</text>
+    <rect x="580" y="270" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="288" fill="#58d68d">地址 26</text>
+    <rect x="580" y="295" width="140" height="25" fill="#102a20" stroke="#58d68d"/><text x="650" y="313" fill="#58d68d">地址 30</text>
+
+    <rect x="790" y="70" width="200" height="285" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/>
+    <text x="890" y="100" fill="#a37ef0" font-size="16" font-weight="bold">M3</text>
+    <rect x="820" y="120" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="138" fill="#a37ef0">地址 3</text>
+    <rect x="820" y="145" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="163" fill="#a37ef0">地址 7</text>
+    <rect x="820" y="170" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="188" fill="#a37ef0">地址 11</text>
+    <rect x="820" y="195" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="213" fill="#a37ef0">地址 15</text>
+    <rect x="820" y="220" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="238" fill="#a37ef0">地址 19</text>
+    <rect x="820" y="245" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="263" fill="#a37ef0">地址 23</text>
+    <rect x="820" y="270" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="288" fill="#a37ef0">地址 27</text>
+    <rect x="820" y="295" width="140" height="25" fill="#201835" stroke="#a37ef0"/><text x="890" y="313" fill="#a37ef0">地址 31</text>
+  </g>
+  <text x="525" y="395" text-anchor="middle" fill="#aaa" font-size="13">连续访问 0,1,2,3 时，分别落在 M0,M1,M2,M3，可以流水式并行启动</text>
+</svg>
+<table>
+  <tr><th>地址</th><th>地址 mod 4</th><th>存储体</th><th>体内地址</th></tr>
+  <tr><td>0</td><td>0</td><td>M0</td><td>0</td></tr>
+  <tr><td>1</td><td>1</td><td>M1</td><td>0</td></tr>
+  <tr><td>2</td><td>2</td><td>M2</td><td>0</td></tr>
+  <tr><td>3</td><td>3</td><td>M3</td><td>0</td></tr>
+  <tr><td>4</td><td>0</td><td>M0</td><td>1</td></tr>
+  <tr><td>5</td><td>1</td><td>M1</td><td>1</td></tr>
+</table>
+<div class="box ok">
+  <span class="label">特点</span>
+  <p>交叉编址特别适合连续访问。CPU 读地址 0 时 M0 忙；下一拍读地址 1，M1 忙；再下一拍读地址 2，M2 忙。多个存储体轮流工作，提高吞吐率。</p>
+</div>
+</section>
+
+<section>
+<h2>4. 地址位怎么拆：高位 vs 低位</h2>
+<p>假设总地址 5 位，范围 0~31；4 个存储体，所以需要 2 位表示体号；每体 8 个单元，所以体内地址需要 3 位。</p>
+<svg viewBox="0 0 980 310" xmlns="http://www.w3.org/2000/svg">
+  <text x="490" y="32" text-anchor="middle" fill="#fff" font-size="17" font-weight="bold">地址拆分对比</text>
+  <g font-family="monospace" text-anchor="middle">
+    <text x="245" y="82" fill="#ffe66d" font-size="15" font-weight="bold">连续编址 / 高位交叉</text>
+    <rect x="95" y="105" width="70" height="45" fill="#3a3012" stroke="#ffe66d"/><text x="130" y="133" fill="#ffe66d">A4</text>
+    <rect x="165" y="105" width="70" height="45" fill="#3a3012" stroke="#ffe66d"/><text x="200" y="133" fill="#ffe66d">A3</text>
+    <rect x="235" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="270" y="133" fill="#5dade2">A2</text>
+    <rect x="305" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="340" y="133" fill="#5dade2">A1</text>
+    <rect x="375" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="410" y="133" fill="#5dade2">A0</text>
+    <text x="165" y="176" fill="#ffe66d" font-size="12">高2位：体号</text>
+    <text x="340" y="176" fill="#5dade2" font-size="12">低3位：体内地址</text>
+    <text x="245" y="212" fill="#aaa" font-size="12">地址 01010：体号01=M1，体内地址010=2</text>
+
+    <text x="735" y="82" fill="#4ecdc4" font-size="15" font-weight="bold">交叉编址 / 低位交叉</text>
+    <rect x="585" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="620" y="133" fill="#5dade2">A4</text>
+    <rect x="655" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="690" y="133" fill="#5dade2">A3</text>
+    <rect x="725" y="105" width="70" height="45" fill="#102a38" stroke="#5dade2"/><text x="760" y="133" fill="#5dade2">A2</text>
+    <rect x="795" y="105" width="70" height="45" fill="#3a3012" stroke="#ffe66d"/><text x="830" y="133" fill="#ffe66d">A1</text>
+    <rect x="865" y="105" width="70" height="45" fill="#3a3012" stroke="#ffe66d"/><text x="900" y="133" fill="#ffe66d">A0</text>
+    <text x="690" y="176" fill="#5dade2" font-size="12">高3位：体内地址</text>
+    <text x="865" y="176" fill="#ffe66d" font-size="12">低2位：体号</text>
+    <text x="735" y="212" fill="#aaa" font-size="12">地址 01010：体内地址010=2，体号10=M2</text>
+  </g>
+</svg>
+<table>
+  <tr><th>方式</th><th>地址拆法</th><th>例：地址 10（二进制 01010）</th></tr>
+  <tr><td>高位交叉</td><td>高位选体，低位选体内地址</td><td>01 → M1；010 → 体内地址 2</td></tr>
+  <tr><td>低位交叉</td><td>低位选体，高位选体内地址</td><td>10 → M2；010 → 体内地址 2</td></tr>
+</table>
+</section>
+
+<section>
+<h2>5. 为什么交叉编址能加速：时序图</h2>
+<p>假设一个存储体的存取周期是 <code>T</code>，总线传送一个字的时间是 <code>r</code>。如果 <code>T = 4r</code>，那么用 4 个存储体低位交叉，刚好可以流水工作。</p>
+<svg viewBox="0 0 1000 390" xmlns="http://www.w3.org/2000/svg">
+  <text x="500" y="30" text-anchor="middle" fill="#fff" font-size="17" font-weight="bold">连续访问 0,1,2,3,4,5,6,7 的访问时序</text>
+  <g font-family="monospace" font-size="12">
+    <text x="70" y="80" fill="#ffe66d">连续编址</text>
+    <rect x="170" y="60" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="220" y="80" fill="#ffe66d">M0: 读0</text>
+    <rect x="325" y="60" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="375" y="80" fill="#ffe66d">M0: 读1</text>
+    <rect x="480" y="60" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="530" y="80" fill="#ffe66d">M0: 读2</text>
+    <rect x="635" y="60" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="685" y="80" fill="#ffe66d">M0: 读3</text>
+    <text x="500" y="120" text-anchor="middle" fill="#ffb0b0">连续地址都在 M0，只能等同一个存储体恢复</text>
+
+    <text x="70" y="190" fill="#4ecdc4">交叉编址</text>
+    <rect x="170" y="170" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="220" y="190" fill="#ffe66d">M0: 读0</text>
+    <rect x="210" y="205" width="150" height="30" fill="#102a38" stroke="#5dade2"/><text x="260" y="225" fill="#5dade2">M1: 读1</text>
+    <rect x="250" y="240" width="150" height="30" fill="#102a20" stroke="#58d68d"/><text x="300" y="260" fill="#58d68d">M2: 读2</text>
+    <rect x="290" y="275" width="150" height="30" fill="#201835" stroke="#a37ef0"/><text x="340" y="295" fill="#a37ef0">M3: 读3</text>
+    <rect x="445" y="170" width="150" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="495" y="190" fill="#ffe66d">M0: 读4</text>
+    <rect x="485" y="205" width="150" height="30" fill="#102a38" stroke="#5dade2"/><text x="535" y="225" fill="#5dade2">M1: 读5</text>
+    <rect x="525" y="240" width="150" height="30" fill="#102a20" stroke="#58d68d"/><text x="575" y="260" fill="#58d68d">M2: 读6</text>
+    <rect x="565" y="275" width="150" height="30" fill="#201835" stroke="#a37ef0"/><text x="615" y="295" fill="#a37ef0">M3: 读7</text>
+    <text x="500" y="340" text-anchor="middle" fill="#cfead4">不同存储体错开启动，像流水线一样连续吐出数据</text>
+  </g>
+</svg>
+<div class="box note">
+  <span class="label">王道常考条件</span>
+  <p>如果存储周期为 <code>T</code>，总线传送周期为 <code>r</code>，要连续流水访问，存储体个数通常至少满足：<code>m ≥ T / r</code>。</p>
+</div>
+</section>
+
+<section>
+<h2>6. 最终记忆表</h2>
+<table>
+  <tr><th>对比项</th><th>连续编址 / 高位交叉</th><th>交叉编址 / 低位交叉</th></tr>
+  <tr><td>体号来自</td><td>地址高位</td><td>地址低位</td></tr>
+  <tr><td>地址分布</td><td>0~7在M0，8~15在M1</td><td>0在M0，1在M1，2在M2，3在M3</td></tr>
+  <tr><td>连续访问</td><td class="bad">容易集中在同一体，难并行</td><td class="good">轮流访问不同体，适合并行</td></tr>
+  <tr><td>典型用途</td><td>容量扩展、结构简单</td><td>提高连续访问速度</td></tr>
+  <tr><td>记忆口诀</td><td>高位定大块：先装满一个体</td><td>低位定轮换：连续地址轮流进各体</td></tr>
+</table>
+<div class="box ok">
+  <span class="label">一句话定死</span>
+  <p><strong>高位交叉看高位，像分区；低位交叉看低位，像轮流发牌。连续访问时，低位交叉能让多个存储体流水工作。</strong></p>
+</div>
+</section>
+</main>
+</body>
+</html>

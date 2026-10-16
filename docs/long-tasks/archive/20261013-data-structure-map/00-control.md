@@ -1,0 +1,32 @@
+# 《数据结构》目录总图重做
+
+- ID: `20261013-data-structure-map`
+- Overall status: completed
+- Goal: 生成一份按教材八章边界组织、以408主干为重点、能够明确每个名词归属的《数据结构》复习总 Markdown。
+- Success criteria:
+  - 有简短名词归属表；
+  - 第1章至第8章各只有一个完整树状 Markdown 块；
+  - 每个核心名词有唯一主归属，关联内容有提示；
+  - 同一层不混放结构、实现、算法、应用和评价指标；
+  - 保留必要性质、前提、复杂度和易混边界，但不扩展成教材全文。
+- In scope / out of scope:
+  - In scope: 数据结构八章知识主线、核心关系、主要算法、复杂度和边界提醒。
+  - Out of scope: 完整 C/C++ 代码、长篇证明、逐页复述教材。
+- Constraints and confirmed invariants:
+  - 采用教材定章节边界、408定主干；
+  - 采用“主归属 + 关联提示”；
+  - 采用“固定六段式”；
+  - 交付为一份总 Markdown，主要用于电子复习总目录。
+- Current phase: completed
+- Current next action: None
+- Blockers / unresolved decisions: None
+- Last updated: 2026-10-13
+- Related evidence:
+  - 正式交付：项目根目录 `数据结构_目录总图.md`
+  - `evidence/审查与来源.md`
+  - `03-results.md` 中的最终检查记录
+  - `C:\Users\24213\.codex\attachments\f504da6a-1044-40a9-b041-39510fa36b9c\pasted-text.txt`
+- Known limits:
+  - 原五张微信目录图片的临时路径已失效；依据旧文字稿、已确认章界和出版社公开目录核对。
+  - 未取得可逐项核对的官方考纲全文，不宣称完成年度考点变化核验。
+  - 旧 HTML 未修订，不视为本次已核验正文。

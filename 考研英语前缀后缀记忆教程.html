@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考研英语前缀后缀记忆教程 · 阅读实战版</title>
+<style>
+  :root{
+    --bg:#0f1116;
+    --panel:#171b22;
+    --panel2:#1d2330;
+    --line:#2e3645;
+    --text:#e8edf4;
+    --muted:#a6b0bf;
+    --cyan:#55d6d6;
+    --blue:#6ea8fe;
+    --green:#64d98c;
+    --yellow:#f0c674;
+    --orange:#f6a85b;
+    --red:#ff6b6b;
+    --violet:#b48ef7;
+    --sidebar:280px;
+    --code:#0c1015;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;
+    line-height:1.85;
+    display:flex;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  nav{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:var(--sidebar);
+    background:#121722;
+    border-right:1px solid var(--line);
+    padding:24px 18px;
+    overflow:auto;
+  }
+  nav h2{
+    margin:0 0 14px;
+    color:var(--yellow);
+    font-size:1rem;
+    letter-spacing:.5px;
+  }
+  nav a{
+    display:block;
+    text-decoration:none;
+    color:var(--muted);
+    padding:8px 10px;
+    margin:4px 0;
+    border-left:3px solid transparent;
+    border-radius:7px;
+    font-size:.92rem;
+  }
+  nav a:hover{
+    background:var(--panel2);
+    color:#fff;
+    border-left-color:var(--cyan);
+  }
+  main{
+    margin-left:var(--sidebar);
+    width:100%;
+    max-width:1180px;
+    padding:40px 54px 90px;
+  }
+  h1{
+    margin:0 0 8px;
+    font-size:2.3rem;
+    line-height:1.25;
+  }
+  h1 span{color:var(--cyan)}
+  .subtitle{
+    margin:0 0 28px;
+    color:var(--muted);
+  }
+  .intro{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+    margin:18px 0 8px;
+  }
+  .intro .box,
+  .card,
+  .note,
+  .warn,
+  .ok,
+  .exercise,
+  .mini{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:15px 17px;
+  }
+  .intro .box strong,
+  .card strong,
+  .note strong,
+  .warn strong,
+  .ok strong,
+  .exercise strong,
+  .mini strong{
+    display:block;
+    margin-bottom:6px;
+    color:#fff;
+  }
+  .intro .box{
+    border-left:4px solid var(--blue);
+  }
+  .chapter{
+    margin-top:34px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  .chapter:first-of-type{
+    margin-top:14px;
+    padding-top:0;
+    border-top:none;
+  }
+  .chapter h2{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin:0 0 14px;
+    font-size:1.55rem;
+  }
+  .chapter h2 .num{
+    width:40px;
+    height:40px;
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    background:var(--cyan);
+    color:#031112;
+    font-weight:900;
+  }
+  .chapter h3{
+    margin:22px 0 10px;
+    font-size:1.14rem;
+    color:#fff;
+  }
+  p{margin:0 0 14px}
+  ul,ol{margin:8px 0 14px;padding-left:1.2em}
+  li{margin:5px 0}
+  code, .token{
+    font-family:"Cascadia Code","Consolas",monospace;
+    color:var(--cyan);
+  }
+  .formula{
+    margin:12px 0 16px;
+    padding:14px 16px;
+    background:var(--code);
+    border:1px solid var(--line);
+    border-radius:8px;
+    white-space:pre-wrap;
+    overflow:auto;
+    font-family:"Cascadia Code","Consolas",monospace;
+    color:#e9f1ef;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0 18px;
+    font-size:.94rem;
+  }
+  th,td{
+    border-bottom:1px solid var(--line);
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  th{
+    background:var(--panel2);
+    color:#fff;
+  }
+  tr:nth-child(even) td{background:#131823}
+  .tag{
+    display:inline-block;
+    margin:2px 4px 2px 0;
+    padding:2px 9px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#121722;
+    color:var(--muted);
+    font-size:.84rem;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    margin:14px 0;
+  }
+  .grid3{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+    margin:14px 0;
+  }
+  .card{border-left:4px solid var(--blue)}
+  .note{border-left:4px solid var(--yellow);background:#201b12}
+  .warn{border-left:4px solid var(--red);background:#261717}
+  .ok{border-left:4px solid var(--green);background:#132018}
+  .exercise{border-left:4px solid var(--violet)}
+  .mini{border-left:4px solid var(--orange)}
+  .small{color:var(--muted);font-size:.92rem}
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:10px 0 16px;
+  }
+  .legend span{
+    padding:4px 10px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#121722;
+    color:var(--muted);
+    font-size:.86rem;
+  }
+  .tree{
+    margin:12px 0 16px;
+    padding:14px 16px;
+    background:var(--code);
+    border:1px solid var(--line);
+    border-radius:8px;
+    white-space:pre-wrap;
+    font-family:"Cascadia Code","Consolas",monospace;
+    color:#e9f1ef;
+  }
+  svg{
+    display:block;
+    max-width:100%;
+    margin:16px auto;
+  }
+  .footer{
+    margin-top:36px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    color:var(--muted);
+    font-size:.92rem;
+  }
+  .nowrap{white-space:nowrap}
+  @media(max-width:980px){
+    nav{display:none}
+    main{margin-left:0;padding:24px 18px 72px}
+    .intro,.grid,.grid3{grid-template-columns:1fr}
+    h1{font-size:1.78rem}
+    .chapter h2{font-size:1.28rem}
+  }
+</style>
+</head>
+<body>
+<nav>
+  <h2>目录</h2>
+  <a href="#start">0. 总规则</a>
+  <a href="#neg">1. 否定/反向前缀</a>
+  <a href="#pos">2. 方向/位置前缀</a>
+  <a href="#qty">3. 数量/程度前缀</a>
+  <a href="#rel">4. 行为/关系前缀</a>
+  <a href="#noun">5. 名词后缀</a>
+  <a href="#adj">6. 形容词后缀</a>
+  <a href="#verbadv">7. 动词与副词后缀</a>
+  <a href="#mix">8. 易混专题</a>
+  <a href="#flow">9. 阅读猜词流程</a>
+  <a href="#practice">10. 练习区</a>
+  <a href="#summary">11. 最后收口</a>
+</nav>
+
+<main>
+<h1>考研英语前缀后缀记忆教程 <span>阅读实战版</span></h1>
+<p class="subtitle">不是词源百科，是考场上能马上用的那种：先看词性，再看方向，最后用上下文收口。</p>
+
+<div class="intro">
+  <div class="box">
+    <strong>一句话总纲</strong>
+    前缀多管“方向、态度、数量”，后缀多管“词性、功能、语气”。
+  </div>
+  <div class="box">
+    <strong>阅读用途</strong>
+    先靠词缀判断大概义，再用上下文验证，不要只背中文意思。
+  </div>
+  <div class="box">
+    <strong>记忆方法</strong>
+    按“否定、位置、数量、关系、名词、形容词、动词”分组，比零散背单词稳得多。
+  </div>
+</div>
+
+<section class="chapter" id="start">
+  <h2><span class="num">0</span>总规则：词缀不是主角，但它很会帮你省时间</h2>
+  <div class="note">
+    <strong>核心判断顺序</strong>
+    先看 <span class="token">后缀</span> 判词性，再看 <span class="token">前缀</span> 判方向，最后看 <span class="token">词根 + 上下文</span> 定具体含义。
+  </div>
+  <div class="formula">prefix  →  root  →  suffix  →  context
+先改方向       给核心意思      定词性/功能      最后纠偏</div>
+
+  <div class="grid">
+    <div class="card">
+      <strong>前缀最常做什么</strong>
+      <span class="tag">否定</span><span class="tag">反向</span><span class="tag">位置</span><span class="tag">数量</span><span class="tag">关系</span>
+      <p>前缀像“方向键”，最常见的是把核心意思改个方向，例如 <code>legal</code> 到 <code>illegal</code>，<code>regular</code> 到 <code>irregular</code>。</p>
+    </div>
+    <div class="card">
+      <strong>后缀最常做什么</strong>
+      <span class="tag">词性</span><span class="tag">名词</span><span class="tag">形容词</span><span class="tag">动词</span><span class="tag">副词</span>
+      <p>后缀更像“身份证”，它告诉你这个词在句子里通常是什么身份，常常比中文意思更值得先看。</p>
+    </div>
+  </div>
+  <div class="ok">
+    <strong>考研阅读里的真实用法</strong>
+    你不用把所有词缀背成字典，只要能在选项里迅速看出：这个词大概率是“否定的、相反的、过多的、再一次的、形容某种倾向的”就够了。
+  </div>
+</section>
+
+<section class="chapter" id="neg">
+  <h2><span class="num">1</span>否定 / 反向前缀：一看到它，先怀疑“不是、反过来、取消”</h2>
+  <p class="small">这一组最适合阅读猜义，因为它们经常直接影响正反关系。</p>
+  <table>
+    <tr>
+      <th>前缀</th><th>核心意思</th><th>常见词</th><th>判断口诀</th><th>提醒</th>
+    </tr>
+    <tr>
+      <td><code>un-</code></td><td>不、反</td><td>unfair, unhappy, unlock</td><td>最像“反义开关”</td><td>多用于形容词/动词</td>
+    </tr>
+    <tr>
+      <td><code>in-/im-/il-/ir-</code></td><td>不、无</td><td>inactive, impossible, illegal, irregular</td><td>看后面首字母做变体</td><td>别只认 <code>in-</code> 一种写法</td>
+    </tr>
+    <tr>
+      <td><code>non-</code></td><td>非、没有</td><td>nonprofit, nonverbal</td><td>“不是这一类”</td><td>比 <code>un-</code> 更像分类排除</td>
+    </tr>
+    <tr>
+      <td><code>dis-</code></td><td>否定、分离、撤销</td><td>dislike, disappear, disconnect</td><td>有时是“不”，有时是“分开”</td><td>常和动作、关系有关</td>
+    </tr>
+    <tr>
+      <td><code>de-</code></td><td>去掉、降低、否定</td><td>devalue, decrease, deactivate</td><td>常有“往回、往下、去除”感觉</td><td>别硬翻成单纯“不”</td>
+    </tr>
+    <tr>
+      <td><code>anti-</code></td><td>反对、抵抗</td><td>antiwar, anti-inflammatory</td><td>带立场色彩</td><td>多见于名词和形容词</td>
+    </tr>
+    <tr>
+      <td><code>counter-</code></td><td>反向、对抗</td><td>counterattack, counterargument</td><td>“顶回去、对着干”</td><td>常见于正式表达</td>
+    </tr>
+  </table>
+  <div class="warn">
+    <strong>别偷懒</strong>
+    <code>dis-</code> 不总是“否定”，<code>de-</code> 也不总是“取消”。阅读里先抓大方向，再看句子是不是在说“拆开、减少、撤回、对抗”。
+  </div>
+</section>
+
+<section class="chapter" id="pos">
+  <h2><span class="num">2</span>方向 / 位置前缀：空间感很强，容易帮助你记词义</h2>
+  <table>
+    <tr>
+      <th>前缀</th><th>核心意思</th><th>常见词</th><th>图像感</th><th>阅读提示</th>
+    </tr>
+    <tr>
+      <td><code>sub-</code></td><td>下、次、从属</td><td>subway, subsoil, subordinate</td><td>往下压一层</td><td>常带“次级、附属”</td>
+    </tr>
+    <tr>
+      <td><code>super-/supra-</code></td><td>上、超、在上方</td><td>superior, supernatural, supranational</td><td>抬高一层</td><td>也可表示“超过”</td>
+    </tr>
+    <tr>
+      <td><code>inter-</code></td><td>之间、互相</td><td>international, interaction</td><td>两边之间拉线</td><td>看到“互相、跨界”就想到它</td>
+    </tr>
+    <tr>
+      <td><code>intra-</code></td><td>内部、之内</td><td>intramural, intracellular</td><td>往里圈</td><td>和 <code>inter-</code> 正好相反</td>
+    </tr>
+    <tr>
+      <td><code>trans-</code></td><td>横过、转移、跨越</td><td>transport, transform, transfer</td><td>从一边到另一边</td><td>非常常见，别忽视</td>
+    </tr>
+    <tr>
+      <td><code>ex-</code></td><td>外、前任</td><td>exit, export, ex-president</td><td>从里面出去</td><td>常见“前任”义</td>
+    </tr>
+    <tr>
+      <td><code>extra-</code></td><td>额外、外部</td><td>extraordinary, extracurricular</td><td>框外加一层</td><td>“超出正常范围”</td>
+    </tr>
+    <tr>
+      <td><code>pre-</code></td><td>在前、预先</td><td>preview, prefix, prepay</td><td>时间向前挪</td><td>阅读里常是“提前”</td>
+    </tr>
+    <tr>
+      <td><code>post-</code></td><td>在后、后来的</td><td>postwar, postgraduate</td><td>时间向后挪</td><td>常表阶段顺序</td>
+    </tr>
+  </table>
+  <div class="mini">
+    <strong>快速联想</strong>
+    把它们记成四条轴：<code>sub-</code>/<code>super-</code> 是上下轴，<code>inter-</code>/<code>intra-</code> 是内外轴，
+    <code>trans-</code>/<code>ex-</code>/<code>extra-</code> 是穿出与外扩轴，<code>pre-</code>/<code>post-</code> 是时间前后轴。
+  </div>
+</section>
+
+<section class="chapter" id="qty">
+  <h2><span class="num">3</span>数量 / 程度前缀：考试里很爱考“多少、几次、过头了没”</h2>
+  <table>
+    <tr>
+      <th>前缀</th><th>核心意思</th><th>常见词</th><th>判断口诀</th><th>提醒</th>
+    </tr>
+    <tr>
+      <td><code>mono-</code></td><td>单一</td><td>monologue, monochrome</td><td>一个</td><td>常和“独立、单色”有关</td>
+    </tr>
+    <tr>
+      <td><code>bi-/di-</code></td><td>两个、双</td><td>bicycle, bilingual, dioxide</td><td>两个一起看</td><td><code>bi-</code> 更常见于英语词</td>
+    </tr>
+    <tr>
+      <td><code>tri-</code></td><td>三个</td><td>triangle, tricycle</td><td>三角、三轮</td><td>一眼就能抓到</td>
+    </tr>
+    <tr>
+      <td><code>multi-</code></td><td>多</td><td>multiple, multimedia</td><td>一堆、一组</td><td>比 <code>poly-</code> 更口语常见</td>
+    </tr>
+    <tr>
+      <td><code>poly-</code></td><td>多、复合</td><td>polytechnic, polymer</td><td>很多部分拼起来</td><td>学术感更强</td>
+    </tr>
+    <tr>
+      <td><code>semi-</code></td><td>半、部分</td><td>semifinal, semicircle</td><td>一半</td><td>常和比赛、形状搭配</td>
+    </tr>
+    <tr>
+      <td><code>over-</code></td><td>过度、太多</td><td>overwork, overload</td><td>超过正常线</td><td>常带负面评价</td>
+    </tr>
+    <tr>
+      <td><code>under-</code></td><td>不足、在下方</td><td>underestimate, underground</td><td>不够、偏低</td><td>既有“位置”也有“程度”</td>
+    </tr>
+    <tr>
+      <td><code>hyper-</code></td><td>过度、亢进</td><td>hyperactive, hypersensitive</td><td>太猛了</td><td>医学、科技语境常见</td>
+    </tr>
+    <tr>
+      <td><code>hypo-</code></td><td>低于、过少</td><td>hypoglycemia, hypodermic</td><td>偏低</td><td>和 <code>hyper-</code> 形成对照</td>
+    </tr>
+  </table>
+  <div class="grid">
+    <div class="ok">
+      <strong>数量主线</strong>
+      <p>先按数轴记：<code>mono-</code> 一个，<code>bi-/di-</code> 两个，<code>tri-</code> 三个，<code>multi-/poly-</code> 是很多个，<code>semi-</code> 是一半。</p>
+    </div>
+    <div class="mini">
+      <strong>程度主线</strong>
+      <p>再按程度轴记：<code>over-</code> 和 <code>hyper-</code> 都偏“过头”，<code>under-</code> 和 <code>hypo-</code> 都偏“低/少”。</p>
+    </div>
+  </div>
+  <div class="warn">
+    <strong>常见误区</strong>
+    <code>under-</code> 不只表示“下面”，在阅读里更常是“低估、不足、低于标准”；<code>hyper-</code> 与 <code>hypo-</code> 则是一组“高/低”对照。
+  </div>
+</section>
+
+<section class="chapter" id="rel">
+  <h2><span class="num">4</span>行为 / 关系前缀：动作感很强，适合抓逻辑</h2>
+  <table>
+    <tr>
+      <th>前缀</th><th>核心意思</th><th>常见词</th><th>阅读感受</th><th>提醒</th>
+    </tr>
+    <tr>
+      <td><code>re-</code></td><td>再、回、重新</td><td>review, reuse, rebuild</td><td>做一遍、往回拉</td><td>有时是“重复”，有时是“恢复”</td>
+    </tr>
+    <tr>
+      <td><code>co-/com-/con-</code></td><td>共同、一起</td><td>cooperate, combine, connect</td><td>合在一起动</td><td>注意拼写变体</td>
+    </tr>
+    <tr>
+      <td><code>pro-</code></td><td>向前、支持</td><td>progress, promote, pro-environment</td><td>往前推、站队支持</td><td>既有方向也有立场</td>
+    </tr>
+    <tr>
+      <td><code>mis-</code></td><td>错误地</td><td>mistake, misunderstand, mislead</td><td>做歪了</td><td>和“错误认知”关系很大</td>
+    </tr>
+    <tr>
+      <td><code>auto-</code></td><td>自己、自动</td><td>autobiography, automatic</td><td>自己驱动</td><td>常见于科技和身份类词汇</td>
+    </tr>
+    <tr>
+      <td><code>tele-</code></td><td>远、远程</td><td>telephone, television, telework</td><td>隔着距离传递</td><td>科技英语里很常见</td>
+    </tr>
+  </table>
+  <div class="note">
+    <strong>一个好记法</strong>
+    这组可以按“动作关系”记：<code>re-</code> 是回放/重做，<code>co-/com-/con-</code> 是合拍一起动，
+    <code>pro-</code> 是往前推/站队支持，<code>mis-</code> 是走偏，<code>auto-</code> 是自驱，<code>tele-</code> 是远程。
+  </div>
+</section>
+
+<section class="chapter" id="noun">
+  <h2><span class="num">5</span>名词后缀：看见它们，先想“这是个名词”</h2>
+  <table>
+    <tr>
+      <th>后缀</th><th>常见功能</th><th>常见词</th><th>大致意义</th><th>阅读提醒</th>
+    </tr>
+    <tr>
+      <td><code>-tion/-sion</code></td><td>动作/结果/状态</td><td>relation, decision</td><td>做出来的结果</td><td>最常见的名词后缀之一</td>
+    </tr>
+    <tr>
+      <td><code>-ment</code></td><td>行为、结果</td><td>development, improvement</td><td>发展、完成后的东西</td><td>常见抽象名词</td>
+    </tr>
+    <tr>
+      <td><code>-ness</code></td><td>性质、状态</td><td>happiness, darkness</td><td>“某种状态”</td><td>形容词变名词很典型</td>
+    </tr>
+    <tr>
+      <td><code>-ity</code></td><td>性质、能力、状态</td><td>ability, reality</td><td>性质变抽象概念</td><td>书面感强</td>
+    </tr>
+    <tr>
+      <td><code>-ism</code></td><td>主义、现象、倾向</td><td>capitalism, criticism</td><td>一套观点或风格</td><td>阅读里常带立场</td>
+    </tr>
+    <tr>
+      <td><code>-ist</code></td><td>人、专家、信奉者</td><td>scientist, artist</td><td>“某类人”</td><td>和 <code>-ism</code> 常配对</td>
+    </tr>
+    <tr>
+      <td><code>-er/-or</code></td><td>人、物、执行者</td><td>teacher, actor, supervisor</td><td>做动作的人/物</td><td>高频、好认</td>
+    </tr>
+    <tr>
+      <td><code>-ship</code></td><td>状态、关系、身份</td><td>friendship, leadership</td><td>关系或职位状态</td><td>抽象感强</td>
+    </tr>
+    <tr>
+      <td><code>-hood</code></td><td>时期、身份、群体</td><td>childhood, neighborhood</td><td>一个阶段或关系圈</td><td>不如前几个高频，但很稳</td>
+    </tr>
+  </table>
+  <div class="mini">
+    <strong>名词后缀快速记</strong>
+    先把它们分成四簇记：<code>-tion/-sion</code> 和 <code>-ment</code> 是“动作落地后的结果”；
+    <code>-ness</code> 和 <code>-ity</code> 是“把性质抽成概念”；<code>-ism</code> 和 <code>-ist</code> 是“主义 + 信奉者”；
+    <code>-er/-or</code>、<code>-ship</code>、<code>-hood</code> 是“人/角色/关系/阶段”。
+  </div>
+</section>
+
+<section class="chapter" id="adj">
+  <h2><span class="num">6</span>形容词后缀：它们往往直接告诉你“这个词在修饰谁”</h2>
+  <table>
+    <tr>
+      <th>后缀</th><th>常见功能</th><th>常见词</th><th>大致印象</th><th>提醒</th>
+    </tr>
+    <tr>
+      <td><code>-ive</code></td><td>有……性质的</td><td>active, sensitive</td><td>倾向、性质</td><td>阅读里很高频</td>
+    </tr>
+    <tr>
+      <td><code>-al</code></td><td>……的，相关的</td><td>natural, national</td><td>属性相关</td><td>常把名词拉成形容词</td>
+    </tr>
+    <tr>
+      <td><code>-ous</code></td><td>充满……的</td><td>dangerous, various</td><td>量感、特征感</td><td>常带书面感</td>
+    </tr>
+    <tr>
+      <td><code>-ful</code></td><td>充满的，富有的</td><td>helpful, careful</td><td>满满的特征</td><td>常是正面或中性</td>
+    </tr>
+    <tr>
+      <td><code>-less</code></td><td>没有……的</td><td>hopeless, careless</td><td>缺失感</td><td>明显负向</td>
+    </tr>
+    <tr>
+      <td><code>-able/-ible</code></td><td>可以……的</td><td>readable, visible</td><td>可行、可被处理</td><td>非常适合阅读猜义</td>
+    </tr>
+    <tr>
+      <td><code>-ic</code></td><td>……的，相关的</td><td>economic, dramatic</td><td>学术/抽象</td><td>经常出现在学术文章里</td>
+    </tr>
+    <tr>
+      <td><code>-ary</code></td><td>相关的，属于……的</td><td>primary, customary</td><td>类别感</td><td>不如 <code>-al</code> 直观</td>
+    </tr>
+    <tr>
+      <td><code>-ent/-ant</code></td><td>处于……状态的</td><td>different, important</td><td>性质固定化</td><td>有时也可作名词</td>
+    </tr>
+  </table>
+  <div class="mini">
+    <strong>形容词后缀快速记</strong>
+    这组别按单个背，按“性质簇”背更顺：<code>-ive</code>、<code>-al</code>、<code>-ous</code>、<code>-ic</code>、<code>-ary</code>、<code>-ent/-ant</code>
+    都是在给名词挂“某种属性”；<code>-ful</code>/<code>-less</code> 是“有/没有”；<code>-able/-ible</code> 是“能不能”。
+  </div>
+  <div class="warn">
+    <strong>词性先行</strong>
+    看到这些后缀时，先把整个词当作形容词，别急着翻成具体中文；真正的褒贬和强弱，再交给上下文判断。
+  </div>
+</section>
+
+<section class="chapter" id="verbadv">
+  <h2><span class="num">7</span>动词与副词后缀：它们告诉你“这个词怎么动、怎么说”</h2>
+  <table>
+    <tr>
+      <th>后缀</th><th>常见功能</th><th>常见词</th><th>阅读印象</th><th>提醒</th>
+    </tr>
+    <tr>
+      <td><code>-ize/-ise</code></td><td>使……化、使……成为</td><td>organize, realize, modernize</td><td>把东西变成某种状态</td><td>英美拼写有差异</td>
+    </tr>
+    <tr>
+      <td><code>-ify</code></td><td>使成、使……化</td><td>simplify, clarify</td><td>把复杂变简单</td><td>常见于学术和说明文</td>
+    </tr>
+    <tr>
+      <td><code>-en</code></td><td>使……变得</td><td>widen, strengthen</td><td>变化感</td><td>不少词很高频</td>
+    </tr>
+    <tr>
+      <td><code>-ate</code></td><td>使、成为、做</td><td>activate, separate, investigate</td><td>动作感强</td><td>动词后缀里很重要</td>
+    </tr>
+    <tr>
+      <td><code>-ly</code></td><td>副词，……地</td><td>quickly, largely</td><td>修饰动作</td><td>也可出现在部分形容词里</td>
+    </tr>
+    <tr>
+      <td><code>-ward(s)</code></td><td>朝着……方向</td><td>forward, backward, toward(s)</td><td>方向感很强</td><td>常和空间、时间有关</td>
+    </tr>
+    <tr>
+      <td><code>-wise</code></td><td>在……方面；以……方式</td><td>clockwise, otherwise</td><td>方式/角度</td><td>阅读里常见于复合表达</td>
+    </tr>
+  </table>
+  <div class="ok">
+    <strong>动词与副词后缀快速记</strong>
+    先分两簇：<code>-ize/-ise</code>、<code>-ify</code>、<code>-en</code>、<code>-ate</code> 是“把东西变成另一种状态”的使动簇；
+    <code>-ly</code>、<code>-ward(s)</code>、<code>-wise</code> 是“怎么做/朝哪儿/从什么角度看”的方式簇。
+  </div>
+</section>
+
+<section class="chapter" id="mix">
+  <h2><span class="num">8</span>易混专题：考场上最容易被它们带偏</h2>
+  <div class="grid">
+    <div class="card">
+      <strong><code>dis-</code> vs <code>de-</code></strong>
+      <p><code>dis-</code> 更像“不、分离、取消”；<code>de-</code> 更像“去掉、降低、往回撤”。</p>
+      <p class="small">例：<code>disconnect</code> 是断开，<code>decrease</code> 是减少，<code>devalue</code> 是贬值。</p>
+    </div>
+    <div class="card">
+      <strong><code>in-</code> 表否定 vs 表进入</strong>
+      <p><code>in-</code> 有时表示“不”，有时表示“进入、在……里面”。别看见就硬翻。</p>
+      <p class="small">例：<code>inaccurate</code> 是不准确，<code>include</code> 是包含，<code>inject</code> 是注入。</p>
+    </div>
+    <div class="card">
+      <strong><code>-able</code> vs <code>-ible</code></strong>
+      <p>两个都常表示“可以……的”，但 <code>-able</code> 更常见，<code>-ible</code> 更偏正式和书面。</p>
+      <p class="small">例：<code>readable</code>, <code>understandable</code>, <code>visible</code>, <code>accessible</code>。</p>
+    </div>
+    <div class="card">
+      <strong><code>-ic</code> vs <code>-ical</code></strong>
+      <p>都常作形容词后缀，<code>-ical</code> 往往更像“……方面的、带某种特征的”。</p>
+      <p class="small">例：<code>economic</code> / <code>economical</code>，<code>historic</code> / <code>historical</code>。</p>
+    </div>
+  </div>
+  <div class="warn">
+    <strong>最重要的提醒</strong>
+    词缀只能给你“高概率方向”，不能替代上下文。尤其在长难句里，先靠词缀缩小范围，再回句子验证。
+  </div>
+</section>
+
+<section class="chapter" id="flow">
+  <h2><span class="num">9</span>阅读猜词流程：四步就够</h2>
+  <div class="formula">1. 看后缀：先判词性
+2. 看前缀：再判方向
+3. 拆词根：抓核心意思
+4. 回句子：用上下文修正</div>
+
+  <svg viewBox="0 0 980 260" xmlns="http://www.w3.org/2000/svg" aria-label="词缀拆词流程图">
+    <defs>
+      <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+        <polygon points="0 0,10 4,0 8" fill="#55d6d6"/>
+      </marker>
+    </defs>
+    <rect x="40" y="70" width="190" height="86" rx="8" fill="#1d2330" stroke="#6ea8fe" stroke-width="2"/>
+    <text x="135" y="104" text-anchor="middle" fill="#6ea8fe" font-size="18" font-weight="bold">prefix</text>
+    <text x="135" y="130" text-anchor="middle" fill="#a6b0bf" font-size="13">先改方向 / 态度</text>
+    <line x1="230" y1="113" x2="360" y2="113" stroke="#55d6d6" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="370" y="70" width="190" height="86" rx="8" fill="#1d2330" stroke="#64d98c" stroke-width="2"/>
+    <text x="465" y="104" text-anchor="middle" fill="#64d98c" font-size="18" font-weight="bold">root</text>
+    <text x="465" y="130" text-anchor="middle" fill="#a6b0bf" font-size="13">词根给核心意思</text>
+    <line x1="560" y1="113" x2="690" y2="113" stroke="#55d6d6" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="700" y="70" width="190" height="86" rx="8" fill="#1d2330" stroke="#f0c674" stroke-width="2"/>
+    <text x="795" y="104" text-anchor="middle" fill="#f0c674" font-size="18" font-weight="bold">suffix</text>
+    <text x="795" y="130" text-anchor="middle" fill="#a6b0bf" font-size="13">后缀定词性 / 功能</text>
+    <text x="490" y="214" text-anchor="middle" fill="#a6b0bf" font-size="14">最后回到 context：真正意思要看句子怎么用。</text>
+  </svg>
+
+  <div class="grid">
+    <div class="mini">
+      <strong>示范 1</strong>
+      <p><code>disagreement</code> = <code>dis-</code>（否定） + <code>agree</code>（同意） + <code>-ment</code>（名词） = 分歧。</p>
+    </div>
+    <div class="mini">
+      <strong>示范 2</strong>
+      <p><code>international</code> = <code>inter-</code>（之间） + <code>nation</code>（国家） + <code>-al</code>（形容词） = 国际的。</p>
+    </div>
+  </div>
+  <div class="ok">
+    <strong>一条实战经验</strong>
+    看到陌生词，不要立刻查词典，先试着拆成“前缀 + 词根 + 后缀”。很多考研阅读里的长词，拆完就能猜个七八成。
+  </div>
+</section>
+
+<section class="chapter" id="practice">
+  <h2><span class="num">10</span>练习区：20 个词，按“前缀 / 词根 / 后缀 / 大意”拆开</h2>
+  <div class="exercise">
+    <strong>先自己试，下面再对答案</strong>
+    尽量先看词缀，不要直接看中文释义。你会发现阅读速度真的会变稳。
+  </div>
+  <table>
+    <tr>
+      <th>单词</th><th>拆分</th><th>大意</th>
+    </tr>
+    <tr><td>illegal</td><td><code>il-</code> + legal</td><td>不合法的</td></tr>
+    <tr><td>impossible</td><td><code>im-</code> + possible</td><td>不可能的</td></tr>
+    <tr><td>irregular</td><td><code>ir-</code> + regular</td><td>不规则的</td></tr>
+    <tr><td>disappear</td><td><code>dis-</code> + appear</td><td>消失</td></tr>
+    <tr><td>decrease</td><td><code>de-</code> + crease</td><td>减少</td></tr>
+    <tr><td>counterattack</td><td><code>counter-</code> + attack</td><td>反击</td></tr>
+    <tr><td>international</td><td><code>inter-</code> + nation + <code>-al</code></td><td>国际的</td></tr>
+    <tr><td>intracellular</td><td><code>intra-</code> + cellular</td><td>细胞内部的</td></tr>
+    <tr><td>transportation</td><td><code>trans-</code> + port + <code>-ation</code></td><td>运输</td></tr>
+    <tr><td>extraordinary</td><td><code>extra-</code> + ordinary</td><td>非凡的</td></tr>
+    <tr><td>preview</td><td><code>pre-</code> + view</td><td>预览</td></tr>
+    <tr><td>postgraduate</td><td><code>post-</code> + graduate</td><td>研究生的；毕业后的</td></tr>
+    <tr><td>multimedia</td><td><code>multi-</code> + media</td><td>多媒体</td></tr>
+    <tr><td>semifinal</td><td><code>semi-</code> + final</td><td>半决赛</td></tr>
+    <tr><td>overwork</td><td><code>over-</code> + work</td><td>过度工作</td></tr>
+    <tr><td>underestimate</td><td><code>under-</code> + estimate</td><td>低估</td></tr>
+    <tr><td>simplify</td><td>simpl + <code>-ify</code></td><td>使简单化</td></tr>
+    <tr><td>modernize</td><td>modern + <code>-ize</code></td><td>使现代化</td></tr>
+    <tr><td>careless</td><td>care + <code>-less</code></td><td>粗心的</td></tr>
+    <tr><td>readable</td><td>read + <code>-able</code></td><td>可读的</td></tr>
+  </table>
+  <div class="note">
+    <strong>自检顺序</strong>
+    如果一个词看起来很长，先找尾巴是不是 <code>-tion</code>、<code>-ment</code>、<code>-al</code>、<code>-ly</code> 这类后缀，再从头找前缀，最后才看词根。
+  </div>
+</section>
+
+<section class="chapter" id="summary">
+  <h2><span class="num">11</span>最后收口：你真正要记住的不是表，而是套路</h2>
+  <div class="grid3">
+    <div class="card">
+      <strong>前缀</strong>
+      <p>改方向，改态度，改数量。</p>
+    </div>
+    <div class="card">
+      <strong>后缀</strong>
+      <p>定词性，定功能，定抽象程度。</p>
+    </div>
+    <div class="card">
+      <strong>上下文</strong>
+      <p>决定最终意思，不让词缀“单独作主”。</p>
+    </div>
+  </div>
+  <div class="ok">
+    <strong>适合考研阅读的记法</strong>
+    记前缀时按“否定、位置、数量、关系”分组；记后缀时按“名词、形容词、动词、副词”分组。这样你不是在背碎片，而是在搭词感。
+  </div>
+</section>
+
+<div class="footer">
+  <p>适用方式：直接双击打开即可。建议先通读一遍，再拿真题阅读里不会的词做拆解练习。</p>
+  <p>文件名：<span class="nowrap">考研英语前缀后缀记忆教程.html</span></p>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="510" viewBox="0 0 900 510" style="max-width:100%;height:auto" role="img" aria-labelledby="title desc">
+  <title id="title">直接插入排序扩大有序前缀</title>
+  <desc id="desc">在 2、5、8 的有序前缀中插入 3，将 8 和 5 右移后写入 3。</desc>
+  <rect width="900" height="510" fill="#FFFFFF"/>
+  <style>
+    .cell{fill:#EFF6FF;stroke:#4b8ee8;stroke-width:2}
+    .move{fill:#DCFCE7;stroke:#269c72;stroke-width:2.5}
+    .write{fill:#EDE9FE;stroke:#a079ce;stroke-width:2.5}
+    .empty{fill:#F3F4F6;stroke:#9CA3AF;stroke-width:2;stroke-dasharray:6 4}
+    .label{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:21px;fill:#1F2937;text-anchor:middle}
+    .small{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:18px;fill:#4B5563}
+  </style>
+  <text x="35" y="35" class="small">每轮把下一个记录插入已有序前缀：先移动较大项，再写入空位</text>
+  <text x="35" y="82" class="small">① 初始：前缀 2、5、8 已有序，待插入 3</text>
+  <g transform="translate(240 100)">
+    <rect x="0" y="0" width="92" height="55" class="cell"/><text x="46" y="36" class="label">2</text>
+    <rect x="92" y="0" width="92" height="55" class="cell"/><text x="138" y="36" class="label">5</text>
+    <rect x="184" y="0" width="92" height="55" class="cell"/><text x="230" y="36" class="label">8</text>
+    <rect x="276" y="0" width="92" height="55" class="write"/><text x="322" y="36" class="label">3</text>
+    <text x="46" y="87" class="small" text-anchor="middle">有序</text><text x="230" y="87" class="small" text-anchor="middle">有序</text><text x="322" y="87" class="small" text-anchor="middle">key</text>
+  </g>
+  <text x="35" y="235" class="small">② 3 小于 8：把 8 向右移，原位置成为空位</text>
+  <g transform="translate(240 253)">
+    <rect x="0" y="0" width="92" height="55" class="cell"/><text x="46" y="36" class="label">2</text>
+    <rect x="92" y="0" width="92" height="55" class="cell"/><text x="138" y="36" class="label">5</text>
+    <rect x="184" y="0" width="92" height="55" class="empty"/>
+    <rect x="276" y="0" width="92" height="55" class="move"/><text x="322" y="36" class="label">8</text>
+    <path d="M230 63 Q276 108 322 63" fill="none" stroke="#269c72" stroke-width="2.5"/>
+  </g>
+  <text x="35" y="388" class="small">③ 3 仍小于 5：再把 5 向右移，在空位写入 3</text>
+  <g transform="translate(240 406)">
+    <rect x="0" y="0" width="92" height="55" class="cell"/><text x="46" y="36" class="label">2</text>
+    <rect x="92" y="0" width="92" height="55" class="write"/><text x="138" y="36" class="label">3</text>
+    <rect x="184" y="0" width="92" height="55" class="cell"/><text x="230" y="36" class="label">5</text>
+    <rect x="276" y="0" width="92" height="55" class="cell"/><text x="322" y="36" class="label">8</text>
+  </g>
+</svg>
+

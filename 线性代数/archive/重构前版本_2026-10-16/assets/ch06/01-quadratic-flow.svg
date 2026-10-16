@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="210" viewBox="0 0 1000 210" role="img" aria-labelledby="title desc">
+  <title id="title">二次型合同变换流程</title>
+  <desc id="desc">二次型经过变量替换产生合同变换，消去交叉项后得到标准形和规范形。</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#64748B"/></marker></defs>
+  <rect width="1000" height="210" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <rect x="25" y="64" width="180" height="76" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/><text x="115" y="108" font-size="21" fill="#1E3A8A">f(x)=xᵀAx</text>
+    <line x1="208" y1="102" x2="300" y2="102" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="303" y="64" width="180" height="76" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/><text x="393" y="98" font-size="18" fill="#166534">x=Cy</text><text x="393" y="123" font-size="14" fill="#475569">A → CᵀAC</text>
+    <line x1="486" y1="102" x2="578" y2="102" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="581" y="64" width="180" height="76" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/><text x="671" y="98" font-size="18" fill="#334155">消去交叉项</text><text x="671" y="123" font-size="14" fill="#475569">对角形式</text>
+    <line x1="764" y1="102" x2="856" y2="102" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="859" y="64" width="115" height="76" rx="8" fill="#FDF4FF" stroke="#9333EA" stroke-width="2"/><text x="916" y="98" font-size="17" fill="#7E22CE">标准形</text><text x="916" y="123" font-size="14" fill="#7E22CE">规范形/惯性</text>
+  </g>
+  <text x="500" y="180" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" text-anchor="middle" fill="#DC2626">合同变换处理二次型，不是保持特征值的相似变换</text>
+</svg>

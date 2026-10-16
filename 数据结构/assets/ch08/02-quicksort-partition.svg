@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" style="max-width:100%;height:auto" role="img" aria-labelledby="title desc">
+  <title id="title">快速排序的一次划分</title>
+  <desc id="desc">以 4 为枢轴，将更小的记录放到左边，更大的记录放到右边，枢轴位置确定。</desc>
+  <rect width="900" height="430" fill="#FFFFFF"/>
+  <style>
+    .cell{fill:#EFF6FF;stroke:#4b8ee8;stroke-width:2}
+    .low{fill:#DCFCE7;stroke:#269c72;stroke-width:2.3}
+    .pivot{fill:#FEE2E2;stroke:#d55263;stroke-width:2.6}
+    .high{fill:#EDE9FE;stroke:#a079ce;stroke-width:2.3}
+    .label{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:21px;fill:#1F2937;text-anchor:middle}
+    .small{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:18px;fill:#4B5563}
+  </style>
+  <text x="35" y="35" class="small">枢轴 4 的一次划分：只确定枢轴的最终位置，左右分区内部尚未排序</text>
+  <text x="35" y="93" class="small">划分前</text>
+  <g transform="translate(150 68)">
+    <rect x="0" y="0" width="82" height="58" class="pivot"/><text x="41" y="38" class="label">4</text>
+    <rect x="82" y="0" width="82" height="58" class="cell"/><text x="123" y="38" class="label">7</text>
+    <rect x="164" y="0" width="82" height="58" class="cell"/><text x="205" y="38" class="label">2</text>
+    <rect x="246" y="0" width="82" height="58" class="cell"/><text x="287" y="38" class="label">6</text>
+    <rect x="328" y="0" width="82" height="58" class="cell"/><text x="369" y="38" class="label">1</text>
+    <rect x="410" y="0" width="82" height="58" class="cell"/><text x="451" y="38" class="label">5</text>
+    <rect x="492" y="0" width="82" height="58" class="cell"/><text x="533" y="38" class="label">3</text>
+  </g>
+  <path d="M450 158 C450 186 450 191 450 220" fill="none" stroke="#269c72" stroke-width="2.5"/>
+  <text x="35" y="250" class="small">划分后的一种结果</text>
+  <g transform="translate(150 268)">
+    <rect x="0" y="0" width="82" height="58" class="low"/><text x="41" y="38" class="label">3</text>
+    <rect x="82" y="0" width="82" height="58" class="low"/><text x="123" y="38" class="label">2</text>
+    <rect x="164" y="0" width="82" height="58" class="low"/><text x="205" y="38" class="label">1</text>
+    <rect x="246" y="0" width="82" height="58" class="pivot"/><text x="287" y="38" class="label">4</text>
+    <rect x="328" y="0" width="82" height="58" class="high"/><text x="369" y="38" class="label">6</text>
+    <rect x="410" y="0" width="82" height="58" class="high"/><text x="451" y="38" class="label">5</text>
+    <rect x="492" y="0" width="82" height="58" class="high"/><text x="533" y="38" class="label">7</text>
+    <text x="123" y="91" class="small" text-anchor="middle">小于 4</text>
+    <text x="287" y="91" class="small" text-anchor="middle">枢轴就位</text>
+    <text x="451" y="91" class="small" text-anchor="middle">大于 4</text>
+  </g>
+</svg>
+

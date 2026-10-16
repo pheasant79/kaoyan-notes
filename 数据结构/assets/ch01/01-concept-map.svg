@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="780" viewBox="0 0 720 780">
+  <rect width="720" height="780" fill="#ffffff"/>
+  <style>
+    .box{fill:#f8fafc;stroke:#94a3b8;stroke-width:2;rx:10}
+    .core{fill:#eff6ff;stroke:#2563eb;stroke-width:2.5}
+    .method{fill:#f0fdf4;stroke:#16a34a;stroke-width:2}
+    .eval{fill:#faf5ff;stroke:#8b5cf6;stroke-width:2}
+    .t{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:22px;fill:#1f2937;text-anchor:middle}
+    .s{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:17px;fill:#475569;text-anchor:middle}
+    .arrow{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#a)}
+  </style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#64748b"/></marker></defs>
+  <rect x="230" y="24" width="260" height="70" class="core"/>
+  <text x="360" y="56" class="t">数据对象</text><text x="360" y="82" class="s">元素、数据项、对象集合</text>
+  <path d="M360 94 V132" class="arrow"/>
+  <rect x="190" y="132" width="340" height="74" class="core"/>
+  <text x="360" y="166" class="t">逻辑关系</text><text x="360" y="193" class="s">集合 · 线性 · 树 · 图</text>
+  <path d="M360 206 V244" class="arrow"/>
+  <rect x="170" y="244" width="380" height="74" class="box"/>
+  <text x="360" y="278" class="t">ADT 操作规范</text><text x="360" y="305" class="s">规定对象、关系、操作效果</text>
+  <path d="M360 318 V356" class="arrow"/>
+  <rect x="80" y="356" width="230" height="84" class="method"/>
+  <text x="195" y="389" class="t">存储实现</text><text x="195" y="416" class="s">顺序、链式、索引、散列</text>
+  <rect x="410" y="356" width="230" height="84" class="method"/>
+  <text x="525" y="389" class="t">数据运算</text><text x="525" y="416" class="s">访问、插入、删除、查找</text>
+  <path d="M195 440 V492 M525 440 V492" class="arrow"/>
+  <rect x="190" y="492" width="340" height="74" class="method"/>
+  <text x="360" y="526" class="t">算法</text><text x="360" y="553" class="s">用有限步骤实现运算</text>
+  <path d="M360 566 V604" class="arrow"/>
+  <rect x="105" y="604" width="210" height="88" class="eval"/>
+  <text x="210" y="637" class="t">正确性</text><text x="210" y="665" class="s">结果、边界、健壮性</text>
+  <rect x="405" y="604" width="210" height="88" class="eval"/>
+  <text x="510" y="637" class="t">代价</text><text x="510" y="665" class="s">时间、辅助空间</text>
+  <text x="360" y="744" class="s">复杂度还要注明输入情况：最好 / 平均 / 最坏</text>
+</svg>
+

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 690" role="img" aria-labelledby="title desc">
+  <title id="title">按目标选择图算法及关键路径示例</title>
+  <desc id="desc">上半部分按任务目标选择遍历、最小生成树、最短路径、拓扑排序或关键路径算法，并标出关键前提。下半部分是一个工期为 8 的 AOE 网示例，红色边构成关键路径，节点列出最早和最迟事件时间。</desc>
+  <rect width="720" height="690" fill="#FFFFFF"/>
+  <text x="360" y="28" text-anchor="middle" font-family="sans-serif" font-size="19" fill="#1F2937">先识别任务目标，再选算法</text>
+  <g font-family="sans-serif" font-size="16" fill="#1F2937">
+    <text x="36" y="69" fill="#6B7280">目标</text><text x="275" y="69" fill="#6B7280">方法</text><text x="488" y="69" fill="#6B7280">关键条件 / 实现</text>
+  </g>
+  <g stroke="#D1D5DB" stroke-width="1">
+    <line x1="28" y1="82" x2="692" y2="82"/><line x1="28" y1="129" x2="692" y2="129"/>
+    <line x1="28" y1="176" x2="692" y2="176"/><line x1="28" y1="223" x2="692" y2="223"/>
+    <line x1="28" y1="270" x2="692" y2="270"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="36" y="111">访问 / 连通分量</text><text x="275" y="111" fill="#4b8ee8">BFS / DFS</text><text x="488" y="111">队列 / 栈或递归</text>
+    <text x="36" y="158">总连接代价最小</text><text x="275" y="158" fill="#4b8ee8">Prim / Kruskal</text><text x="470" y="158">无向带权；扩张点集 / 排序选边</text>
+    <text x="36" y="205">最短路径</text><text x="275" y="205" fill="#4b8ee8">Dijkstra / Floyd</text><text x="470" y="205">单源无负边 / 全点对无负环</text>
+    <text x="36" y="252">依赖 / 项目工期</text><text x="275" y="252" fill="#4b8ee8">拓扑 / 关键路径</text><text x="470" y="252">AOV / AOE，均要求 DAG</text>
+  </g>
+
+  <text x="360" y="306" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">AOE 网：事件最早 / 最迟时间与关键活动</text>
+  <g fill="none" stroke="#9CA3AF" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M95 440 L220 385"/>
+    <path d="M95 440 L220 510"/>
+    <path d="M238 385 L378 385"/>
+    <path d="M238 510 Q300 445 378 385"/>
+    <path d="M238 385 Q318 600 378 510"/>
+    <path d="M396 385 L555 440"/>
+    <path d="M396 510 L555 440"/>
+  </g>
+  <g fill="none" stroke="#d55263" stroke-width="4" marker-end="url(#redArrow)">
+    <path d="M95 440 L220 510"/>
+    <path d="M238 510 Q300 445 378 385"/>
+    <path d="M396 385 L555 440"/>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9CA3AF"/>
+    </marker>
+    <marker id="redArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d55263"/>
+    </marker>
+  </defs>
+
+  <g fill="#FFFFFF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="80" cy="440" r="30"/><circle cx="220" cy="385" r="30"/><circle cx="220" cy="510" r="30"/>
+    <circle cx="378" cy="385" r="30"/><circle cx="378" cy="510" r="30"/><circle cx="570" cy="440" r="30"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="80" y="435">v0</text><text x="220" y="380">v1</text><text x="220" y="505">v2</text>
+    <text x="378" y="380">v3</text><text x="378" y="505">v4</text><text x="570" y="435">v5</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="89" y="416">3</text><text x="101" y="483">2</text><text x="294" y="374">2</text>
+    <text x="300" y="466">4</text><text x="299" y="442">3</text><text x="478" y="405">2</text><text x="478" y="485">1</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#6B7280">
+    <text x="30" y="486">ve/vl: 0/0</text><text x="165" y="344">3/4</text><text x="165" y="557">2/2</text>
+    <text x="347" y="344">6/6</text><text x="347" y="557">6/7</text><text x="593" y="486">8/8</text>
+  </g>
+  <text x="360" y="604" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#374151">红边 v0→v2→v3→v5 为关键路径，总工期 8</text>
+  <text x="360" y="635" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#374151">活动 a(i,j)：e(a)=ve(i)，l(a)=vl(j)−w(i,j)</text>
+  <text x="360" y="663" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#d55263">活动余量 l(a)−e(a)=0 时为关键活动</text>
+</svg>
+

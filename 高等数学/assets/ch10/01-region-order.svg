@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 430" role="img" aria-labelledby="title desc">
+  <title id="title">二重积分区域与换序</title>
+  <desc id="desc">同一三角形区域用竖直切片和水平切片描述，说明换序是重新描述区域。</desc>
+  <rect width="780" height="430" fill="#ffffff"/>
+  <g stroke="#94A3B8" stroke-width="2">
+    <line x1="55" y1="350" x2="350" y2="350"/>
+    <line x1="80" y1="375" x2="80" y2="55"/>
+    <line x1="430" y1="350" x2="725" y2="350"/>
+    <line x1="455" y1="375" x2="455" y2="55"/>
+  </g>
+  <polygon points="80,350 300,350 80,105" fill="#DBEAFE" stroke="#2563EB" stroke-width="3"/>
+  <polygon points="455,350 675,350 455,105" fill="#DCFCE7" stroke="#16A34A" stroke-width="3"/>
+  <line x1="170" y1="350" x2="170" y2="250" stroke="#DC2626" stroke-width="5"/>
+  <line x1="455" y1="260" x2="535" y2="260" stroke="#DC2626" stroke-width="5"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="16" fill="#334155">
+    <text x="105" y="90">竖直切片</text>
+    <text x="108" y="405">0 ≤ x ≤ 1</text>
+    <text x="92" y="240">y 上下限</text>
+    <text x="505" y="90">水平切片</text>
+    <text x="470" y="405">0 ≤ y ≤ 1</text>
+    <text x="540" y="250">x 左右限</text>
+    <text x="175" y="180" fill="#2563EB">同一块区域 D</text>
+    <text x="570" y="180" fill="#16A34A">只是描述方式改变</text>
+  </g>
+  <path d="M360 210 C390 180 410 180 440 210" fill="none" stroke="#9333EA" stroke-width="3"/>
+  <path d="M440 210 l-13 -8 l3 15" fill="#9333EA"/>
+  <text x="355" y="165" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" fill="#9333EA">换序</text>
+</svg>

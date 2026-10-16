@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="210" viewBox="0 0 1050 210" role="img" aria-labelledby="title desc">
+  <title id="title">特征值到对角化流程</title>
+  <desc id="desc">从特征方程求特征值，解齐次方程得到特征向量，再根据无关特征向量数量判断是否可对角化。</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#64748B"/></marker></defs>
+  <rect width="1050" height="210" fill="#FFFFFF"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <rect x="25" y="63" width="135" height="75" rx="8" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/><text x="92" y="107" font-size="21" fill="#1E3A8A">Ax=λx</text>
+    <line x1="163" y1="100" x2="236" y2="100" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="239" y="63" width="165" height="75" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/><text x="321" y="96" font-size="18" fill="#166534">特征方程</text><text x="321" y="121" font-size="15" fill="#475569">|A−λI|=0</text>
+    <line x1="407" y1="100" x2="480" y2="100" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="483" y="63" width="155" height="75" rx="8" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2"/><text x="560" y="96" font-size="18" fill="#334155">特征值 λ</text><text x="560" y="121" font-size="14" fill="#475569">逐个处理</text>
+    <line x1="641" y1="100" x2="714" y2="100" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="717" y="63" width="170" height="75" rx="8" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/><text x="802" y="96" font-size="18" fill="#166534">解 (A−λI)x=0</text><text x="802" y="121" font-size="14" fill="#475569">得到特征子空间</text>
+    <line x1="890" y1="100" x2="963" y2="100" stroke="#64748B" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="966" y="63" width="70" height="75" rx="8" fill="#FDF4FF" stroke="#9333EA" stroke-width="2"/><text x="1001" y="96" font-size="15" fill="#7E22CE">无关</text><text x="1001" y="120" font-size="14" fill="#7E22CE">数量</text>
+  </g>
+  <text x="525" y="178" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" text-anchor="middle" fill="#DC2626">无关特征向量达到 n，才有 P⁻¹AP=Λ</text>
+</svg>

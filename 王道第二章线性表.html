@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>王道数据结构第二章 · 线性表</title>
+<style>
+  :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#222240;--panel:#151528;--text:#d8d8e8;--dim:#8d8daa;--line:#2a2a45;--red:#ff6b6b;--cyan:#4ecdc4;--yellow:#ffe66d;--purple:#a37ef0;--blue:#5dade2;--green:#58d68d;--orange:#f0a050;--code:#16162a;--side:280px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;display:flex;min-height:100vh}
+  nav{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--surface);border-right:1px solid var(--line);padding:28px 18px;overflow:auto}
+  nav h2{font-size:1.05rem;color:var(--yellow);margin-bottom:14px;letter-spacing:1px}
+  nav a{display:block;color:var(--dim);text-decoration:none;padding:8px 11px;border-left:3px solid transparent;border-radius:6px;font-size:.9rem;margin:3px 0}
+  nav a:hover,nav a.active{background:var(--surface2);color:white;border-left-color:var(--cyan)}
+  main{margin-left:var(--side);max-width:1040px;padding:42px 54px 80px;width:100%}
+  h1{font-size:2.18rem;color:white;margin-bottom:.3rem} h1 span{color:var(--cyan)}
+  .subtitle{color:var(--dim);margin-bottom:2.5rem}
+  .chapter{border-top:1px solid var(--line);padding-top:2rem;margin-bottom:4rem}.chapter:first-of-type{border-top:0;padding-top:0}
+  h2{display:flex;align-items:center;gap:12px;color:white;font-size:1.55rem;margin-bottom:1rem}
+  h2 .num{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:1.05rem}
+  .ch1 .num{background:var(--red)}.ch2 .num{background:var(--cyan)}.ch3 .num{background:var(--yellow)}.ch4 .num{background:var(--purple);color:white}.ch5 .num{background:var(--blue)}.ch6 .num{background:var(--green)}.ch7 .num{background:var(--orange)}.ch8 .num{background:#c8d6ff}.ch9 .num{background:#f48fb1}.ch10 .num{background:#80cbc4}
+  h3{font-size:1.17rem;color:white;margin:1.6rem 0 .65rem}
+  p{margin-bottom:1rem}strong{color:white}em{color:var(--yellow);font-style:normal}code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .box{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:8px;padding:16px 20px;margin:1.1rem 0}
+  .note{background:#1f1f18;border-left-color:var(--yellow)}.fix{background:#2a1a1a;border-color:#ff6b6b55;border-left-color:var(--red)}.ok{background:#17251d;border-left-color:var(--green)}
+  .label{display:block;font-size:.88rem;font-weight:800;margin-bottom:7px}.box .label{color:var(--cyan)}.note .label{color:var(--yellow)}.fix .label{color:var(--red)}.ok .label{color:var(--green)}
+  .code{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:1rem 0 1.4rem;overflow:auto;white-space:pre;font-family:"Cascadia Code","Consolas",monospace;font-size:.9rem;line-height:1.7}
+  .cm{color:#73738a}.kw{color:var(--purple)}.ty{color:var(--blue)}.fn{color:var(--green)}.lit{color:var(--orange)}
+  table{width:100%;border-collapse:collapse;margin:1.3rem 0;font-size:.92rem}th{background:var(--surface2);text-align:left;color:white;border-bottom:2px solid var(--line);padding:11px 13px}td{border-bottom:1px solid var(--line);padding:11px 13px;vertical-align:top}tr:nth-child(even) td{background:#141428}
+  .good{color:var(--green)}.bad{color:var(--red)}.mid{color:var(--yellow)}svg{display:block;max-width:100%;margin:1.4rem auto}
+  .pill{display:inline-block;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:2px 9px;margin:2px 3px;color:var(--dim);font-size:.86rem}
+  @media(max-width:840px){nav{display:none}main{margin-left:0;padding:24px 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <h2>第二章目录</h2>
+  <a href="#ch1">1. 本章主线</a>
+  <a href="#ch2">2. 线性表定义</a>
+  <a href="#ch3">3. 线性表 ADT</a>
+  <a href="#ch4">4. 顺序表</a>
+  <a href="#ch5">5. 顺序表操作</a>
+  <a href="#ch6">6. 单链表</a>
+  <a href="#ch7">7. 链表操作</a>
+  <a href="#ch8">8. 双链表与循环链表</a>
+  <a href="#ch9">9. 考研复杂度与题型</a>
+  <a href="#ch10">10. 你那些疑问放哪</a>
+</nav>
+<main>
+<h1>王道数据结构第二章 · <span>线性表</span></h1>
+<p class="subtitle">主目标：吃透第二章。副目标：把 C/C++、typedef、LinkList、&、结构体比较这些“路上的刺”顺手拔掉。</p>
+
+<section class="chapter ch1" id="ch1">
+<h2><span class="num">1</span> 本章主线：先逻辑，后存储，再操作</h2>
+<p>线性表这一章不是在教“某一个 C 语言结构体”，而是在教一个完整套路：</p>
+<svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a1" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <rect x="40" y="70" width="160" height="90" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/><text x="120" y="105" text-anchor="middle" fill="#ffe66d" font-size="16" font-weight="bold">逻辑结构</text><text x="120" y="132" text-anchor="middle" fill="#ccc" font-size="12">一对一排队</text>
+  <line x1="200" y1="115" x2="280" y2="115" stroke="#888" marker-end="url(#a1)"/>
+  <rect x="290" y="70" width="220" height="90" rx="8" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/><text x="400" y="105" text-anchor="middle" fill="#5dade2" font-size="16" font-weight="bold">存储结构</text><text x="400" y="132" text-anchor="middle" fill="#ccc" font-size="12">顺序表 / 链表</text>
+  <line x1="510" y1="115" x2="590" y2="115" stroke="#888" marker-end="url(#a1)"/>
+  <rect x="600" y="70" width="180" height="90" rx="8" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/><text x="690" y="105" text-anchor="middle" fill="#58d68d" font-size="16" font-weight="bold">基本操作</text><text x="690" y="132" text-anchor="middle" fill="#ccc" font-size="12">增删改查</text>
+  <text x="410" y="212" text-anchor="middle" fill="#aaa" font-size="12">王道第二章的核心，不是背代码，而是看懂同一个逻辑结构如何落到不同存储结构上</text>
+</svg>
+<div class="box note"><span class="label">本章学习顺序</span>线性表定义 → 线性表基本操作 → 顺序表实现 → 单链表实现 → 双链表/循环链表 → 操作复杂度与题型。</div>
+</section>
+
+<section class="chapter ch2" id="ch2">
+<h2><span class="num">2</span> 线性表的定义</h2>
+<p><strong>线性表</strong>是具有相同数据类型的 <code>n</code> 个数据元素的有限序列。记作：</p>
+<div class="code">L = (a1, a2, a3, ..., ai, ..., an)</div>
+<table>
+  <tr><th>关键词</th><th>含义</th><th>为什么重要</th></tr>
+  <tr><td>相同数据类型</td><td>表中元素属于同一类</td><td>方便统一处理和存储</td></tr>
+  <tr><td>有限序列</td><td>元素个数有限，且有前后顺序</td><td>不是集合，顺序有意义</td></tr>
+  <tr><td>除第一个外都有直接前驱</td><td><code>ai</code> 前面是 <code>a(i-1)</code></td><td>体现一对一关系</td></tr>
+  <tr><td>除最后一个外都有直接后继</td><td><code>ai</code> 后面是 <code>a(i+1)</code></td><td>体现线性关系</td></tr>
+</table>
+<div class="box fix"><span class="label">纠偏：线性表不是“顺序逻辑”那么窄</span>线性表的逻辑是“线性关系”，也就是一对一前后相邻。它可以顺序存储，也可以链式存储。不要把“线性表”直接等同于“顺序表”。</div>
+<div class="box ok"><span class="label">一句话</span>线性表是逻辑结构：它只说元素排成一条线，不规定这条线在内存里怎么摆。</div>
+</section>
+
+<section class="chapter ch3" id="ch3">
+<h2><span class="num">3</span> 线性表 ADT：为什么抽象也有操作？</h2>
+<p>王道里的 <code>InitList</code>、<code>ListInsert</code>、<code>ListDelete</code> 不是 C 语言内置函数，而是<strong>抽象数据类型 ADT</strong> 的操作名。</p>
+<table>
+  <tr><th>操作</th><th>含义</th><th>顺序表如何做</th><th>链表如何做</th></tr>
+  <tr><td><code>InitList</code></td><td>初始化空表</td><td>分配数组，长度置 0</td><td>建立头结点或空指针</td></tr>
+  <tr><td><code>ListInsert</code></td><td>插入元素</td><td>移动后续元素</td><td>改指针</td></tr>
+  <tr><td><code>ListDelete</code></td><td>删除元素</td><td>移动后续元素</td><td>断开并释放节点</td></tr>
+  <tr><td><code>GetElem</code></td><td>按位取值</td><td>数组下标 O(1)</td><td>从头遍历 O(n)</td></tr>
+  <tr><td><code>LocateElem</code></td><td>按值查找</td><td>顺序扫描</td><td>顺序扫描</td></tr>
+</table>
+<div class="box fix"><span class="label">你三年没见过 InitList 的原因</span>你用过它的思想，只是没用过这个名字。Python 的 <code>[]</code>、C++ 的 <code>vector</code> 构造、Java 的 <code>new ArrayList()</code> 都是在做“初始化线性表”。</div>
+<div class="box ok"><span class="label">一句话</span>抽象线性表规定“应该有哪些操作”；具体顺序表/链表决定“操作怎么实现”。</div>
+</section>
+
+<section class="chapter ch4" id="ch4">
+<h2><span class="num">4</span> 顺序表：数组 + 长度 + 操作规则</h2>
+<p>顺序表是线性表的顺序存储实现。核心特点是：<strong>逻辑相邻，物理也相邻</strong>。</p>
+<div class="code"><span class="kw">typedef struct</span> {
+    <span class="ty">int</span> data[MaxSize];
+    <span class="ty">int</span> length;
+} SqList;</div>
+<svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg">
+  <rect x="65" y="55" width="540" height="85" rx="7" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+  <g font-family="monospace" font-size="14" text-anchor="middle">
+    <rect x="90" y="80" width="75" height="38" fill="#102a2a" stroke="#4ecdc4"/><text x="127" y="105" fill="#4ecdc4">a1</text>
+    <rect x="165" y="80" width="75" height="38" fill="#102a2a" stroke="#4ecdc4"/><text x="202" y="105" fill="#4ecdc4">a2</text>
+    <rect x="240" y="80" width="75" height="38" fill="#102a2a" stroke="#4ecdc4"/><text x="277" y="105" fill="#4ecdc4">a3</text>
+    <rect x="315" y="80" width="75" height="38" fill="#102a2a" stroke="#4ecdc4"/><text x="352" y="105" fill="#4ecdc4">a4</text>
+    <rect x="390" y="80" width="75" height="38" fill="#252530" stroke="#555"/><text x="427" y="105" fill="#777">空</text>
+    <rect x="465" y="80" width="75" height="38" fill="#252530" stroke="#555"/><text x="502" y="105" fill="#777">空</text>
+    <rect x="540" y="80" width="45" height="38" fill="#252530" stroke="#555"/><text x="562" y="105" fill="#777">...</text>
+  </g>
+  <rect x="635" y="65" width="120" height="65" rx="7" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+  <text x="695" y="95" text-anchor="middle" fill="#ffe66d" font-size="14" font-weight="bold">length = 4</text>
+  <text x="695" y="116" text-anchor="middle" fill="#888" font-size="11">有效元素个数</text>
+  <text x="410" y="190" text-anchor="middle" fill="#aaa" font-size="12">顺序表不是裸数组：裸数组只给空间，顺序表还记录当前长度</text>
+</svg>
+<div class="box fix"><span class="label">纠偏：顺序表就是数组吗？</span>不完全是。顺序表底层通常是数组，但顺序表还包含长度和操作规则。裸数组像一排空格子，顺序表像“有管理制度的一排格子”。</div>
+</section>
+
+<section class="chapter ch5" id="ch5">
+<h2><span class="num">5</span> 顺序表操作：考研重点是移动次数</h2>
+<h3>插入</h3>
+<p>在第 <code>i</code> 个位置插入 <code>e</code>，需要把第 <code>i</code> 到第 <code>n</code> 个元素整体后移。</p>
+<div class="code"><span class="kw">for</span> (j = L.length; j >= i; j--)
+    L.data[j] = L.data[j - 1];
+L.data[i - 1] = e;
+L.length++;</div>
+<h3>删除</h3>
+<p>删除第 <code>i</code> 个元素，需要把第 <code>i+1</code> 到第 <code>n</code> 个元素整体前移。</p>
+<div class="code"><span class="kw">for</span> (j = i; j < L.length; j++)
+    L.data[j - 1] = L.data[j];
+L.length--;</div>
+<table>
+  <tr><th>操作</th><th>最好情况</th><th>最坏情况</th><th>平均情况</th></tr>
+  <tr><td>按位查找</td><td class="good">O(1)</td><td class="good">O(1)</td><td class="good">O(1)</td></tr>
+  <tr><td>按值查找</td><td class="good">O(1)</td><td class="bad">O(n)</td><td class="bad">O(n)</td></tr>
+  <tr><td>插入</td><td class="good">O(1)，插尾</td><td class="bad">O(n)，插头</td><td class="bad">O(n)</td></tr>
+  <tr><td>删除</td><td class="good">O(1)，删尾</td><td class="bad">O(n)，删头</td><td class="bad">O(n)</td></tr>
+</table>
+<div class="box note"><span class="label">考研抓手</span>顺序表题目常考“移动多少个元素”。插入第 <code>i</code> 个位置移动 <code>n-i+1</code> 个；删除第 <code>i</code> 个位置移动 <code>n-i</code> 个。</div>
+</section>
+
+<section class="chapter ch6" id="ch6">
+<h2><span class="num">6</span> 单链表：节点 + 指针串起来</h2>
+<p>单链表是线性表的链式存储实现。核心特点是：<strong>逻辑相邻，物理不要求相邻</strong>。</p>
+<div class="code"><span class="kw">typedef struct</span> LNode {
+    <span class="ty">int</span> data;
+    <span class="kw">struct</span> LNode *next;
+} LNode, *LinkList;</div>
+<svg viewBox="0 0 840 280" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a6" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#a37ef0"/></marker></defs>
+  <rect x="45" y="90" width="115" height="58" rx="6" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="102" y="124" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">LinkList L</text>
+  <line x1="160" y1="119" x2="235" y2="119" stroke="#a37ef0" stroke-width="2" marker-end="url(#a6)"/>
+  <rect x="245" y="65" width="145" height="105" rx="7" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/><text x="317" y="95" text-anchor="middle" fill="#58d68d" font-size="14" font-weight="bold">头结点</text><text x="317" y="122" text-anchor="middle" fill="#ccc" font-size="12">data 不存有效值</text><text x="317" y="146" text-anchor="middle" fill="#a37ef0" font-size="12">next</text>
+  <line x1="390" y1="119" x2="465" y2="119" stroke="#a37ef0" stroke-width="2" marker-end="url(#a6)"/>
+  <rect x="475" y="75" width="120" height="90" rx="7" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/><text x="535" y="107" text-anchor="middle" fill="#5dade2" font-size="14" font-weight="bold">结点1</text><text x="535" y="134" text-anchor="middle" fill="#ccc" font-size="12">data=a1</text>
+  <line x1="595" y1="119" x2="650" y2="119" stroke="#a37ef0" stroke-width="2" marker-end="url(#a6)"/>
+  <rect x="660" y="75" width="120" height="90" rx="7" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/><text x="720" y="107" text-anchor="middle" fill="#5dade2" font-size="14" font-weight="bold">结点2</text><text x="720" y="134" text-anchor="middle" fill="#ccc" font-size="12">data=a2</text>
+  <text x="420" y="225" text-anchor="middle" fill="#aaa" font-size="12">每个节点自己带 next 字段，next 存下一个节点的地址</text>
+</svg>
+<div class="box fix"><span class="label">纠偏：LinkList 是系统给的吗？</span>不是。<code>LinkList</code> 是你用 <code>typedef</code> 起的别名，等价于 <code>LNode *</code>。它只是为了让“头指针”读起来像“链表”。</div>
+<div class="box note"><span class="label">带头结点 vs 不带头结点</span>王道常用带头结点，优点是插入/删除第一个元素时不用额外特殊判断。头结点不是第一个有效数据元素。</div>
+</section>
+
+<section class="chapter ch7" id="ch7">
+<h2><span class="num">7</span> 单链表操作：考研重点是改指针顺序</h2>
+<h3>插入：在 p 后插入 s</h3>
+<div class="code">s->next = p->next;
+p->next = s;</div>
+<p>顺序不能反。先让新节点接住后半段，再让前半段接住新节点。</p>
+<h3>删除：删除 p 的后继节点 q</h3>
+<div class="code">q = p->next;
+p->next = q->next;
+free(q);</div>
+<table>
+  <tr><th>操作</th><th>单链表复杂度</th><th>原因</th></tr>
+  <tr><td>按位查找</td><td class="bad">O(n)</td><td>必须从头数过去</td></tr>
+  <tr><td>按值查找</td><td class="bad">O(n)</td><td>必须逐节点比较</td></tr>
+  <tr><td>已知前驱插入/删除</td><td class="good">O(1)</td><td>只改指针</td></tr>
+  <tr><td>已知某节点但不知道前驱，删除它</td><td class="bad">通常 O(n)</td><td>单链表不能直接回到前驱</td></tr>
+</table>
+<div class="box fix"><span class="label">纠偏：LNode *p = L-&gt;next</span>这句话不是“结构体等于 next”。<code>p</code> 是指针变量，<code>L-&gt;next</code> 也是指针值，所以它只是把“首元结点地址”复制给 <code>p</code>。</div>
+</section>
+
+<section class="chapter ch8" id="ch8">
+<h2><span class="num">8</span> 双链表、循环链表、静态链表</h2>
+<table>
+  <tr><th>类型</th><th>结构特点</th><th>解决什么问题</th><th>代价</th></tr>
+  <tr><td>双链表</td><td><code>prior + data + next</code></td><td>可以向前找前驱</td><td>多一个指针空间，修改更复杂</td></tr>
+  <tr><td>循环单链表</td><td>尾节点 <code>next</code> 指回头结点</td><td>从任意节点可绕回表头</td><td>判断结束条件变化</td></tr>
+  <tr><td>循环双链表</td><td>头尾互连，双向循环</td><td>插入删除边界更统一</td><td>指针维护更多</td></tr>
+  <tr><td>静态链表</td><td>数组模拟链表，游标代替指针</td><td>无指针语言也能实现链式思想</td><td>空间预先固定</td></tr>
+</table>
+<div class="code"><span class="cm">// 双链表节点</span>
+<span class="kw">typedef struct</span> DNode {
+    <span class="ty">int</span> data;
+    <span class="kw">struct</span> DNode *prior, *next;
+} DNode;</div>
+<div class="box note"><span class="label">考研抓手</span>双链表插入删除常考指针修改顺序；循环链表常考“判空”和“尾指针找表头/表尾”的便利性。</div>
+</section>
+
+<section class="chapter ch9" id="ch9">
+<h2><span class="num">9</span> 复杂度与题型总表</h2>
+<table>
+  <tr><th>结构</th><th>按位查找</th><th>按值查找</th><th>插入删除</th><th>适合场景</th></tr>
+  <tr><td>顺序表</td><td class="good">O(1)</td><td class="bad">O(n)</td><td class="bad">O(n)</td><td>随机访问多，插删少</td></tr>
+  <tr><td>单链表</td><td class="bad">O(n)</td><td class="bad">O(n)</td><td class="good">已知前驱 O(1)</td><td>插删多，长度变化大</td></tr>
+  <tr><td>双链表</td><td class="bad">O(n)</td><td class="bad">O(n)</td><td class="good">已知节点更方便</td><td>需要双向移动</td></tr>
+</table>
+<h3>王道第二章常见题型</h3>
+<p><span class="pill">顺序表移动次数</span><span class="pill">链表指针修改顺序</span><span class="pill">带头结点判空</span><span class="pill">头插法/尾插法</span><span class="pill">逆置链表</span><span class="pill">删除特定值节点</span><span class="pill">合并两个有序表</span></p>
+<div class="box ok"><span class="label">做题路线</span>先判断逻辑结构是线性表，再判断存储结构是顺序还是链式，最后问自己：这题真正考的是“移动元素”还是“改指针”。</div>
+</section>
+
+<section class="chapter ch10" id="ch10">
+<h2><span class="num">10</span> 你那些疑问应该放在本章哪里？</h2>
+<table>
+  <tr><th>你的问题</th><th>属于第二章哪块</th><th>结论</th></tr>
+  <tr><td><code>InitList</code> 是 C 语言吗？</td><td>线性表 ADT</td><td>不是内置，是教材操作名</td></tr>
+  <tr><td>线性表抽象，为什么有函数？</td><td>ADT 与实现分离</td><td>抽象规定操作，实现负责代码</td></tr>
+  <tr><td>顺序表是不是数组？</td><td>顺序表</td><td>用数组实现，但还要有 length 和规则</td></tr>
+  <tr><td>动态分配是不是伪数组？</td><td>顺序表动态分配</td><td>不是，堆区真实连续空间，指针存首地址</td></tr>
+  <tr><td>C 的 <code>&</code> 和 C++ 引用</td><td>C/C++ 语法补丁</td><td>C 取地址；C++ 声明中的 <code>&</code> 可表示引用</td></tr>
+  <tr><td><code>LinkList</code> 是系统定义吗？</td><td>单链表类型定义</td><td>不是，是 <code>LNode*</code> 的别名</td></tr>
+  <tr><td><code>LNode *p = L-&gt;next</code></td><td>链表指针操作</td><td>把 next 里的地址复制给 p</td></tr>
+  <tr><td>结构体能不能 <code>==</code></td><td>C 语言补丁</td><td>C 不自动定义结构体相等，需逐字段比较</td></tr>
+</table>
+<div class="box fix"><span class="label">最重要的纠偏</span>第二章不是在证明“数据结构常不常用”，而是在训练你把“抽象逻辑关系”翻译成“两类存储实现”。C 语言代码只是王道用来表达这个翻译过程的工具。</div>
+</section>
+
+<p style="text-align:center;color:var(--dim);font-size:.86rem;margin-top:3rem">END · 王道第二章线性表</p>
+</main>
+<script>
+const sections=[...document.querySelectorAll(".chapter")];
+const links=[...document.querySelectorAll("nav a")];
+window.addEventListener("scroll",()=>{let current="";for(const section of sections){if(scrollY>=section.offsetTop-130)current=section.id}for(const link of links){link.classList.toggle("active",link.getAttribute("href")==="#"+current)}});
+</script>
+</body>
+</html>

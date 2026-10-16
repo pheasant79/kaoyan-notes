@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330">
+  <rect width="760" height="330" fill="white"/>
+  <line x1="70" y1="270" x2="700" y2="270" stroke="#64748B" stroke-width="2"/>
+  <line x1="390" y1="35" x2="390" y2="285" stroke="#CBD5E1" stroke-width="2" stroke-dasharray="6 5"/>
+  <path d="M90 230 C190 225 260 195 335 145 C365 125 380 108 390 96 C400 108 415 125 445 145 C520 195 590 225 680 230" fill="none" stroke="#2563EB" stroke-width="4"/>
+  <circle cx="390" cy="96" r="7" fill="#DC2626"/>
+  <text x="70" y="305" fill="#334155" font-size="18">x 从左、右靠近 a</text>
+  <text x="400" y="55" fill="#DC2626" font-size="18">x = a</text>
+  <text x="415" y="92" fill="#DC2626" font-size="18">L</text>
+  <text x="470" y="125" fill="#2563EB" font-size="17">f(x) 的值趋近 L</text>
+  <text x="70" y="35" fill="#0F172A" font-size="20" font-weight="bold">极限关注“靠近过程”，不只看点值</text>
+</svg>

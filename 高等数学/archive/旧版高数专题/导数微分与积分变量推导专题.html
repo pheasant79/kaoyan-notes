@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>导数、微分与积分变量推导专题</title>
+<style>
+  :root{
+    --bg:#101214;--text:#f3f5f4;--muted:#aab2af;--panel:#181d20;--panel2:#22282c;
+    --line:#323a40;--cyan:#4dd7d0;--blue:#64a8ff;--green:#55d68c;--yellow:#ffd166;
+    --red:#ff6b6b;--violet:#b692ff;--orange:#f5a45d;--code:#0b0f11;--side:300px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.86;display:flex;min-height:100vh}
+  nav{position:fixed;inset:0 auto 0 0;width:var(--side);height:100vh;overflow:auto;background:#15191c;border-right:1px solid var(--line);padding:24px 18px}
+  nav h2{font-size:1rem;margin:0 0 12px;color:var(--yellow)}
+  nav a{display:block;color:var(--muted);text-decoration:none;padding:8px 10px;border-left:3px solid transparent;border-radius:7px;margin:3px 0;font-size:.92rem}
+  nav a:hover{background:var(--panel2);color:#fff;border-left-color:var(--cyan)}
+  main{margin-left:var(--side);width:100%;max-width:1140px;padding:38px 54px 90px}
+  h1{font-size:2.12rem;line-height:1.3;margin:0 0 8px}
+  h1 span{color:var(--cyan)}
+  .subtitle{color:var(--muted);margin:0 0 28px}
+  .chapter{border-top:1px solid var(--line);padding-top:30px;margin-top:34px}
+  .chapter:first-of-type{border-top:0;margin-top:0}
+  h2{display:flex;align-items:center;gap:12px;font-size:1.5rem;margin:0 0 14px}
+  h2 .num{width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--cyan);color:#061111;font-weight:900;flex:0 0 auto}
+  h3{font-size:1.15rem;margin:23px 0 8px;color:#fff}
+  p{margin:0 0 14px}
+  code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .formula{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0;white-space:pre-wrap;overflow:auto;font-family:"Cascadia Code","Consolas",monospace;color:#e8f0ed}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+  .box{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px;padding:15px 17px}
+  .ok{border-left-color:var(--green);background:#132119}
+  .warn{border-left-color:var(--red);background:#241819}
+  .note{border-left-color:var(--yellow);background:#211d12}
+  .purple{border-left-color:var(--violet)}
+  .box strong{display:block;margin-bottom:6px;color:#fff}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.94rem}
+  th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#fff}
+  tr:nth-child(even) td{background:#131719}
+  .route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+  .step{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;text-align:center;min-height:98px}
+  .step b{display:block;color:var(--yellow);font-size:1.08rem}
+  svg{display:block;max-width:100%;margin:18px auto}
+  .good{color:var(--green)}.bad{color:var(--red)}.mid{color:var(--yellow)}
+  @media(max-width:900px){nav{display:none}main{margin-left:0;padding:24px 18px}.grid,.route{grid-template-columns:1fr}h1{font-size:1.72rem}h2{font-size:1.28rem}}
+</style>
+</head>
+<body>
+<nav>
+  <h2>推导目录</h2>
+  <a href="#core">1. 先立三条本质公式</a>
+  <a href="#case1">2. y=x+2 时 dy=dx 吗</a>
+  <a href="#case2">3. y'·dy=x'·dx 是否成立</a>
+  <a href="#prime">4. y'、x' 到底对谁求导</a>
+  <a href="#differential">5. 微分公式怎么推出来</a>
+  <a href="#integral-constant">6. 积分上下限是常数</a>
+  <a href="#integral-variable">7. 变上限积分</a>
+  <a href="#chain">8. 复合上限积分</a>
+  <a href="#compare">9. 按导数推 vs 按微分推</a>
+  <a href="#summary">10. 最终判断流程</a>
+</nav>
+
+<main>
+<h1>导数、微分与积分变量：<span>从公式推到例子</span></h1>
+<p class="subtitle">这份专门回答你刚刚的疑问：为什么 <code>y=x+2</code> 能推出 <code>dy=dx</code>，<code>y'</code> 到底对谁求导，积分里的 <code>t</code> 和外面的 <code>x</code> 谁才是真变量。</p>
+
+<section class="chapter" id="core">
+<h2><span class="num">1</span>先立三条本质公式</h2>
+<p>后面所有推导都从这三条来。只要抓住它们，就不会被 <code>dy</code>、<code>dx</code>、<code>dt</code> 绕晕。</p>
+<div class="formula">公式 1：导数定义
+如果 y=f(x)，那么
+
+dy/dx = f'(x)
+
+意思：y 对 x 的变化率。</div>
+<div class="formula">公式 2：微分定义
+如果 y=f(x) 可导，那么
+
+dy = f'(x)dx
+
+意思：x 发生微小变化 dx 时，y 的线性主部是 dy。</div>
+<div class="formula">公式 3：链式法则
+如果 y=f(x)，x=x(t)，那么
+
+dy/dt = dy/dx · dx/dt
+
+意思：y 对 t 的变化率 = y 对 x 的变化率 × x 对 t 的变化率。</div>
+<div class="note box">
+  <strong>最重要的习惯</strong>
+  每看到一个撇号 <code>'</code>，先补成分式：是 <code>dy/dx</code>、<code>dx/dt</code>，还是 <code>df/dx</code>。不补全就容易乱。
+</div>
+</section>
+
+<section class="chapter" id="case1">
+<h2><span class="num">2</span>如果 y=x+2，它们不是关于 t 的函数，dy=dx 还成立吗</h2>
+<p>成立。因为这时默认 <code>y</code> 是 <code>x</code> 的函数，也就是：</p>
+<div class="formula">y = f(x) = x + 2</div>
+<p>对 <code>x</code> 求导：</p>
+<div class="formula">dy/dx = 1</div>
+<p>再用微分定义：</p>
+<div class="formula">dy = (dy/dx)dx
+   = 1·dx
+   = dx</div>
+<div class="ok box">
+  <strong>所以它成立的原因</strong>
+  不是因为存在某个 <code>t</code>，而是因为 <code>y=x+2</code> 定义了 <code>y</code> 关于 <code>x</code> 的函数关系，且 <code>dy/dx=1</code>。
+</div>
+<table>
+  <tr><th>语境</th><th>写法</th><th>结果</th></tr>
+  <tr><td>把 y 看成 x 的函数</td><td><code>y=x+2</code></td><td><code>dy/dx=1</code>，所以 <code>dy=dx</code></td></tr>
+  <tr><td>把 x、y 都看成 t 的函数</td><td><code>y(t)=x(t)+2</code></td><td><code>dy/dt=dx/dt</code>，所以 <code>dy=dx</code></td></tr>
+</table>
+<p>两个语境都能得到 <code>dy=dx</code>，但推理路径不完全一样。</p>
+</section>
+
+<section class="chapter" id="case2">
+<h2><span class="num">3</span>y=x+2，那么 y'·dy=x'·dx 是否成立</h2>
+<p>这句话不能直接判定。必须先问：</p>
+<div class="formula">y' 是 dy/d谁？
+x' 是 dx/d谁？</div>
+<h3>情况 A：撇号都表示对 x 求导</h3>
+<div class="formula">y = x + 2
+
+y' = dy/dx = 1
+x' = dx/dx = 1
+
+左边：y'·dy = 1·dy = dy
+右边：x'·dx = 1·dx = dx
+
+又因为 dy=dx
+所以 y'·dy = x'·dx 成立。</div>
+<h3>情况 B：撇号都表示对 t 求导</h3>
+<div class="formula">y(t)=x(t)+2
+
+y' = dy/dt
+x' = dx/dt
+
+由 y=x+2 对 t 求导：
+dy/dt = dx/dt
+所以 y'=x'
+
+同时由微分关系：
+dy=dx
+
+因此：
+y'·dy = x'·dx</div>
+<div class="warn box">
+  <strong>但不要把它当基本公式</strong>
+  <code>y'·dy=x'·dx</code> 只是某些条件下由 <code>y'=x'</code> 和 <code>dy=dx</code> 推出来的结果。真正的基本公式仍然是 <code>dy=f'(x)dx</code> 和链式法则。
+</div>
+</section>
+
+<section class="chapter" id="prime">
+<h2><span class="num">4</span>y'、x' 到底是关于谁的导数</h2>
+<p>撇号是省略记法，不是完整记法。</p>
+<table>
+  <tr><th>写法</th><th>可能意思</th><th>什么时候这样理解</th></tr>
+  <tr><td><code>y'</code></td><td><code>dy/dx</code></td><td>一元函数 <code>y=f(x)</code> 里最常见</td></tr>
+  <tr><td><code>x'</code></td><td><code>dx/dt</code></td><td>参数方程、运动学、微分方程里常见</td></tr>
+  <tr><td><code>f'(x)</code></td><td><code>df/dx</code></td><td>明确函数 <code>f</code> 对自变量 <code>x</code> 求导</td></tr>
+  <tr><td><code>y'_t</code></td><td><code>dy/dt</code></td><td>为了避免歧义，有些书会标下标</td></tr>
+</table>
+<div class="note box">
+  <strong>判断规则</strong>
+  题目如果说 <code>y=f(x)</code>，那么 <code>y'</code> 默认是 <code>dy/dx</code>。题目如果说 <code>x=x(t)</code>，那么 <code>x'</code> 默认是 <code>dx/dt</code>。
+</div>
+</section>
+
+<section class="chapter" id="differential">
+<h2><span class="num">5</span>微分公式 dy=f'(x)dx 怎么推出来</h2>
+<p>先从导数定义开始：</p>
+<div class="formula">f'(x) = lim(Δx→0) Δy/Δx</div>
+<p>这表示当 <code>Δx</code> 很小时：</p>
+<div class="formula">Δy/Δx ≈ f'(x)</div>
+<p>两边乘以 <code>Δx</code>：</p>
+<div class="formula">Δy ≈ f'(x)Δx</div>
+<p>于是我们把右边这个“主要的线性变化量”定义为微分：</p>
+<div class="formula">dx = Δx
+dy = f'(x)dx</div>
+<div class="ok box">
+  <strong>微分的本质</strong>
+  <code>dy</code> 不是随便从 <code>dy/dx</code> 里拆出来的，而是函数增量 <code>Δy</code> 的线性主部。
+</div>
+<svg viewBox="0 0 860 290" xmlns="http://www.w3.org/2000/svg">
+  <line x1="70" y1="235" x2="800" y2="235" stroke="#647078"/>
+  <line x1="105" y1="255" x2="105" y2="40" stroke="#647078"/>
+  <path d="M115 220 C230 198,295 142,395 136 C500 130,575 86,760 72" fill="none" stroke="#4dd7d0" stroke-width="4"/>
+  <line x1="285" y1="172" x2="605" y2="78" stroke="#ffd166" stroke-width="2"/>
+  <circle cx="395" cy="136" r="6" fill="#ffd166"/>
+  <line x1="395" y1="136" x2="520" y2="136" stroke="#64a8ff" stroke-width="2"/>
+  <line x1="520" y1="136" x2="520" y2="100" stroke="#55d68c" stroke-width="2"/>
+  <line x1="520" y1="136" x2="520" y2="121" stroke="#ff6b6b" stroke-width="2"/>
+  <text x="457" y="130" text-anchor="middle" fill="#64a8ff" font-size="13">dx</text>
+  <text x="535" y="108" fill="#55d68c" font-size="13">真实增量 Δy</text>
+  <text x="535" y="144" fill="#ff6b6b" font-size="13">线性主部 dy</text>
+  <text x="430" y="270" text-anchor="middle" fill="#aab2af" font-size="13">微分 dy 是切线给出的近似变化量</text>
+</svg>
+</section>
+
+<section class="chapter" id="integral-constant">
+<h2><span class="num">6</span>积分上下限是常数：f(x)=∫₀¹(t+2)dt</h2>
+<p>你写的这个例子如果上下限真的是 <code>0</code> 到 <code>1</code>：</p>
+<div class="formula">f(x)=∫_0^1 (t+2)dt</div>
+<p>这里没有 <code>x</code>。<code>t</code> 是积分变量，积分完就消失。</p>
+<div class="formula">∫_0^1 (t+2)dt
+= [t²/2 + 2t]_0^1
+= 1/2 + 2
+= 5/2</div>
+<p>所以：</p>
+<div class="formula">f(x)=5/2</div>
+<p>这是一个常数函数，对 <code>x</code> 求导：</p>
+<div class="formula">f'(x)=0
+df=0·dx=0</div>
+<div class="warn box">
+  <strong>关键点</strong>
+  这里的导数是对 <code>x</code> 求导，不是对 <code>t</code> 求导。因为函数名字是 <code>f(x)</code>，真正的外部变量是 <code>x</code>。
+</div>
+</section>
+
+<section class="chapter" id="integral-variable">
+<h2><span class="num">7</span>变上限积分：f(x)=∫₀ˣ(t+2)dt</h2>
+<p>如果你真正想讨论的是：</p>
+<div class="formula">f(x)=∫_0^x (t+2)dt</div>
+<p>这里 <code>x</code> 出现在积分上限，函数值会随着 <code>x</code> 变化。</p>
+<div class="formula">微积分基本定理：
+
+如果 F(x)=∫_a^x g(t)dt
+那么 F'(x)=g(x)</div>
+<p>套到这里：</p>
+<div class="formula">g(t)=t+2
+
+f'(x)=g(x)=x+2</div>
+<p>再写成微分：</p>
+<div class="formula">df=f'(x)dx=(x+2)dx</div>
+<div class="ok box">
+  <strong>t 和 x 的分工</strong>
+  <code>t</code> 是积分里的临时变量；<code>x</code> 是积分上限，是让 <code>f(x)</code> 变化的变量。求 <code>f'(x)</code> 时，最后把被积函数里的 <code>t</code> 换成上限 <code>x</code>。
+</div>
+</section>
+
+<section class="chapter" id="chain">
+<h2><span class="num">8</span>复合上限积分：上限不是 x，而是 φ(x)</h2>
+<p>如果上限不是 <code>x</code>，而是 <code>φ(x)</code>，就要再乘上限的导数。</p>
+<div class="formula">如果 F(x)=∫_a^{φ(x)} g(t)dt
+
+令 u=φ(x)
+F(x)=∫_a^u g(t)dt
+
+先对 u 求导：
+dF/du = g(u)
+
+再由链式法则：
+dF/dx = dF/du · du/dx
+      = g(u) · φ'(x)
+      = g(φ(x))φ'(x)</div>
+<p>例子：</p>
+<div class="formula">F(x)=∫_0^{x²} (t+2)dt
+
+g(t)=t+2
+φ(x)=x²
+
+F'(x)=g(φ(x))φ'(x)
+     = [(x²)+2]·2x
+     = 2x(x²+2)
+
+dF=2x(x²+2)dx</div>
+</section>
+
+<section class="chapter" id="compare">
+<h2><span class="num">9</span>按导数推 vs 按微分推，其实是一件事</h2>
+<h3>例：f(x)=∫₀ˣ(t+2)dt</h3>
+<div class="grid">
+  <div class="box">
+    <strong>按导数推</strong>
+    <div class="formula">f'(x)=x+2</div>
+    这是微积分基本定理。
+  </div>
+  <div class="box">
+    <strong>按微分推</strong>
+    <div class="formula">df=f'(x)dx
+  =(x+2)dx</div>
+    这是在导数结果后面乘 <code>dx</code>。
+  </div>
+</div>
+<p>所以“按微分定理推”不是另一套独立规则，它通常是：</p>
+<div class="formula">先求导数 f'(x)
+再写微分 df=f'(x)dx</div>
+<div class="note box">
+  <strong>你问“关于谁的导数，dx 还是 dt？”</strong>
+  <code>f'(x)</code> 永远是对 <code>x</code> 求导。积分里的 <code>dt</code> 只是说明对变量 <code>t</code> 积分。外面的微分 <code>df=f'(x)dx</code> 使用的是外部变量 <code>x</code>。
+</div>
+</section>
+
+<section class="chapter" id="summary">
+<h2><span class="num">10</span>最终判断流程</h2>
+<div class="route">
+  <div class="step"><b>1</b>先找函数<br>谁是谁的函数？</div>
+  <div class="step"><b>2</b>补全撇号<br><code>'</code> 是对谁求导？</div>
+  <div class="step"><b>3</b>求导数<br>得到变化率</div>
+  <div class="step"><b>4</b>写微分<br>导数乘外部变量的微小变化</div>
+</div>
+<table>
+  <tr><th>表达式</th><th>正确理解</th><th>结论</th></tr>
+  <tr><td><code>y=x+2</code></td><td>y 是 x 的函数</td><td><code>dy/dx=1</code>，<code>dy=dx</code></td></tr>
+  <tr><td><code>y(t)=x(t)+2</code></td><td>x、y 都是 t 的函数</td><td><code>dy/dt=dx/dt</code>，<code>dy=dx</code></td></tr>
+  <tr><td><code>f(x)=∫_0^1(t+2)dt</code></td><td>积分结果是常数</td><td><code>f'(x)=0</code>，<code>df=0</code></td></tr>
+  <tr><td><code>f(x)=∫_0^x(t+2)dt</code></td><td>x 是积分上限</td><td><code>f'(x)=x+2</code>，<code>df=(x+2)dx</code></td></tr>
+  <tr><td><code>f(x)=∫_0^{x²}(t+2)dt</code></td><td>上限是复合函数</td><td><code>f'(x)=2x(x²+2)</code></td></tr>
+</table>
+<div class="ok box">
+  <strong>最终一句话</strong>
+  导数是“对外部变量的变化率”；微分是“导数乘外部变量的微小变化”；积分里的 <code>t</code> 是临时变量，只有 <code>x</code> 出现在上下限或被积函数中时，积分结果才会随 <code>x</code> 变。
+</div>
+</section>
+</main>
+</body>
+</html>

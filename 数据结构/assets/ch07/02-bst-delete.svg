@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" style="max-width:100%;height:auto" role="img" aria-labelledby="title desc">
+  <title id="title">二叉查找树删除双孩子结点</title>
+  <desc id="desc">删除 40 时用右子树最小结点 45 替代，再把原位置的 45 摘除并接上 47。</desc>
+  <defs>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#269c72"/>
+    </marker>
+  </defs>
+  <rect width="900" height="520" fill="#FFFFFF"/>
+  <style>
+    .edge{stroke:#6B7280;stroke-width:2;fill:none}
+    .node{fill:#EFF6FF;stroke:#4b8ee8;stroke-width:2}
+    .target{fill:#FEE2E2;stroke:#d55263;stroke-width:2.5}
+    .replace{fill:#DCFCE7;stroke:#269c72;stroke-width:2.5}
+    .label{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:20px;fill:#1F2937;text-anchor:middle}
+    .small{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:17px;fill:#4B5563}
+  </style>
+  <text x="35" y="34" class="small">删除 40：它有两个孩子，选择右子树最小结点 45 作为中序后继</text>
+  <text x="245" y="72" class="small">原树</text>
+  <g transform="translate(0 0)">
+    <path d="M245 130 L145 205 M245 130 L345 205 M345 205 L295 280 M345 205 L395 280 M295 280 L345 355" class="edge"/>
+    <circle cx="245" cy="130" r="28" class="target"/><text x="245" y="137" class="label">40</text>
+    <circle cx="145" cy="205" r="28" class="node"/><text x="145" y="212" class="label">20</text>
+    <circle cx="345" cy="205" r="28" class="node"/><text x="345" y="212" class="label">60</text>
+    <circle cx="295" cy="280" r="28" class="replace"/><text x="295" y="287" class="label">45</text>
+    <circle cx="395" cy="280" r="28" class="node"/><text x="395" y="287" class="label">80</text>
+    <circle cx="345" cy="355" r="28" class="node"/><text x="345" y="362" class="label">47</text>
+    <text x="275" y="415" class="small">45 是右子树中的最小关键字</text>
+  </g>
+  <path d="M485 235 C565 205 600 205 645 225" fill="none" stroke="#269c72" stroke-width="2.5" marker-end="url(#greenArrow)"/>
+  <text x="525" y="192" class="small">复制 / 替代</text>
+  <text x="705" y="72" class="small">替代后</text>
+  <g transform="translate(560 0)">
+    <path d="M145 130 L45 205 M145 130 L245 205 M245 205 L195 280 M245 205 L295 280" class="edge"/>
+    <circle cx="145" cy="130" r="28" class="replace"/><text x="145" y="137" class="label">45</text>
+    <circle cx="45" cy="205" r="28" class="node"/><text x="45" y="212" class="label">20</text>
+    <circle cx="245" cy="205" r="28" class="node"/><text x="245" y="212" class="label">60</text>
+    <circle cx="195" cy="280" r="28" class="node"/><text x="195" y="287" class="label">47</text>
+    <circle cx="295" cy="280" r="28" class="node"/><text x="295" y="287" class="label">80</text>
+    <text x="145" y="420" class="small" text-anchor="middle">原 45 被摘除，47 接替其位置</text>
+  </g>
+  <text x="35" y="490" class="small">中序关键字仍为 20、45、47、60、80；BST 的有序性质没有被破坏。</text>
+</svg>
+

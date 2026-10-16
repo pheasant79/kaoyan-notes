@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 345" role="img" aria-labelledby="title desc">
+  <title id="title">同一带权无向图的邻接矩阵和邻接表</title>
+  <desc id="desc">顶点 A、B、C、D 之间有 AB 权 2、AC 权 5、BC 权 1、BD 权 4、CD 权 3。右侧展示相同图的矩阵与邻接表，横线表示没有边。</desc>
+  <rect width="720" height="345" fill="#FFFFFF"/>
+  <line x1="270" y1="18" x2="270" y2="325" stroke="#D1D5DB"/>
+  <line x1="492" y1="18" x2="492" y2="325" stroke="#D1D5DB"/>
+  <text x="135" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">同一张图</text>
+  <text x="380" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">邻接矩阵</text>
+  <text x="605" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">邻接表</text>
+
+  <g stroke="#9CA3AF" stroke-width="2" fill="none">
+    <line x1="85" y1="100" x2="188" y2="100"/>
+    <line x1="85" y1="100" x2="85" y2="220"/>
+    <line x1="188" y1="100" x2="85" y2="220"/>
+    <line x1="188" y1="100" x2="188" y2="220"/>
+    <line x1="85" y1="220" x2="188" y2="220"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="129" y="91">2</text><text x="64" y="164">5</text><text x="125" y="157">1</text>
+    <text x="194" y="164">4</text><text x="129" y="240">3</text>
+  </g>
+  <g fill="#EFF6FF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="85" cy="100" r="20"/><circle cx="188" cy="100" r="20"/><circle cx="85" cy="220" r="20"/><circle cx="188" cy="220" r="20"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="85" y="100">A</text><text x="188" y="100">B</text><text x="85" y="220">C</text><text x="188" y="220">D</text>
+  </g>
+
+  <g font-family="sans-serif" font-size="16" text-anchor="middle" fill="#374151">
+    <text x="337" y="72">A</text><text x="372" y="72">B</text><text x="407" y="72">C</text><text x="442" y="72">D</text>
+    <text x="297" y="112">A</text><text x="297" y="152">B</text><text x="297" y="192">C</text><text x="297" y="232">D</text>
+  </g>
+  <g stroke="#D1D5DB" stroke-width="1">
+    <path d="M315 78 H460 M315 118 H460 M315 158 H460 M315 198 H460 M315 238 H460"/>
+    <path d="M315 78 V238 M350 78 V238 M385 78 V238 M420 78 V238 M455 78 V238"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="337" y="98">—</text><text x="372" y="98">2</text><text x="407" y="98">5</text><text x="442" y="98">—</text>
+    <text x="337" y="138">2</text><text x="372" y="138">—</text><text x="407" y="138">1</text><text x="442" y="138">4</text>
+    <text x="337" y="178">5</text><text x="372" y="178">1</text><text x="407" y="178">—</text><text x="442" y="178">3</text>
+    <text x="337" y="218">—</text><text x="372" y="218">4</text><text x="407" y="218">3</text><text x="442" y="218">—</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="510" y="83">A: B(2), C(5)</text>
+    <text x="510" y="123">B: A(2), C(1), D(4)</text>
+    <text x="510" y="163">C: A(5), B(1), D(3)</text>
+    <text x="510" y="203">D: B(4), C(3)</text>
+  </g>
+  <text x="360" y="283" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#6B7280">矩阵：判边 O(1)，枚举邻居 O(v)　｜　邻接表：枚举邻居 O(deg(u))</text>
+  <text x="360" y="311" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#d55263">“—”代表无边；合法的零权边不能当作无边</text>
+</svg>
+

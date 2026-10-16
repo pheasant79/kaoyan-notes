@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>主存访问、多存储体与芯片位宽</title>
+<style>
+  :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#222240;--panel:#151528;--text:#d8d8e8;--dim:#8d8daa;--line:#2a2a45;--red:#ff6b6b;--cyan:#4ecdc4;--yellow:#ffe66d;--purple:#a37ef0;--blue:#5dade2;--green:#58d68d;--orange:#f0a050;--code:#16162a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.85;padding:42px 52px}
+  main{max-width:1120px;margin:0 auto}
+  h1{font-size:2.08rem;color:white;margin-bottom:.35rem}h1 span{color:var(--cyan)}
+  .subtitle{color:var(--dim);margin-bottom:2rem}
+  section{border-top:1px solid var(--line);padding-top:2rem;margin-top:2.8rem}
+  section:first-of-type{border-top:0;margin-top:0}
+  h2{font-size:1.45rem;color:white;margin-bottom:1rem}
+  h3{font-size:1.14rem;color:white;margin:1.2rem 0 .5rem}
+  p{margin-bottom:1rem}strong{color:white}em{font-style:normal;color:var(--yellow)}
+  code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .box{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:8px;padding:16px 20px;margin:1.1rem 0}
+  .ok{background:#17251d;border-left-color:var(--green)}.warn{background:#2a1a1a;border-color:#ff6b6b55;border-left-color:var(--red)}.note{background:#1f1f18;border-left-color:var(--yellow)}.deep{background:#17182d;border-left-color:var(--purple)}
+  .label{display:block;font-weight:800;font-size:.9rem;margin-bottom:7px;color:var(--cyan)}
+  .ok .label{color:var(--green)}.warn .label{color:var(--red)}.note .label{color:var(--yellow)}.deep .label{color:var(--purple)}
+  table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.92rem}
+  th{background:var(--surface2);color:white;text-align:left;border-bottom:2px solid var(--line);padding:11px 13px}
+  td{border-bottom:1px solid var(--line);padding:11px 13px;vertical-align:top}
+  tr:nth-child(even) td{background:#141428}
+  .formula{font-family:"Cascadia Code","Consolas",monospace;background:#121224;border:1px solid var(--line);border-radius:8px;padding:12px 16px;color:var(--yellow);margin:1rem 0}
+  .good{color:var(--green)}.bad{color:var(--red)}.mid{color:var(--yellow)}svg{display:block;max-width:100%;margin:1.2rem auto}
+</style>
+</head>
+<body>
+<main>
+<h1>主存访问、<span>多存储体</span> 与 <span>芯片位宽</span></h1>
+<p class="subtitle">专门解释：多存储体不是“模拟出来的分割”，而是物理上多个可交叠工作的存储体；以及教材说“一片芯片一次只读1bit”到底是什么口径。</p>
+
+<section>
+<h2>1. 先回答你的核心：多存储体是模拟的吗？</h2>
+<div class="box ok">
+  <span class="label">结论</span>
+  <p><strong>多存储体不是软件模拟，也不是把一个 X/Y 矩阵“想象切开”。</strong>它通常表示物理上有多个相对独立的存储体，每个存储体有自己的译码、读写、恢复相关电路，可以交叠工作。</p>
+</div>
+<table>
+  <tr><th>对象</th><th>内部有什么</th><th>能否和别的体交叠工作</th></tr>
+  <tr><td>单个存储体 Bank0</td><td>自己的存储阵列、行/列译码、读写放大、恢复过程</td><td>可以和 Bank1 交叠</td></tr>
+  <tr><td>单个存储体 Bank1</td><td>自己的存储阵列、行/列译码、读写放大、恢复过程</td><td>可以和 Bank0 交叠</td></tr>
+  <tr><td>同一存储体内部</td><td>共享同一套部分电路和阵列资源</td><td>同一时间通常不能无限并发访问</td></tr>
+</table>
+<div class="box warn">
+  <span class="label">你原来的推理卡点</span>
+  <p>你把“低位交叉”想成了同一个二维 X/Y 阵列里的列恢复，所以会觉得：如果连续地址换列，那列也要恢复，还是不能连续读。问题在于：<strong>低位交叉的连续地址不是落在同一个存储体的不同列，而是落在不同存储体。</strong></p>
+</div>
+</section>
+
+<section>
+<h2>2. 单个存储体为什么会忙：不是只影响一个 bit</h2>
+<p>在动态 RAM 这类存储器中，读出可能会破坏或扰动存储元状态，因此需要恢复。这个恢复不是“只恢复一个小格子就没事”，而是和一整行、位线、读写放大器等共享结构相关。</p>
+<svg viewBox="0 0 960 420" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <rect x="60" y="55" width="210" height="270" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+  <text x="165" y="90" text-anchor="middle" fill="#ffe66d" font-size="16" font-weight="bold">行译码器</text>
+  <text x="165" y="118" text-anchor="middle" fill="#ccc" font-size="11">选中某一行</text>
+  <line x1="270" y1="190" x2="365" y2="190" stroke="#ffe66d" stroke-width="3" marker-end="url(#a2)"/>
+  <rect x="380" y="45" width="500" height="290" rx="8" fill="#151528" stroke="#2a2a45" stroke-width="2"/>
+  <text x="630" y="80" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold">单个 Bank 内部</text>
+  <g font-family="monospace" text-anchor="middle" font-size="12">
+    <text x="440" y="112" fill="#888">bit0</text><text x="510" y="112" fill="#888">bit1</text><text x="580" y="112" fill="#888">bit2</text><text x="650" y="112" fill="#888">bit3</text><text x="720" y="112" fill="#888">bit4</text><text x="790" y="112" fill="#888">bit5</text>
+    <rect x="415" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="440" y="156" fill="#58d68d">元</text>
+    <rect x="485" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="510" y="156" fill="#58d68d">元</text>
+    <rect x="555" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="580" y="156" fill="#58d68d">元</text>
+    <rect x="625" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="650" y="156" fill="#58d68d">元</text>
+    <rect x="695" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="720" y="156" fill="#58d68d">元</text>
+    <rect x="765" y="135" width="50" height="32" fill="#102a20" stroke="#58d68d"/><text x="790" y="156" fill="#58d68d">元</text>
+    <rect x="415" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="440" y="206" fill="#ffe66d">元</text>
+    <rect x="485" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="510" y="206" fill="#ffe66d">元</text>
+    <rect x="555" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="580" y="206" fill="#ffe66d">元</text>
+    <rect x="625" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="650" y="206" fill="#ffe66d">元</text>
+    <rect x="695" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="720" y="206" fill="#ffe66d">元</text>
+    <rect x="765" y="185" width="50" height="32" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="790" y="206" fill="#ffe66d">元</text>
+  </g>
+  <rect x="405" y="255" width="440" height="45" rx="7" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+  <text x="625" y="284" text-anchor="middle" fill="#5dade2" font-size="14" font-weight="bold">共享位线 + 读写放大器 + 恢复相关电路</text>
+  <text x="630" y="365" text-anchor="middle" fill="#aaa" font-size="12">一次访问会占用这个 Bank 的共享资源，所以同一 Bank 需要等待存取周期完成</text>
+</svg>
+<div class="box note">
+  <span class="label">关键</span>
+  <p>“一个存储体忙”不是因为只读了一个 bit 后它自己慢慢恢复，而是因为这个存储体的阵列、行、位线、读写放大器等资源被这次访问占用。教材用“存取周期 T”把这些细节合并成一个时间。</p>
+</div>
+</section>
+
+<section>
+<h2>3. 低位交叉为什么能连续读：连续地址去不同 Bank</h2>
+<p>低位交叉不是在同一个 Bank 里连续选列，而是让地址 0、1、2、3 分别进入 Bank0、Bank1、Bank2、Bank3。</p>
+<div class="formula">4 个存储体时：Bank编号 = 地址 mod 4</div>
+<svg viewBox="0 0 1000 460" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <text x="500" y="35" text-anchor="middle" fill="#4ecdc4" font-size="18" font-weight="bold">低位交叉：连续地址分给不同存储体</text>
+  <rect x="55" y="80" width="130" height="70" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="120" y="112" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">地址0</text><text x="120" y="134" text-anchor="middle" fill="#ccc" font-size="11">0 mod 4 = 0</text>
+  <rect x="55" y="170" width="130" height="70" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="120" y="202" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">地址1</text><text x="120" y="224" text-anchor="middle" fill="#ccc" font-size="11">1 mod 4 = 1</text>
+  <rect x="55" y="260" width="130" height="70" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="120" y="292" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">地址2</text><text x="120" y="314" text-anchor="middle" fill="#ccc" font-size="11">2 mod 4 = 2</text>
+  <rect x="55" y="350" width="130" height="70" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="120" y="382" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">地址3</text><text x="120" y="404" text-anchor="middle" fill="#ccc" font-size="11">3 mod 4 = 3</text>
+  <line x1="185" y1="115" x2="305" y2="115" stroke="#ffe66d" stroke-width="2" marker-end="url(#a3)"/>
+  <line x1="185" y1="205" x2="305" y2="205" stroke="#5dade2" stroke-width="2" marker-end="url(#a3)"/>
+  <line x1="185" y1="295" x2="305" y2="295" stroke="#58d68d" stroke-width="2" marker-end="url(#a3)"/>
+  <line x1="185" y1="385" x2="305" y2="385" stroke="#a37ef0" stroke-width="2" marker-end="url(#a3)"/>
+  <rect x="320" y="80" width="150" height="70" rx="8" fill="#3a3012" stroke="#ffe66d" stroke-width="2"/><text x="395" y="122" text-anchor="middle" fill="#ffe66d" font-size="15" font-weight="bold">Bank0 忙</text>
+  <rect x="320" y="170" width="150" height="70" rx="8" fill="#102a38" stroke="#5dade2" stroke-width="2"/><text x="395" y="212" text-anchor="middle" fill="#5dade2" font-size="15" font-weight="bold">Bank1 忙</text>
+  <rect x="320" y="260" width="150" height="70" rx="8" fill="#102a20" stroke="#58d68d" stroke-width="2"/><text x="395" y="302" text-anchor="middle" fill="#58d68d" font-size="15" font-weight="bold">Bank2 忙</text>
+  <rect x="320" y="350" width="150" height="70" rx="8" fill="#201835" stroke="#a37ef0" stroke-width="2"/><text x="395" y="392" text-anchor="middle" fill="#a37ef0" font-size="15" font-weight="bold">Bank3 忙</text>
+  <rect x="580" y="95" width="335" height="300" rx="8" fill="#151528" stroke="#2a2a45" stroke-width="2"/>
+  <text x="748" y="130" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">时间上交叠</text>
+  <g font-family="monospace" font-size="12">
+    <rect x="635" y="165" width="135" height="30" fill="#3a3012" stroke="#ffe66d"/><text x="670" y="185" fill="#ffe66d">B0读0</text>
+    <rect x="670" y="205" width="135" height="30" fill="#102a38" stroke="#5dade2"/><text x="705" y="225" fill="#5dade2">B1读1</text>
+    <rect x="705" y="245" width="135" height="30" fill="#102a20" stroke="#58d68d"/><text x="740" y="265" fill="#58d68d">B2读2</text>
+    <rect x="740" y="285" width="135" height="30" fill="#201835" stroke="#a37ef0"/><text x="775" y="305" fill="#a37ef0">B3读3</text>
+  </g>
+  <text x="748" y="355" text-anchor="middle" fill="#aaa" font-size="12">Bank0 恢复时，Bank1/2/3 可以开始各自访问</text>
+</svg>
+<div class="box ok">
+  <span class="label">你问题里的关键修正</span>
+  <p>低位交叉不是“列地址需要恢复所以还是卡住”。地址 0、1、2、3 不是同一个 Bank 的不同列，而是不同 Bank 的访问。每个 Bank 有自己的恢复过程，所以可以错开。</p>
+</div>
+</section>
+
+<section>
+<h2>4. 数据总线 8bit，但单片芯片一次只出 1bit？</h2>
+<p>王道这里经常用一种典型芯片组织来讲“位扩展”：例如一片芯片是 <code>1K × 1位</code>，表示它有 1K 个地址，每个地址只输出 1 bit。若主机数据总线是 8 bit，就并联 8 片这样的芯片。</p>
+<div class="box warn">
+  <span class="label">先纠偏</span>
+  <p><strong>不是所有存储芯片都一次只能读 1 bit。</strong>教材为了讲清“位扩展”，常用 <code>×1</code> 芯片举例。现实芯片可以是 <code>×1、×4、×8、×16</code> 等不同数据位宽。</p>
+</div>
+<svg viewBox="0 0 980 450" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a4" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <text x="490" y="35" text-anchor="middle" fill="#ffe66d" font-size="18" font-weight="bold">8片 1K×1 位芯片 → 组成 1K×8 位存储器</text>
+  <rect x="45" y="120" width="135" height="80" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="112" y="153" text-anchor="middle" fill="#a37ef0" font-size="14" font-weight="bold">同一个地址</text><text x="112" y="176" text-anchor="middle" fill="#ccc" font-size="11">A0~A9</text>
+  <line x1="180" y1="160" x2="270" y2="160" stroke="#a37ef0" stroke-width="2" marker-end="url(#a4)"/>
+  <g font-family="monospace" font-size="11" text-anchor="middle">
+    <rect x="285" y="75" width="90" height="45" rx="6" fill="#3a3012" stroke="#ffe66d"/><text x="330" y="103" fill="#ffe66d">芯片0 ×1</text>
+    <rect x="285" y="125" width="90" height="45" rx="6" fill="#102a38" stroke="#5dade2"/><text x="330" y="153" fill="#5dade2">芯片1 ×1</text>
+    <rect x="285" y="175" width="90" height="45" rx="6" fill="#102a20" stroke="#58d68d"/><text x="330" y="203" fill="#58d68d">芯片2 ×1</text>
+    <rect x="285" y="225" width="90" height="45" rx="6" fill="#201835" stroke="#a37ef0"/><text x="330" y="253" fill="#a37ef0">芯片3 ×1</text>
+    <text x="330" y="303" fill="#888">...</text>
+    <rect x="285" y="325" width="90" height="45" rx="6" fill="#2a1a1a" stroke="#ff6b6b"/><text x="330" y="353" fill="#ff6b6b">芯片7 ×1</text>
+  </g>
+  <g stroke="#4ecdc4" stroke-width="2">
+    <line x1="375" y1="98" x2="615" y2="98"/>
+    <line x1="375" y1="148" x2="615" y2="148"/>
+    <line x1="375" y1="198" x2="615" y2="198"/>
+    <line x1="375" y1="248" x2="615" y2="248"/>
+    <line x1="375" y1="348" x2="615" y2="348"/>
+  </g>
+  <rect x="630" y="120" width="210" height="180" rx="8" fill="#1a2e3a" stroke="#4ecdc4" stroke-width="2"/>
+  <text x="735" y="155" text-anchor="middle" fill="#4ecdc4" font-size="16" font-weight="bold">8位数据总线</text>
+  <text x="735" y="190" text-anchor="middle" fill="#ccc" font-size="12">芯片0 → D0</text>
+  <text x="735" y="215" text-anchor="middle" fill="#ccc" font-size="12">芯片1 → D1</text>
+  <text x="735" y="240" text-anchor="middle" fill="#ccc" font-size="12">...</text>
+  <text x="735" y="265" text-anchor="middle" fill="#ccc" font-size="12">芯片7 → D7</text>
+  <text x="490" y="410" text-anchor="middle" fill="#aaa" font-size="12">同一个地址同时送给8片芯片，每片吐出1bit，合起来就是8bit送上数据总线</text>
+</svg>
+<table>
+  <tr><th>芯片规格</th><th>含义</th><th>要组成8位字长需要几片并联</th></tr>
+  <tr><td><code>1K × 1位</code></td><td>每个地址输出 1 bit</td><td>8片</td></tr>
+  <tr><td><code>1K × 4位</code></td><td>每个地址输出 4 bit</td><td>2片</td></tr>
+  <tr><td><code>1K × 8位</code></td><td>每个地址输出 8 bit</td><td>1片</td></tr>
+</table>
+<div class="box ok">
+  <span class="label">准确说法</span>
+  <p>不是“由于存储芯片限制，每次只能存取 1 bit”这个普遍规律；而是“某些题目给的芯片规格是 ×1，所以每片每次只输出 1 bit，需要多片并联做位扩展”。</p>
+</div>
+</section>
+
+<section>
+<h2>5. 把“多体交叉”和“芯片位扩展”分开</h2>
+<p>这两个概念容易混，但它们解决的问题不同。</p>
+<table>
+  <tr><th>概念</th><th>解决什么问题</th><th>怎么做</th><th>例子</th></tr>
+  <tr><td>位扩展</td><td>一次读出的位数不够</td><td>多片芯片并联，每片提供若干位</td><td>8片 1K×1 → 1K×8</td></tr>
+  <tr><td>字扩展</td><td>地址容量不够</td><td>多组芯片分地址范围</td><td>2组 1K×8 → 2K×8</td></tr>
+  <tr><td>多存储体交叉</td><td>连续访问速度不够</td><td>连续地址分散到不同 Bank，交叠访问</td><td>地址0到B0，1到B1，2到B2，3到B3</td></tr>
+</table>
+<div class="box note">
+  <span class="label">一句话定死</span>
+  <p><strong>位扩展是在“同一个地址同时读够多少位”；多体交叉是在“连续地址能不能分给不同存储体流水读”。</strong></p>
+</div>
+</section>
+
+<section>
+<h2>6. 你的三个问题逐条归位</h2>
+<h3>问题1：多存储体交叉，和主存连接里的扩容是不是差不多？</h3>
+<p>它们都在讲“多个存储芯片/存储体组合成主存”，所以材料长得很像；但<strong>目的不同</strong>。</p>
+<table>
+  <tr><th>内容</th><th>核心目的</th><th>关心什么</th><th>典型图</th></tr>
+  <tr><td>主存与CPU连接、芯片扩展</td><td>把芯片拼成 CPU 需要的容量和字长</td><td>容量够不够、一次读几位、地址线/数据线/片选怎么接</td><td>位扩展、字扩展</td></tr>
+  <tr><td>多存储体连续/交叉编址</td><td>提高连续访问吞吐率</td><td>连续地址落在哪个 Bank、恢复周期能否错开</td><td>高位交叉、低位交叉</td></tr>
+</table>
+<div class="box ok">
+  <span class="label">一句话</span>
+  <p>主存连接讲“怎么拼得出来”；多存储体交叉讲“拼出来后怎么让它读得更快”。</p>
+</div>
+
+<h3>问题2：8bit 数据总线，为什么教程又说一次只能传 1bit？</h3>
+<p>这里必须把“存储芯片规格”和“主存整体宽度”分开。</p>
+<table>
+  <tr><th>层级</th><th>如果是 8K×1 位</th><th>如果是 8K×8 位</th></tr>
+  <tr><td>单片芯片</td><td>每个地址只输出 1 bit</td><td>每个地址输出 8 bit</td></tr>
+  <tr><td>8bit 数据总线要求</td><td>需要 8 片并联，每片接 D0~D7 中的一根</td><td>1 片就能接满 D0~D7</td></tr>
+  <tr><td>是否罕见</td><td>不是罕见，教材常用来讲位扩展；实际芯片也可能有 ×1/×4/×8/×16</td><td>也是常见组织，只是不适合用来演示位扩展</td></tr>
+</table>
+<div class="box warn">
+  <span class="label">关键纠偏</span>
+  <p>“一个存储体能读一行/一个字”这句话成立的前提是：这个存储体已经被组织成了足够的位宽。若教材给的是 <code>8K×1位</code> 芯片，那么<strong>单片芯片的一个地址确实只给 1 bit</strong>，要 8 片并联后，整个存储模块才一次给 CPU 8 bit。</p>
+</div>
+<svg viewBox="0 0 980 440" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a6" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <text x="490" y="34" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">单片 ×1 与整体 8bit 的关系</text>
+  <rect x="60" y="90" width="160" height="85" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/>
+  <text x="140" y="124" text-anchor="middle" fill="#a37ef0" font-size="15" font-weight="bold">CPU地址</text>
+  <text x="140" y="150" text-anchor="middle" fill="#ccc" font-size="11">同一个地址 A</text>
+  <line x1="220" y1="132" x2="315" y2="132" stroke="#a37ef0" stroke-width="2" marker-end="url(#a6)"/>
+  <g font-family="monospace" text-anchor="middle" font-size="11">
+    <rect x="330" y="60" width="105" height="36" rx="5" fill="#3a3012" stroke="#ffe66d"/><text x="382" y="83" fill="#ffe66d">8K×1 芯片0</text>
+    <rect x="330" y="102" width="105" height="36" rx="5" fill="#102a38" stroke="#5dade2"/><text x="382" y="125" fill="#5dade2">8K×1 芯片1</text>
+    <rect x="330" y="144" width="105" height="36" rx="5" fill="#102a20" stroke="#58d68d"/><text x="382" y="167" fill="#58d68d">8K×1 芯片2</text>
+    <rect x="330" y="186" width="105" height="36" rx="5" fill="#201835" stroke="#a37ef0"/><text x="382" y="209" fill="#a37ef0">8K×1 芯片3</text>
+    <text x="382" y="254" fill="#888">...</text>
+    <rect x="330" y="280" width="105" height="36" rx="5" fill="#2a1a1a" stroke="#ff6b6b"/><text x="382" y="303" fill="#ff6b6b">8K×1 芯片7</text>
+  </g>
+  <g stroke="#4ecdc4" stroke-width="2">
+    <line x1="435" y1="78" x2="670" y2="78"/>
+    <line x1="435" y1="120" x2="670" y2="120"/>
+    <line x1="435" y1="162" x2="670" y2="162"/>
+    <line x1="435" y1="204" x2="670" y2="204"/>
+    <line x1="435" y1="298" x2="670" y2="298"/>
+  </g>
+  <rect x="690" y="95" width="190" height="170" rx="8" fill="#1a2e3a" stroke="#4ecdc4" stroke-width="2"/>
+  <text x="785" y="130" text-anchor="middle" fill="#4ecdc4" font-size="16" font-weight="bold">8bit 数据总线</text>
+  <text x="785" y="160" text-anchor="middle" fill="#ccc" font-size="12">芯片0 → D0</text>
+  <text x="785" y="184" text-anchor="middle" fill="#ccc" font-size="12">芯片1 → D1</text>
+  <text x="785" y="208" text-anchor="middle" fill="#ccc" font-size="12">...</text>
+  <text x="785" y="232" text-anchor="middle" fill="#ccc" font-size="12">芯片7 → D7</text>
+  <text x="490" y="380" text-anchor="middle" fill="#aaa" font-size="12">每片只出1bit不等于主存整体只出1bit；8片并联后，主存模块一次出8bit</text>
+</svg>
+
+<h3>问题3：为什么读地址01后，不能马上读同一体的地址02？</h3>
+<p>你的最新推理是对的：不是“02 这行不存在”，而是<strong>同一个存储体的共享资源还被上一次访问占着</strong>。</p>
+<table>
+  <tr><th>你想象的情况</th><th>真实限制</th></tr>
+  <tr><td>01 行在恢复，02 行应该还能用</td><td>同一个 Bank 的译码器、位线、读写放大器、恢复相关电路是共享的，不能无限同时服务两次访问</td></tr>
+  <tr><td>如果换列读，列地址恢复也会卡住</td><td>低位交叉不是换同一个 Bank 的列，而是换另一个 Bank</td></tr>
+  <tr><td>单体连续地址为什么慢</td><td>因为连续地址都落在同一 Bank，必须等该 Bank 完成存取周期</td></tr>
+  <tr><td>多体交叉为什么快</td><td>因为地址0在Bank0恢复时，地址1可以去Bank1，地址2可以去Bank2</td></tr>
+</table>
+<div class="box deep">
+  <span class="label">把两块知识串起来</span>
+  <p>一个“Bank”内部可以已经由多片芯片做了位扩展，例如 8 片 <code>8K×1</code> 组成一个 <code>8K×8</code> 的 Bank；然后再把多个这样的 Bank 做低位交叉，解决连续访问恢复等待问题。</p>
+</div>
+<div class="formula">第一层：位扩展 → 多片 ×1 芯片并联，凑够一个字/字节宽度<br>第二层：多体交叉 → 多个 Bank 轮流响应连续地址，隐藏恢复时间</div>
+<div class="box ok">
+  <span class="label">最终定死</span>
+  <p>“一片芯片一次只出1bit”是芯片规格问题；“一个存储体访问后要恢复”是 Bank 存取周期问题；“低位交叉能连续读”是因为连续地址去了不同 Bank，而不是同一个 Bank 的下一行或下一列。</p>
+</div>
+</section>
+</main>
+</body>
+</html>

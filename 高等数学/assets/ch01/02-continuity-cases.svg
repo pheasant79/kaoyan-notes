@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 285">
+  <rect width="900" height="285" fill="white"/>
+  <g transform="translate(25,20)">
+    <text x="115" y="20" fill="#16A34A" font-size="18" font-weight="bold">连续</text>
+    <line x1="30" y1="220" x2="250" y2="220" stroke="#64748B"/><line x1="140" y1="40" x2="140" y2="245" stroke="#CBD5E1"/>
+    <path d="M45 190 C90 170 110 130 140 110 C170 90 190 60 235 45" fill="none" stroke="#16A34A" stroke-width="4"/>
+    <circle cx="140" cy="110" r="6" fill="#16A34A"/><text x="58" y="255" fill="#334155" font-size="15">左极限 = 点值 = 右极限</text>
+  </g>
+  <g transform="translate(315,20)">
+    <text x="80" y="20" fill="#CA8A04" font-size="18" font-weight="bold">可去间断</text>
+    <line x1="30" y1="220" x2="250" y2="220" stroke="#64748B"/><line x1="140" y1="40" x2="140" y2="245" stroke="#CBD5E1"/>
+    <path d="M45 190 C85 175 110 135 140 110 C170 85 200 65 235 50" fill="none" stroke="#CA8A04" stroke-width="4"/>
+    <circle cx="140" cy="110" r="7" fill="white" stroke="#CA8A04" stroke-width="3"/><text x="65" y="255" fill="#334155" font-size="15">趋势有，点值缺或不相等</text>
+  </g>
+  <g transform="translate(605,20)">
+    <text x="95" y="20" fill="#DC2626" font-size="18" font-weight="bold">跳跃间断</text>
+    <line x1="30" y1="220" x2="250" y2="220" stroke="#64748B"/><line x1="140" y1="40" x2="140" y2="245" stroke="#CBD5E1"/>
+    <path d="M45 175 L135 175 M145 95 L235 95" fill="none" stroke="#DC2626" stroke-width="4"/>
+    <circle cx="140" cy="175" r="6" fill="white" stroke="#DC2626" stroke-width="3"/><circle cx="140" cy="95" r="6" fill="#DC2626"/>
+    <text x="62" y="255" fill="#334155" font-size="15">左右极限不相等</text>
+  </g>
+</svg>

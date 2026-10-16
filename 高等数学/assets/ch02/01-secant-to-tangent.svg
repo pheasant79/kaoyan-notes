@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430">
+  <rect width="900" height="430" fill="white"/>
+  <text x="40" y="38" fill="#0F172A" font-size="24" font-weight="bold">割线斜率在 Q → P 时趋于切线斜率</text>
+  <line x1="70" y1="350" x2="850" y2="350" stroke="#64748B" stroke-width="2"/>
+  <line x1="240" y1="70" x2="240" y2="370" stroke="#CBD5E1" stroke-dasharray="7 6" stroke-width="2"/>
+  <path d="M95 305 C210 285 270 225 350 175 C470 100 610 95 820 160" fill="none" stroke="#2563EB" stroke-width="4"/>
+  <line x1="150" y1="270" x2="505" y2="125" stroke="#CA8A04" stroke-width="3"/>
+  <line x1="125" y1="325" x2="420" y2="145" stroke="#DC2626" stroke-width="3"/>
+  <circle cx="240" cy="230" r="7" fill="#DC2626"/>
+  <circle cx="420" cy="145" r="7" fill="#CA8A04"/>
+  <text x="250" y="222" fill="#DC2626" font-size="20">P(x₀,f(x₀))</text>
+  <text x="430" y="138" fill="#CA8A04" font-size="20">Q</text>
+  <text x="470" y="120" fill="#CA8A04" font-size="18">割线</text>
+  <text x="430" y="205" fill="#DC2626" font-size="18">切线极限位置</text>
+  <text x="295" y="345" fill="#475569" font-size="18">Δx</text>
+  <line x1="240" y1="365" x2="420" y2="365" stroke="#475569" stroke-width="2"/>
+  <line x1="240" y1="360" x2="240" y2="370" stroke="#475569" stroke-width="2"/>
+  <line x1="420" y1="360" x2="420" y2="370" stroke="#475569" stroke-width="2"/>
+  <text x="455" y="185" fill="#475569" font-size="18">Δy</text>
+  <line x1="430" y1="145" x2="430" y2="230" stroke="#475569" stroke-width="2"/>
+  <line x1="425" y1="145" x2="435" y2="145" stroke="#475569" stroke-width="2"/>
+  <line x1="425" y1="230" x2="435" y2="230" stroke="#475569" stroke-width="2"/>
+  <text x="70" y="398" fill="#334155" font-size="18">割线斜率 = Δy/Δx；当 Δx → 0 时，得到导数 f′(x₀)。</text>
+</svg>

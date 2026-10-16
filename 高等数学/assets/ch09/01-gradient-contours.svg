@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" role="img" aria-labelledby="title desc">
+  <title id="title">等高线与梯度方向</title>
+  <desc id="desc">二维等高线图中，梯度向量垂直等高线并指向函数增大方向。</desc>
+  <rect width="760" height="430" fill="#ffffff"/>
+  <g stroke="#CBD5E1" fill="none" stroke-width="2">
+    <ellipse cx="270" cy="220" rx="175" ry="110"/>
+    <ellipse cx="270" cy="220" rx="125" ry="78"/>
+    <ellipse cx="270" cy="220" rx="78" ry="48"/>
+    <ellipse cx="270" cy="220" rx="38" ry="23"/>
+  </g>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="16" fill="#475569">
+    <text x="102" y="92">较低函数值</text>
+    <text x="235" y="214">较高</text>
+    <text x="235" y="235">函数值</text>
+    <text x="535" y="116" fill="#2563EB">∇f(x,y)</text>
+    <text x="535" y="145">梯度垂直等高线</text>
+    <text x="535" y="170">并指向增长最快方向</text>
+  </g>
+  <g stroke="#2563EB" stroke-width="4" fill="none">
+    <line x1="310" y1="205" x2="500" y2="105"/>
+    <path d="M500 105 l-18 2 l10 15" fill="#2563EB"/>
+  </g>
+  <circle cx="310" cy="205" r="6" fill="#DC2626"/>
+  <text x="318" y="198" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="16" fill="#DC2626">P</text>
+  <g stroke="#94A3B8" stroke-width="2">
+    <line x1="55" y1="360" x2="690" y2="360"/>
+    <line x1="80" y1="390" x2="80" y2="50"/>
+  </g>
+  <text x="600" y="385" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" fill="#64748B">x</text>
+  <text x="58" y="70" font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="15" fill="#64748B">y</text>
+</svg>

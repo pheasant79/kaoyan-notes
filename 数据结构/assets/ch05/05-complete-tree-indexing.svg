@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="title desc">
+  <title id="title">完全二叉树的层序数组表示</title>
+  <desc id="desc">完全二叉树结点按层序编号 1 到 6，并依次存放在数组位置 1 到 6；右侧列出从 1 开始编号的父子下标关系。</desc>
+  <rect width="640" height="330" fill="#FFFFFF"/>
+  <text x="180" y="30" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">按层序连续编号</text>
+  <g fill="none" stroke="#9CA3AF" stroke-width="2">
+    <path d="M180 78 L112 128 M180 78 L248 128"/>
+    <path d="M112 158 L78 208 M112 158 L146 208"/>
+    <path d="M248 158 L214 208"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#269C72" stroke-width="2">
+    <circle cx="180" cy="66" r="19"/><circle cx="112" cy="143" r="19"/><circle cx="248" cy="143" r="19"/>
+    <circle cx="78" cy="223" r="19"/><circle cx="146" cy="223" r="19"/><circle cx="214" cy="223" r="19"/>
+  </g>
+  <g font-family="sans-serif" font-size="15" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="180" y="66">1</text><text x="112" y="143">2</text><text x="248" y="143">3</text>
+    <text x="78" y="223">4</text><text x="146" y="223">5</text><text x="214" y="223">6</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="340" y="91">根从 1 编号时：</text>
+    <text x="360" y="128" fill="#269C72">双亲：⌊i / 2⌋</text>
+    <text x="360" y="162" fill="#269C72">左孩子：2i</text>
+    <text x="360" y="196" fill="#269C72">右孩子：2i + 1</text>
+    <text x="340" y="241" fill="#D55263">孩子下标必须 ≤ n</text>
+  </g>
+  <g font-family="sans-serif" font-size="14" fill="#6B7280">
+    <text x="340" y="274">0 起点：左 2i+1，右 2i+2</text>
+    <text x="340" y="298">这是位置关系，不是关键字次序。</text>
+  </g>
+</svg>

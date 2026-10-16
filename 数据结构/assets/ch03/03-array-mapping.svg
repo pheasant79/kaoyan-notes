@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" role="img" aria-labelledby="title desc">
+  <title id="title">二维数组行优先地址映射</title>
+  <desc id="desc">三行四列数组按行优先存储，A[1][2]的0起点线性偏移为6，也就是第7个元素，地址为首地址B加6倍元素宽度。</desc>
+  <rect width="760" height="390" fill="#ffffff"/>
+  <style>
+    .cell{fill:#eef5ff;stroke:#4b8ee8;stroke-width:2}.hot{fill:#fef2f2;stroke:#d55263;stroke-width:2.5}.t{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:19px;fill:#1f2937;text-anchor:middle}.s{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:16px;fill:#475569;text-anchor:middle}.f{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:18px;fill:#269c72;text-anchor:start}
+  </style>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#269c72"/></marker></defs>
+  <text x="380" y="28" class="t">3×4 数组按行优先存储：偏移 = i×列数+j</text>
+  <g transform="translate(70 70)">
+    <text x="85" y="0" class="s">j=0</text><text x="165" y="0" class="s">j=1</text><text x="245" y="0" class="s">j=2</text><text x="325" y="0" class="s">j=3</text>
+    <text x="0" y="43" class="s">i=0</text><text x="0" y="113" class="s">i=1</text><text x="0" y="183" class="s">i=2</text>
+    <g transform="translate(45 12)">
+      <rect x="0" y="0" width="80" height="54" class="cell"/><text x="40" y="35" class="t">A[0][0]</text>
+      <rect x="80" y="0" width="80" height="54" class="cell"/><text x="120" y="35" class="t">A[0][1]</text>
+      <rect x="160" y="0" width="80" height="54" class="cell"/><text x="200" y="35" class="t">A[0][2]</text>
+      <rect x="240" y="0" width="80" height="54" class="cell"/><text x="280" y="35" class="t">A[0][3]</text>
+      <rect x="0" y="70" width="80" height="54" class="cell"/><text x="40" y="105" class="t">A[1][0]</text>
+      <rect x="80" y="70" width="80" height="54" class="cell"/><text x="120" y="105" class="t">A[1][1]</text>
+      <rect x="160" y="70" width="80" height="54" class="hot"/><text x="200" y="105" class="t">A[1][2]</text>
+      <rect x="240" y="70" width="80" height="54" class="cell"/><text x="280" y="105" class="t">A[1][3]</text>
+      <rect x="0" y="140" width="80" height="54" class="cell"/><text x="40" y="175" class="t">A[2][0]</text>
+      <rect x="80" y="140" width="80" height="54" class="cell"/><text x="120" y="175" class="t">A[2][1]</text>
+      <rect x="160" y="140" width="80" height="54" class="cell"/><text x="200" y="175" class="t">A[2][2]</text>
+      <rect x="240" y="140" width="80" height="54" class="cell"/><text x="280" y="175" class="t">A[2][3]</text>
+    </g>
+  </g>
+  <path d="M430 150 H610" stroke="#269c72" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="460" y="122" class="f">0 起点偏移：1×4+2=6</text>
+  <text x="460" y="185" class="f">第 7 个元素（偏移从 0 计）</text>
+  <text x="460" y="222" class="f">LOC = B + 6×w</text>
+  <text x="380" y="350" class="s">若下标从 1 开始，先减去下标起点；列优先公式需按列方向重新换算。</text>
+</svg>

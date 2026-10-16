@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考研高数：导数急救与全图谱教程</title>
+<style>
+  :root{
+    --bg:#101214;--ink:#f2f4f3;--muted:#a9b0ae;--panel:#181c1f;--panel2:#20262a;
+    --line:#31383d;--green:#51d18a;--blue:#61a7ff;--yellow:#ffd166;--red:#ff6b6b;
+    --violet:#b58cff;--cyan:#4dd7d0;--orange:#f7a65a;--side:292px;--code:#0c1012;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI","Microsoft YaHei","PingFang SC",Arial,sans-serif;line-height:1.85;display:flex;min-height:100vh}
+  nav{position:fixed;inset:0 auto 0 0;width:var(--side);background:#15191c;border-right:1px solid var(--line);padding:24px 18px;overflow:auto}
+  nav h2{font-size:1rem;margin:0 0 12px;color:var(--yellow)}
+  nav a{display:block;color:var(--muted);text-decoration:none;padding:8px 10px;border-left:3px solid transparent;border-radius:7px;margin:3px 0;font-size:.92rem}
+  nav a:hover{background:var(--panel2);color:#fff;border-left-color:var(--cyan)}
+  main{margin-left:var(--side);width:100%;max-width:1120px;padding:38px 54px 90px}
+  h1{font-size:2.25rem;line-height:1.25;margin:0 0 8px}
+  h1 span{color:var(--cyan)}
+  .subtitle{color:var(--muted);margin:0 0 28px}
+  .chapter{border-top:1px solid var(--line);padding-top:30px;margin-top:34px}
+  .chapter:first-of-type{border-top:0;margin-top:0}
+  h2{display:flex;gap:12px;align-items:center;font-size:1.55rem;margin:0 0 14px}
+  h2 .num{width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:var(--cyan);color:#051010;font-weight:900;flex:0 0 auto}
+  h3{font-size:1.16rem;margin:24px 0 8px;color:#fff}
+  p{margin:0 0 14px}
+  code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+  .card,.warn,.ok,.note{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:15px 17px}
+  .card strong,.warn strong,.ok strong,.note strong{display:block;margin-bottom:6px}
+  .warn{border-left:4px solid var(--red);background:#241819}
+  .ok{border-left:4px solid var(--green);background:#132119}
+  .note{border-left:4px solid var(--yellow);background:#211d12}
+  .card{border-left:4px solid var(--blue)}
+  .formula{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:12px 0;overflow:auto;font-family:"Cascadia Code","Consolas",monospace;white-space:pre-wrap;color:#e7efed}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.94rem}
+  th,td{border-bottom:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+  th{background:var(--panel2);color:#fff}
+  tr:nth-child(even) td{background:#131719}
+  .tag{display:inline-block;border:1px solid var(--line);background:#14191c;border-radius:999px;padding:2px 9px;margin:2px;color:var(--muted);font-size:.86rem}
+  .bad{color:var(--red)}.good{color:var(--green)}.mid{color:var(--yellow)}.blue{color:var(--blue)}
+  svg{display:block;max-width:100%;margin:18px auto}
+  .route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+  .step{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;text-align:center;min-height:94px}
+  .step b{display:block;color:var(--yellow);font-size:1.08rem}
+  ul{padding-left:1.2em;margin:8px 0 14px}
+  li{margin:5px 0}
+  @media(max-width:900px){nav{display:none}main{margin-left:0;padding:24px 18px}.grid,.route{grid-template-columns:1fr}h1{font-size:1.75rem}h2{font-size:1.32rem}}
+</style>
+</head>
+<body>
+<nav>
+  <h2>高数教程目录</h2>
+  <a href="#start">0. 先把混乱停住</a>
+  <a href="#prime">1. x' 到底是什么</a>
+  <a href="#differential">2. dx、dv、微分</a>
+  <a href="#chain">3. 链式法则与换元</a>
+  <a href="#wrong">4. 三个常见误区</a>
+  <a href="#derivative">5. 导数考研核心</a>
+  <a href="#integral">6. 积分核心</a>
+  <a href="#limit">7. 极限连续</a>
+  <a href="#series">8. 级数与多元</a>
+  <a href="#equation">9. 微分方程</a>
+  <a href="#map">10. 考研高数全图谱</a>
+  <a href="#method">11. 做题路线</a>
+</nav>
+
+<main>
+<h1>考研高数：<span>导数急救</span>与全图谱教程</h1>
+<p class="subtitle">给现在“看到 x'、dx、dv 就乱”的阶段用。先把符号地基打稳，再把考研高数各章放进一张地图里。</p>
+
+<section class="chapter" id="start">
+<h2><span class="num">0</span>先把混乱停住：导数只问一件事</h2>
+<div class="note">
+  <strong>导数的核心问题</strong>
+  某个量随着另一个量变化时，变化得有多快。必须同时说清楚：谁是函数，谁是自变量。
+</div>
+<div class="formula">导数 = 因变量的微小变化 / 自变量的微小变化
+
+如果 y = f(x)，那么 y' 通常表示 dy/dx。
+如果 x = x(t)，那么 x' 通常表示 dx/dt。
+如果没有说“对谁求导”，x' 这个符号本身是不完整的。</div>
+<svg viewBox="0 0 860 240" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#61a7ff"/></marker></defs>
+  <rect x="50" y="55" width="180" height="92" rx="8" fill="#20262a" stroke="#61a7ff"/>
+  <text x="140" y="92" text-anchor="middle" fill="#61a7ff" font-size="18" font-weight="bold">自变量</text>
+  <text x="140" y="122" text-anchor="middle" fill="#a9b0ae" font-size="13">你拿它当尺子</text>
+  <line x1="230" y1="101" x2="350" y2="101" stroke="#61a7ff" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="360" y="55" width="180" height="92" rx="8" fill="#20262a" stroke="#4dd7d0"/>
+  <text x="450" y="92" text-anchor="middle" fill="#4dd7d0" font-size="18" font-weight="bold">函数关系</text>
+  <text x="450" y="122" text-anchor="middle" fill="#a9b0ae" font-size="13">y = f(x)</text>
+  <line x1="540" y1="101" x2="660" y2="101" stroke="#61a7ff" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="670" y="55" width="150" height="92" rx="8" fill="#20262a" stroke="#51d18a"/>
+  <text x="745" y="92" text-anchor="middle" fill="#51d18a" font-size="18" font-weight="bold">导数</text>
+  <text x="745" y="122" text-anchor="middle" fill="#a9b0ae" font-size="13">dy/dx</text>
+  <text x="430" y="192" text-anchor="middle" fill="#ffd166" font-size="14">先定自变量，再谈导数。自变量换了，导数就可能完全变。</text>
+</svg>
+</section>
+
+<section class="chapter" id="prime">
+<h2><span class="num">1</span>x' 到底是什么：不是固定答案</h2>
+<p>你见过 <code>x'=0</code>，也见过 <code>x'=x^2</code>，并不矛盾。它们说的是不同语境。</p>
+<table>
+  <tr><th>写法</th><th>完整意思</th><th>为什么</th></tr>
+  <tr><td><code>x' = 0</code></td><td><code>dx/dt = 0</code>，x 对 t 是常数</td><td>例如 <code>x=3</code>，t 怎么变，x 都不变</td></tr>
+  <tr><td><code>x' = 1</code></td><td><code>dx/dx = 1</code></td><td>x 对自己求导，每增加 1，自己也增加 1</td></tr>
+  <tr><td><code>x' = 2t</code></td><td><code>dx/dt = 2t</code>，且 <code>x=t^2</code></td><td>x 是 t 的函数</td></tr>
+  <tr><td><code>x' = x^2</code></td><td><code>dx/dt = x^2</code></td><td>这是微分方程，不是普通求导结果，意思是“x 的变化率等于 x²”</td></tr>
+</table>
+<div class="ok">
+  <strong>一句话定心</strong>
+  <code>'</code> 是省略写法。省略之前必须知道自变量是谁。考研题里若写 <code>y'</code>，默认多半是 <code>dy/dx</code>；若写运动、微分方程里的 <code>x'</code>，多半是 <code>dx/dt</code>。
+</div>
+</section>
+
+<section class="chapter" id="differential">
+<h2><span class="num">2</span>dx、dv、微分：它不是“随便消去”</h2>
+<p>如果 <code>v=x+1</code>，我们写 <code>dv=dx</code>；如果 <code>v=x^2</code>，写 <code>dv=2x dx</code>。原因不是“把 t 消掉就行”，而是<strong>微分定义</strong>。</p>
+<div class="formula">若 v = f(x)
+dv = f'(x) dx
+
+v = x + 1  →  dv = 1·dx = dx
+v = x²     →  dv = 2x·dx</div>
+<div class="grid">
+  <div class="card">
+    <strong>导数写法</strong>
+    <code>dv/dx = 2x</code> 表示 v 对 x 的变化率。
+  </div>
+  <div class="card">
+    <strong>微分写法</strong>
+    <code>dv = 2x dx</code> 表示 v 的微小变化约等于 <code>2x</code> 倍的 x 的微小变化。
+  </div>
+</div>
+<div class="warn">
+  <strong>不要写成 <code>v'=2x dv/dx</code></strong>
+  如果 <code>v'=dv/dx</code>，那已经等于 <code>2x</code> 了；再乘一个 <code>dv/dx</code> 就重复了。正确链条是：<code>dv/dx=2x</code>，所以 <code>dv=2x dx</code>。
+</div>
+</section>
+
+<section class="chapter" id="chain">
+<h2><span class="num">3</span>链式法则与换元积分：t 不是被魔法消掉</h2>
+<p>当 <code>v=f(x)</code>，而 <code>x=x(t)</code> 时，v 间接依赖 t。此时：</p>
+<div class="formula">v = f(x),  x = x(t)
+
+dv/dt = dv/dx · dx/dt
+
+例如 v=x²:
+dv/dt = 2x · dx/dt</div>
+<p>如果两边都乘 <code>dt</code>，得到：</p>
+<div class="formula">dv = 2x · dx</div>
+<p>这就是为什么换元积分里可以写 <code>v=x², dv=2x dx</code>。它不是“左右各自随便挑一个导数”，而是链式法则背后的统一结果。</p>
+<svg viewBox="0 0 850 250" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0 0,10 4,0 8" fill="#4dd7d0"/></marker></defs>
+  <rect x="80" y="72" width="150" height="80" rx="8" fill="#20262a" stroke="#ffd166"/>
+  <text x="155" y="106" text-anchor="middle" fill="#ffd166" font-size="18" font-weight="bold">t</text>
+  <text x="155" y="130" text-anchor="middle" fill="#a9b0ae" font-size="12">最底层自变量</text>
+  <line x1="230" y1="112" x2="350" y2="112" stroke="#4dd7d0" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="290" y="96" text-anchor="middle" fill="#4dd7d0" font-size="13">dx/dt</text>
+  <rect x="360" y="72" width="150" height="80" rx="8" fill="#20262a" stroke="#61a7ff"/>
+  <text x="435" y="106" text-anchor="middle" fill="#61a7ff" font-size="18" font-weight="bold">x</text>
+  <text x="435" y="130" text-anchor="middle" fill="#a9b0ae" font-size="12">中间变量</text>
+  <line x1="510" y1="112" x2="630" y2="112" stroke="#4dd7d0" stroke-width="2" marker-end="url(#a2)"/>
+  <text x="570" y="96" text-anchor="middle" fill="#4dd7d0" font-size="13">dv/dx</text>
+  <rect x="640" y="72" width="150" height="80" rx="8" fill="#20262a" stroke="#51d18a"/>
+  <text x="715" y="106" text-anchor="middle" fill="#51d18a" font-size="18" font-weight="bold">v</text>
+  <text x="715" y="130" text-anchor="middle" fill="#a9b0ae" font-size="12">最终函数</text>
+  <text x="425" y="198" text-anchor="middle" fill="#f2f4f3" font-size="15">总变化率 = 每一段变化率相乘：dv/dt = dv/dx · dx/dt</text>
+</svg>
+</section>
+
+<section class="chapter" id="wrong">
+<h2><span class="num">4</span>你提到的三个误区，逐个纠正</h2>
+<div class="grid">
+  <div class="warn">
+    <strong>误区 1：x' 有固定值</strong>
+    没有。<code>x'</code> 必须看对谁求导。<code>dx/dx=1</code>，但 <code>dx/dt</code> 可能是 0、2t、x² 或别的。
+  </div>
+  <div class="warn">
+    <strong>误区 2：等式右边只要能反映变化就行</strong>
+    不行。必须变量关系明确。<code>dv/dt = dv/dx · dx/dt</code> 是链式法则，不是随意拼接。
+  </div>
+  <div class="warn">
+    <strong>误区 3：导数左边关于 v，右边关于 x，所以要写 v'=2x dv/dx</strong>
+    正好相反：<code>dv/dx</code> 本身就是“v 关于 x 的导数”。若 <code>v=x²</code>，则 <code>dv/dx=2x</code>。
+  </div>
+  <div class="warn">
+    <strong>误区 4：x' · dx = x</strong>
+    一般不成立。若 <code>x'=dx/dt</code>，则 <code>x' dx=(dx/dt)dx</code>，没有理由等于 x。你可能想起的是 <code>∫1 dx=x+C</code> 或 <code>d(x²/2)=x dx</code>。
+  </div>
+</div>
+<div class="ok">
+  <strong>遇到任何导数符号，先补全</strong>
+  把 <code>'</code> 改写成分式：<code>y'</code> 改成 <code>dy/dx</code>，<code>x'</code> 改成 <code>dx/dt</code> 或题目给定的自变量。补全以后，很多混乱会自己消失。
+</div>
+</section>
+
+<section class="chapter" id="derivative">
+<h2><span class="num">5</span>导数这一章，考研真正考什么</h2>
+<table>
+  <tr><th>模块</th><th>必须会</th><th>做题抓手</th></tr>
+  <tr><td>导数定义</td><td><code>f'(x0)=lim[f(x)-f(x0)]/(x-x0)</code></td><td>看到一点处、绝对值、分段函数，优先用定义</td></tr>
+  <tr><td>求导法则</td><td>和差积商、复合函数、隐函数、参数方程</td><td>先识别结构，再机械求导</td></tr>
+  <tr><td>高阶导数</td><td>二阶、n 阶、莱布尼茨公式</td><td>找规律，不要硬算到底</td></tr>
+  <tr><td>微分</td><td><code>dy=f'(x)dx</code></td><td>用于近似、换元、误差估计</td></tr>
+  <tr><td>导数应用</td><td>单调性、极值、凹凸、拐点、渐近线</td><td>一阶看增减，二阶看弯曲</td></tr>
+</table>
+<div class="route">
+  <div class="step"><b>1</b>定义题<br>先写极限</div>
+  <div class="step"><b>2</b>求导题<br>先拆结构</div>
+  <div class="step"><b>3</b>应用题<br>列一阶二阶</div>
+  <div class="step"><b>4</b>证明题<br>想中值定理</div>
+</div>
+</section>
+
+<section class="chapter" id="integral">
+<h2><span class="num">6</span>积分：它和导数是一对反向工具</h2>
+<p>不定积分是在找原函数，定积分是在算累积量。考研里不要只背公式，要先判断类型。</p>
+<table>
+  <tr><th>积分类型</th><th>常见信号</th><th>常用方法</th></tr>
+  <tr><td>凑微分</td><td>里面有复合函数，外面有其导数影子</td><td><code>u=g(x), du=g'(x)dx</code></td></tr>
+  <tr><td>分部积分</td><td>乘积，尤其多项式乘三角/指数/对数</td><td><code>∫u dv=uv-∫v du</code></td></tr>
+  <tr><td>有理函数</td><td>分式多项式</td><td>拆分、配方、部分分式</td></tr>
+  <tr><td>定积分性质</td><td>区间对称、含 <code>a+b-x</code></td><td>换元、奇偶性、周期性</td></tr>
+  <tr><td>反常积分</td><td>无穷区间或无界函数</td><td>先写极限，再判敛散</td></tr>
+</table>
+<div class="note">
+  <strong>积分换元的本质</strong>
+  不是“把 dx 换掉就行”，而是用微分关系替换整块：若 <code>u=g(x)</code>，则 <code>du=g'(x)dx</code>。必须整块匹配。
+</div>
+</section>
+
+<section class="chapter" id="limit">
+<h2><span class="num">7</span>极限与连续：高数第一地基</h2>
+<table>
+  <tr><th>知识点</th><th>核心问题</th><th>常用方法</th></tr>
+  <tr><td>数列极限</td><td>n 趋于无穷时靠近谁</td><td>夹逼、单调有界、等价无穷小思想</td></tr>
+  <tr><td>函数极限</td><td>x 靠近某点或无穷时函数靠近谁</td><td>代入、因式分解、洛必达、泰勒</td></tr>
+  <tr><td>无穷小比较</td><td>谁比谁小得更快</td><td>等价替换：<code>sin x~x</code>，<code>1-cos x~x²/2</code></td></tr>
+  <tr><td>连续</td><td>函数值等于极限值</td><td>左极限=右极限=函数值</td></tr>
+</table>
+<div class="ok">
+  <strong>考研经验</strong>
+  极限题不是都用洛必达。能等价替换就替换，能泰勒就泰勒，复杂乘除再考虑洛必达。
+</div>
+</section>
+
+<section class="chapter" id="series">
+<h2><span class="num">8</span>级数、多元函数、空间解析几何</h2>
+<div class="grid">
+  <div class="card">
+    <strong>级数</strong>
+    正项级数判敛散，交错级数看莱布尼茨，幂级数重点是收敛半径、收敛域、展开与求和。
+  </div>
+  <div class="card">
+    <strong>多元函数微分</strong>
+    偏导、全微分、复合函数求导、隐函数求导、极值与条件极值。核心是变量关系图。
+  </div>
+  <div class="card">
+    <strong>二重积分</strong>
+    先画区域，再定积分次序。直角坐标适合矩形/上下边界，极坐标适合圆、扇形、含 x²+y²。
+  </div>
+  <div class="card">
+    <strong>空间解析几何</strong>
+    向量、平面、直线、曲面。重点是会把几何条件翻译成方程。
+  </div>
+</div>
+</section>
+
+<section class="chapter" id="equation">
+<h2><span class="num">9</span>微分方程：x'=x² 这类式子的归宿</h2>
+<p><code>x'=x²</code> 不是“x 求导等于 x² 的普通公式”，它是在规定未知函数 x(t) 应该满足的变化规律。</p>
+<table>
+  <tr><th>类型</th><th>样子</th><th>方法</th></tr>
+  <tr><td>可分离变量</td><td><code>dy/dx=g(x)h(y)</code></td><td>把 y 放一边，x 放一边，积分</td></tr>
+  <tr><td>一阶线性</td><td><code>y'+P(x)y=Q(x)</code></td><td>公式法或常数变易法</td></tr>
+  <tr><td>二阶常系数齐次</td><td><code>y''+py'+qy=0</code></td><td>特征方程</td></tr>
+  <tr><td>二阶常系数非齐次</td><td><code>y''+py'+qy=f(x)</code></td><td>通解=齐次通解+特解</td></tr>
+</table>
+<div class="formula">例：dx/dt = x²
+
+分离变量：
+dx/x² = dt
+
+两边积分：
+-1/x = t + C
+
+所以：
+x = -1/(t+C)</div>
+</section>
+
+<section class="chapter" id="map">
+<h2><span class="num">10</span>考研高数全图谱：先知道自己在哪</h2>
+<table>
+  <tr><th>板块</th><th>核心能力</th><th>你现在要怎么学</th></tr>
+  <tr><td>函数、极限、连续</td><td>看懂变化趋势</td><td>补函数图像、基本初等函数、等价无穷小</td></tr>
+  <tr><td>一元微分学</td><td>会求变化率，会用导数研究函数</td><td>先解决符号，再练求导，再做单调极值</td></tr>
+  <tr><td>一元积分学</td><td>会反求原函数，会算累积量</td><td>按积分类型刷，不要混着乱刷</td></tr>
+  <tr><td>微分方程</td><td>根据变化率关系求函数</td><td>先掌握可分离和一阶线性</td></tr>
+  <tr><td>多元微分学</td><td>多个变量一起变时求变化率</td><td>画变量依赖图，分清偏导和全导</td></tr>
+  <tr><td>重积分</td><td>在二维/三维区域上累积</td><td>第一步永远画区域</td></tr>
+  <tr><td>无穷级数</td><td>无限相加是否有意义</td><td>先判敛散，再求和/展开</td></tr>
+  <tr><td>线性代数与概率</td><td>考研数学另两大块</td><td>和高数分块推进，不要等高数学完再开始</td></tr>
+</table>
+<div class="note">
+  <strong>你现在的优先级</strong>
+  先不用追求“所有题都会”。先把导数、微分、链式法则、换元积分这条线打通。它贯穿极限、积分、多元、微分方程，属于地基里的地基。
+</div>
+</section>
+
+<section class="chapter" id="method">
+<h2><span class="num">11</span>做题路线：不会做时按这个顺序救场</h2>
+<div class="route">
+  <div class="step"><b>看对象</b>函数？数列？积分？级数？方程？</div>
+  <div class="step"><b>看变量</b>谁是自变量？谁依赖谁？</div>
+  <div class="step"><b>看结构</b>复合、乘积、分式、绝对值、分段？</div>
+  <div class="step"><b>选工具</b>定义、公式、换元、分部、泰勒、中值定理</div>
+</div>
+<h3>给你的一周急救安排</h3>
+<table>
+  <tr><th>天数</th><th>任务</th><th>目标</th></tr>
+  <tr><td>第 1 天</td><td>只学导数符号：<code>dy/dx</code>、<code>dx/dt</code>、<code>dy</code>、<code>dx</code></td><td>看到符号不慌</td></tr>
+  <tr><td>第 2 天</td><td>基本求导公式和复合函数求导</td><td>机械求导正确</td></tr>
+  <tr><td>第 3 天</td><td>隐函数、参数方程、对数求导</td><td>补全特殊求导</td></tr>
+  <tr><td>第 4 天</td><td>导数应用：单调、极值、凹凸</td><td>会画函数性质表</td></tr>
+  <tr><td>第 5 天</td><td>不定积分：凑微分和分部积分</td><td>理解 <code>dv=f'(x)dx</code></td></tr>
+  <tr><td>第 6 天</td><td>定积分性质与换元</td><td>会看区间和对称</td></tr>
+  <tr><td>第 7 天</td><td>整理错题：每题标“卡在符号/公式/方法/计算”</td><td>知道自己真正缺哪块</td></tr>
+</table>
+<div class="ok">
+  <strong>最后一句</strong>
+  你不是“高数完全不会”，你现在是符号系统还没稳定，所以每个公式都像在变脸。先把“谁对谁求导”这根线抓住，后面会顺很多。
+</div>
+</section>
+</main>
+</body>
+</html>

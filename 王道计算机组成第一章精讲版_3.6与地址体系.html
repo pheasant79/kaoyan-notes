@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>王道计算机组成第一章精讲版</title>
+<style>
+  :root{--bg:#0f0f1a;--surface:#1a1a2e;--surface2:#222240;--panel:#151528;--text:#d8d8e8;--dim:#8d8daa;--line:#2a2a45;--red:#ff6b6b;--cyan:#4ecdc4;--yellow:#ffe66d;--purple:#a37ef0;--blue:#5dade2;--green:#58d68d;--orange:#f0a050;--pink:#f48fb1;--mint:#80cbc4;--code:#16162a;--side:310px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.86;display:flex;min-height:100vh}
+  nav{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--surface);border-right:1px solid var(--line);padding:26px 16px;overflow:auto}
+  nav h2{font-size:1.05rem;color:var(--yellow);margin-bottom:14px;letter-spacing:1px}
+  nav a{display:block;color:var(--dim);text-decoration:none;padding:7px 10px;border-left:3px solid transparent;border-radius:6px;font-size:.86rem;margin:2px 0}
+  nav a:hover,nav a.active{background:var(--surface2);color:white;border-left-color:var(--cyan)}
+  main{margin-left:var(--side);max-width:1120px;padding:42px 54px 90px;width:100%}
+  h1{font-size:2.16rem;color:white;margin-bottom:.3rem}h1 span{color:var(--cyan)}
+  .subtitle{color:var(--dim);margin-bottom:2.5rem}
+  .chapter{border-top:1px solid var(--line);padding-top:2rem;margin-bottom:4rem}.chapter:first-of-type{border-top:0;padding-top:0}
+  h2{display:flex;align-items:center;gap:12px;color:white;font-size:1.48rem;margin-bottom:1rem}
+  h2 .num{min-width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:1rem}
+  .ch1 .num{background:var(--red)}.ch2 .num{background:var(--cyan)}.ch3 .num{background:var(--yellow)}.ch4 .num{background:var(--purple);color:white}.ch5 .num{background:var(--blue)}.ch6 .num{background:var(--green)}.ch7 .num{background:var(--orange)}.ch8 .num{background:#c8d6ff}.ch9 .num{background:var(--pink)}.ch10 .num{background:var(--mint)}.ch11 .num{background:#b39ddb}.ch12 .num{background:#ffcc80}.ch13 .num{background:#90caf9}.ch14 .num{background:#a5d6a7}.ch15 .num{background:#ce93d8}.ch16 .num{background:#ef9a9a}.ch17 .num{background:#fff59d}
+  h3{font-size:1.15rem;color:white;margin:1.55rem 0 .65rem}p{margin-bottom:1rem}strong{color:white}em{color:var(--yellow);font-style:normal}code{font-family:"Cascadia Code","Consolas",monospace;color:var(--cyan)}
+  .box{background:var(--surface2);border:1px solid var(--line);border-left:4px solid var(--cyan);border-radius:8px;padding:16px 20px;margin:1.1rem 0}.note{background:#1f1f18;border-left-color:var(--yellow)}.fix{background:#2a1a1a;border-color:#ff6b6b55;border-left-color:var(--red)}.ok{background:#17251d;border-left-color:var(--green)}.deep{background:#17182d;border-left-color:var(--purple)}
+  .label{display:block;font-size:.88rem;font-weight:800;margin-bottom:7px}.box .label{color:var(--cyan)}.note .label{color:var(--yellow)}.fix .label{color:var(--red)}.ok .label{color:var(--green)}.deep .label{color:var(--purple)}
+  table{width:100%;border-collapse:collapse;margin:1.3rem 0;font-size:.91rem}th{background:var(--surface2);text-align:left;color:white;border-bottom:2px solid var(--line);padding:11px 13px}td{border-bottom:1px solid var(--line);padding:11px 13px;vertical-align:top}tr:nth-child(even) td{background:#141428}
+  .code{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:1rem 0 1.4rem;overflow:auto;white-space:pre;font-family:"Cascadia Code","Consolas",monospace;font-size:.9rem;line-height:1.7}.cm{color:#73738a}.kw{color:var(--purple)}.ty{color:var(--blue)}.fn{color:var(--green)}.lit{color:var(--orange)}
+  .good{color:var(--green)}.bad{color:var(--red)}.mid{color:var(--yellow)}svg{display:block;max-width:100%;margin:1.4rem auto}.pill{display:inline-block;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:2px 9px;margin:2px 3px;color:var(--dim);font-size:.86rem}
+  .formula{font-family:"Cascadia Code","Consolas",monospace;background:#121224;border:1px solid var(--line);border-radius:8px;padding:12px 16px;color:var(--yellow);margin:1rem 0}
+  @media(max-width:900px){nav{display:none}main{margin-left:0;padding:24px 18px}}
+</style>
+</head>
+<body>
+<nav>
+  <h2>精讲目录</h2>
+  <a href="#map">总图：先把脑子理顺</a>
+  <a href="#q1">1. 五大部件到底是哪五个</a>
+  <a href="#q2">2. 主存/辅存/RAM/ROM/I/O</a>
+  <a href="#q3">3. 主存由什么组成</a>
+  <a href="#q4">4. 地址和指针</a>
+  <a href="#q5">5. 32位/64位/机器字长</a>
+  <a href="#q6">6. 地址与存储单元</a>
+  <a href="#q7">7. 字是什么</a>
+  <a href="#q8">8. MAR/MDR 与位数</a>
+  <a href="#q9">9. CPU与主存内部部件</a>
+  <a href="#q10">10. 函数调用和栈</a>
+  <a href="#q11">11. 早期模型与现代计算机</a>
+  <a href="#q12">12. 应用软件与系统软件</a>
+  <a href="#q13">13. 软硬件逻辑等价性</a>
+  <a href="#q14">14. ISA与乘法</a>
+  <a href="#q15">15. 汇编、ISA、ISR</a>
+  <a href="#q16">16. M0/M1/OS/M2/M3</a>
+  <a href="#q17">17. 数据通路带宽</a>
+</nav>
+<main>
+<h1>王道计组第一章 · <span>逐问精讲版</span></h1>
+<p class="subtitle">这版按你的 1-17 个问题逐条讲，不绕。重点把“CPU 位数、字、存储单元、MAR、MDR、数据通路带宽”这几个容易混的东西彻底拆开。</p>
+
+<section class="chapter" id="map">
+<h2><span class="num" style="background:#fff;color:#000">图</span> 总图：第一章其实有三条线</h2>
+<p>你现在懵，是因为王道第一章把三条线压在一起讲了：<strong>硬件组成线、存储访问线、抽象层次线</strong>。</p>
+<svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="amap" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <rect x="40" y="40" width="240" height="250" rx="10" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/>
+  <text x="160" y="75" text-anchor="middle" fill="#58d68d" font-size="17" font-weight="bold">硬件组成线</text>
+  <text x="160" y="112" text-anchor="middle" fill="#ccc" font-size="12">CPU = 运算器 + 控制器</text>
+  <text x="160" y="142" text-anchor="middle" fill="#ccc" font-size="12">主存 = 存储体 + MAR + MDR</text>
+  <text x="160" y="172" text-anchor="middle" fill="#ccc" font-size="12">I/O = 输入设备 + 输出设备</text>
+  <text x="160" y="230" text-anchor="middle" fill="#888" font-size="11">回答：机器里面有什么</text>
+  <rect x="330" y="40" width="240" height="250" rx="10" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+  <text x="450" y="75" text-anchor="middle" fill="#5dade2" font-size="17" font-weight="bold">存储访问线</text>
+  <text x="450" y="112" text-anchor="middle" fill="#ccc" font-size="12">地址：找哪个单元</text>
+  <text x="450" y="142" text-anchor="middle" fill="#ccc" font-size="12">MAR：暂存地址</text>
+  <text x="450" y="172" text-anchor="middle" fill="#ccc" font-size="12">MDR：暂存数据</text>
+  <text x="450" y="202" text-anchor="middle" fill="#ccc" font-size="12">存储单元：被找的格子</text>
+  <text x="450" y="230" text-anchor="middle" fill="#888" font-size="11">回答：CPU 怎么读写主存</text>
+  <rect x="620" y="40" width="240" height="250" rx="10" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+  <text x="740" y="75" text-anchor="middle" fill="#ffe66d" font-size="17" font-weight="bold">抽象层次线</text>
+  <text x="740" y="112" text-anchor="middle" fill="#ccc" font-size="12">M0 微程序机器</text>
+  <text x="740" y="142" text-anchor="middle" fill="#ccc" font-size="12">M1 机器语言机器</text>
+  <text x="740" y="172" text-anchor="middle" fill="#ccc" font-size="12">操作系统机器</text>
+  <text x="740" y="202" text-anchor="middle" fill="#ccc" font-size="12">M2/M3 语言虚拟机</text>
+  <text x="740" y="230" text-anchor="middle" fill="#888" font-size="11">回答：人怎么更方便地使用机器</text>
+</svg>
+<div class="box ok"><span class="label">先给你定心丸</span>你不是理解能力差，而是这里的“位数、地址、字、寄存器、机器层次”全都在用类似的词。真正要做的是：每个词只回答一个问题。</div>
+</section>
+
+<section class="chapter ch1" id="q1">
+<h2><span class="num">1</span> 五大部件组成：你说得基本对，但少一个细分</h2>
+<p>冯·诺依曼结构的五大部件是：</p>
+<table>
+  <tr><th>部件</th><th>职责</th><th>你该怎么想</th></tr>
+  <tr><td>运算器</td><td>做算术运算、逻辑运算</td><td>真正算东西</td></tr>
+  <tr><td>控制器</td><td>取指令、分析指令、发控制信号</td><td>指挥其它部件</td></tr>
+  <tr><td>存储器</td><td>存放程序和数据</td><td>仓库</td></tr>
+  <tr><td>输入设备</td><td>把外界信息送进计算机</td><td>键盘、鼠标、传感器</td></tr>
+  <tr><td>输出设备</td><td>把结果送出计算机</td><td>屏幕、打印机、LED</td></tr>
+</table>
+<div class="box note"><span class="label">注意</span>运算器 + 控制器通常合称 CPU。输入设备和输出设备也常合称 I/O 设备。</div>
+</section>
+
+<section class="chapter ch2" id="q2">
+<h2><span class="num">2</span> 存储器有主存和辅存：硬盘到底是不是存储器？</h2>
+<p>你这句话里有一个容易混的地方：<strong>硬盘既是辅助存储器，又从 CPU 访问路径看属于 I/O 设备</strong>。</p>
+<table>
+  <tr><th>角度</th><th>硬盘/SSD 算什么</th><th>为什么</th></tr>
+  <tr><td>存储层次角度</td><td class="good">辅助存储器</td><td>它负责长期保存大量数据</td></tr>
+  <tr><td>CPU直接访问角度</td><td class="mid">I/O 外设</td><td>CPU 通常不能像读内存一样直接按主存地址读硬盘，必须通过控制器、驱动、I/O 命令</td></tr>
+</table>
+<div class="box fix"><span class="label">纠偏</span>“只有内存才是存储器”不准确。准确说法是：<strong>只有主存是 CPU 可直接访问的存储器</strong>；硬盘是辅助存储器，但访问它需要走 I/O 路径。</div>
+<table>
+  <tr><th>名称</th><th>典型例子</th><th>断电是否丢失</th><th>CPU是否直接按主存地址访问</th></tr>
+  <tr><td>RAM</td><td>内存条、SRAM Cache</td><td class="bad">通常丢失</td><td class="good">主存可以直接访问，Cache更靠近CPU</td></tr>
+  <tr><td>ROM/Flash</td><td>BIOS、单片机 Flash</td><td class="good">不丢失</td><td class="mid">取决于系统设计，可映射为地址空间，也可通过控制器访问</td></tr>
+  <tr><td>辅存</td><td>硬盘、SSD、U盘</td><td class="good">不丢失</td><td class="bad">一般不直接按主存地址访问</td></tr>
+</table>
+</section>
+
+<section class="chapter ch3" id="q3">
+<h2><span class="num">3</span> 主存储器由存储体、MAR、MDR 组成吗？</h2>
+<p>在王道的抽象模型里，是的：主存储器由<strong>存储体、MAR、MDR</strong>组成。但你要知道这是一张“教学模型图”，不是现代电脑主板的真实拆解图。</p>
+<svg viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a3" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <rect x="60" y="95" width="170" height="80" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/>
+  <text x="145" y="127" text-anchor="middle" fill="#a37ef0" font-size="16" font-weight="bold">CPU</text>
+  <text x="145" y="152" text-anchor="middle" fill="#ccc" font-size="11">发出读/写请求</text>
+  <line x1="230" y1="115" x2="340" y2="115" stroke="#ffe66d" stroke-width="2" marker-end="url(#a3)"/><text x="285" y="102" text-anchor="middle" fill="#ffe66d" font-size="11">地址送入 MAR</text>
+  <line x1="340" y1="155" x2="230" y2="155" stroke="#4ecdc4" stroke-width="2" marker-end="url(#a3)"/><text x="285" y="178" text-anchor="middle" fill="#4ecdc4" font-size="11">数据经 MDR 返回</text>
+  <rect x="360" y="55" width="130" height="75" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/>
+  <text x="425" y="88" text-anchor="middle" fill="#ffe66d" font-size="16" font-weight="bold">MAR</text>
+  <text x="425" y="112" text-anchor="middle" fill="#ccc" font-size="11">放地址</text>
+  <rect x="360" y="155" width="130" height="75" rx="8" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/>
+  <text x="425" y="188" text-anchor="middle" fill="#5dade2" font-size="16" font-weight="bold">MDR</text>
+  <text x="425" y="212" text-anchor="middle" fill="#ccc" font-size="11">放数据</text>
+  <rect x="570" y="50" width="250" height="210" rx="8" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/>
+  <text x="695" y="82" text-anchor="middle" fill="#58d68d" font-size="16" font-weight="bold">存储体</text>
+  <text x="695" y="115" text-anchor="middle" fill="#ccc" font-size="12">很多存储单元组成的阵列</text>
+  <text x="695" y="150" text-anchor="middle" fill="#888" font-size="11">0000 → 数据</text>
+  <text x="695" y="175" text-anchor="middle" fill="#888" font-size="11">0001 → 数据</text>
+  <text x="695" y="200" text-anchor="middle" fill="#888" font-size="11">0010 → 数据</text>
+  <text x="695" y="225" text-anchor="middle" fill="#888" font-size="11">...</text>
+</svg>
+<div class="box ok"><span class="label">你的理解怎么改</span>可以把主存看成“存储体 + 两个门口寄存器”。MAR 是地址门口，MDR 是数据门口。CPU 不需要知道存储体内部每个晶体管怎么排，只需要给地址、拿数据。</div>
+<div class="box fix"><span class="label">不是只有一整根内存条</span>教材说“一个主存储器”是逻辑视角。真实电脑可能有多根内存条、多个内存通道、内存控制器、Cache、MMU。但在第一章，你先按一个统一主存模型理解。</div>
+</section>
+
+<section class="chapter ch4" id="q4">
+<h2><span class="num">4</span> 地址和指针有什么区别？是否都是物理地址？</h2>
+<p>先记一句话：<strong>地址是编号；指针是变量。</strong></p>
+<table>
+  <tr><th>概念</th><th>是什么</th><th>在哪一层</th><th>例子</th></tr>
+  <tr><td>地址</td><td>定位存储单元的编号</td><td>计算机组成/体系结构</td><td>0x1000 这个位置编号</td></tr>
+  <tr><td>物理地址</td><td>真实内存硬件位置的编号</td><td>硬件/MMU之后</td><td>内存芯片上的某个位置</td></tr>
+  <tr><td>虚拟地址</td><td>程序以为自己看到的地址</td><td>操作系统+CPU</td><td>C 程序里打印出来的指针值通常是虚拟地址</td></tr>
+  <tr><td>指针</td><td>一个变量，它的值被解释为地址</td><td>C/C++语言层</td><td><code>int *p = &x;</code></td></tr>
+</table>
+<div class="code"><span class="ty">int</span> x = 10;
+<span class="ty">int</span> *p = &x;
+
+<span class="cm">// &x 是 x 的地址</span>
+<span class="cm">// p 是一个变量</span>
+<span class="cm">// p 里面存的值，是 x 的地址</span></div>
+<div class="box fix"><span class="label">关键纠偏</span>你在 C/C++ 里看到的指针，一般不是裸物理地址，而是进程虚拟地址。操作系统和 MMU 会把虚拟地址翻译成物理地址。</div>
+</section>
+
+<section class="chapter ch5" id="q5">
+<h2><span class="num">5</span> CPU 32/64 位、机器字长 64 位怎么理解？</h2>
+<p>“64 位电脑”这个说法最接近下面这几个东西，但不等于所有“64 位”的东西。</p>
+<table>
+  <tr><th>说法</th><th>最核心含义</th><th>和“我的电脑64位”的关系</th></tr>
+  <tr><td>64位CPU</td><td>CPU 支持 64 位指令集，通用寄存器通常为 64 位，整数运算自然宽度通常为 64 位</td><td class="good">最接近</td></tr>
+  <tr><td>64位操作系统</td><td>操作系统运行在 64 位模式，能管理更大的虚拟地址空间</td><td class="good">也常包含在“64位电脑”的日常说法里</td></tr>
+  <tr><td>64位程序</td><td>程序按 64 位 ABI 编译，指针通常为 64 位</td><td class="mid">取决于程序本身</td></tr>
+  <tr><td>机器字长64位</td><td>CPU 一次自然处理的数据位数是 64 位</td><td class="good">教材里通常近似等于 CPU 位数</td></tr>
+</table>
+<div class="box note"><span class="label">王道考试口径</span>如果题目说“某机字长 64 位”，一般理解为 CPU 一次能处理 64 位二进制数据，通用寄存器宽度通常也是 64 位。</div>
+<div class="box fix"><span class="label">不要推出这个错误结论</span>64 位 CPU 不代表内存里每个地址存 64 位。现代机器通常仍是按字节编址，一个地址对应 1 字节。</div>
+</section>
+
+<section class="chapter ch6" id="q6">
+<h2><span class="num">6</span> 一个地址存 1 字节，那存储体中的存储单元怎么理解？</h2>
+<p>你记得“一个地址里面存储 1 个字节”，这个在现代通用机里通常叫<strong>按字节编址</strong>。更准确说法是：</p>
+<div class="formula">一个地址编号 → 对应一个可寻址存储单元 → 该单元大小通常为 1B = 8bit</div>
+<p>但“存储单元”在教材里有时会有两个层次：</p>
+<table>
+  <tr><th>层次</th><th>含义</th><th>大小</th></tr>
+  <tr><td>可寻址存储单元</td><td>一个地址能直接定位的最小单位</td><td>按字节编址时是 1B</td></tr>
+  <tr><td>存储字单元</td><td>存储器一次读写的一组二进制位</td><td>可能是 16/32/64 位，取决于存储字长或 MDR 宽度</td></tr>
+</table>
+<div class="box ok"><span class="label">简单记法</span>如果王道题目没特殊说明，看到现代计算机地址，优先按“一个地址对应 1 字节”理解。遇到“按字编址”题目，再改成一个地址对应一个字。</div>
+</section>
+
+<section class="chapter ch7" id="q7">
+<h2><span class="num">7</span> 字怎么理解？它的大小是多少？</h2>
+<p><strong>字 word</strong>不是像字节那样固定为 8 位。字是“这台机器自然处理的一组二进制位”。</p>
+<table>
+  <tr><th>概念</th><th>大小是否固定</th><th>解释</th></tr>
+  <tr><td>位 bit</td><td class="good">固定</td><td>0 或 1</td></tr>
+  <tr><td>字节 Byte</td><td class="good">基本固定为 8 bit</td><td>现代计算机最常见的编址单位</td></tr>
+  <tr><td>字 Word</td><td class="bad">不固定</td><td>随机器而定，常等于机器字长</td></tr>
+  <tr><td>字长</td><td class="bad">不固定</td><td>一个字包含多少位</td></tr>
+</table>
+<div class="box note"><span class="label">例子</span>32 位机上，一个字通常是 32 位；64 位机上，一个字通常是 64 位。但某些体系结构或教材语境可能另有定义，所以做题看题干。</div>
+</section>
+
+<section class="chapter ch8" id="q8">
+<h2><span class="num">8</span> MAR、MDR、CPU位数、字、存储单元到底有没有相同的？</h2>
+<p>这是你最核心的疑问。先看总表：</p>
+<table>
+  <tr><th>名称</th><th>它回答的问题</th><th>常见大小</th><th>是否等于CPU位数</th><th>为什么</th></tr>
+  <tr><td>CPU位数</td><td>CPU 自然处理多少位数据</td><td>32/64</td><td class="good">它自己就是基准</td><td>通常体现为通用寄存器宽度、整数运算宽度、指令集模式</td></tr>
+  <tr><td>机器字长</td><td>机器一次能处理的二进制位数</td><td>32/64</td><td class="good">教材中通常近似相同</td><td>王道里常把“64位机”与“机器字长64位”接近处理</td></tr>
+  <tr><td>字 Word</td><td>机器自然处理的数据单位</td><td>通常等于机器字长</td><td class="mid">通常有关</td><td>字的大小叫字长；字长常与CPU位数一致</td></tr>
+  <tr><td>存储单元长度</td><td>一个地址对应多大空间</td><td>常见1B=8bit</td><td class="bad">不是</td><td>64位CPU也通常按字节编址，一个地址还是1B</td></tr>
+  <tr><td>MAR位数</td><td>能表示多少个地址</td><td>32/36/48/64等</td><td class="bad">不一定</td><td>MAR 管寻址范围，不管一次算多少位</td></tr>
+  <tr><td>MDR位数</td><td>一次和主存交换多少位数据</td><td>32/64/更宽</td><td class="mid">可能相同</td><td>MDR 管一次搬多少数据，常和字长接近，但不是定义相同</td></tr>
+  <tr><td>数据通路宽度</td><td>部件间一次传多少位</td><td>32/64/128等</td><td class="mid">可能相同</td><td>通路可能按性能设计得更宽或更窄</td></tr>
+</table>
+<div class="formula">MAR 有 n 位 → 最多表示 2^n 个地址<br>若按字节编址 → 最大寻址空间 = 2^n 字节</div>
+<div class="formula">MDR 有 m 位 → 一次主存读写可搬 m 位数据</div>
+<div class="box ok"><span class="label">最终结论</span>“我的电脑是64位”最接近 CPU位数/机器字长/通用寄存器宽度；它不等于存储单元长度，不必然等于 MAR，也不必然等于 MDR。</div>
+</section>
+
+<section class="chapter ch9" id="q9">
+<h2><span class="num">9</span> 运算器、控制器、主存储器内部部件逐个讲</h2>
+<h3>运算器</h3>
+<table>
+  <tr><th>部件</th><th>全称/含义</th><th>作用</th><th>单片机类比</th></tr>
+  <tr><td>ALU</td><td>Arithmetic Logic Unit</td><td>做加减、与或非、比较等</td><td>执行算术/逻辑指令的核心电路</td></tr>
+  <tr><td>ACC</td><td>Accumulator 累加器</td><td>暂存操作数或结果</td><td>很多单片机里的 A 寄存器</td></tr>
+  <tr><td>MQ</td><td>Multiplier-Quotient Register</td><td>乘法/除法中保存乘数、商等</td><td>早期模型中用于解释乘除流程</td></tr>
+  <tr><td>X</td><td>操作数寄存器</td><td>暂存另一个操作数</td><td>类似通用临时寄存器</td></tr>
+</table>
+<h3>控制器</h3>
+<table>
+  <tr><th>部件</th><th>作用</th><th>一句话</th></tr>
+  <tr><td>CU</td><td>发出控制信号</td><td>总指挥</td></tr>
+  <tr><td>IR</td><td>保存当前指令</td><td>现在正在执行什么</td></tr>
+  <tr><td>PC</td><td>保存下一条指令地址</td><td>下一步去哪取指令</td></tr>
+</table>
+<h3>主存储器</h3>
+<table>
+  <tr><th>部件</th><th>作用</th><th>和CPU关系</th></tr>
+  <tr><td>存储体</td><td>保存指令和数据</td><td>CPU 通过地址访问它</td></tr>
+  <tr><td>MAR</td><td>保存本次访问的地址</td><td>CPU 把地址送到这里</td></tr>
+  <tr><td>MDR</td><td>保存本次读写的数据</td><td>读出的数据先到这里，写入的数据也先到这里</td></tr>
+</table>
+</section>
+
+<section class="chapter ch10" id="q10">
+<h2><span class="num">10</span> 函数调用、栈、下一行地址在这个框架里吗？</h2>
+<p>在。只是王道第一章暂时不展开。函数调用横跨：<strong>指令系统、CPU、主存、操作系统、编译器</strong>。</p>
+<table>
+  <tr><th>你说的东西</th><th>在计组框架中的位置</th><th>后面会在哪学</th></tr>
+  <tr><td>函数调用</td><td>由 call/jump/branch 等指令实现</td><td>指令系统、CPU</td></tr>
+  <tr><td>返回地址</td><td>下一条指令的地址，常被压入栈或保存在链接寄存器</td><td>指令系统、汇编、CPU</td></tr>
+  <tr><td>栈</td><td>主存中的一段区域，由栈指针寄存器管理</td><td>操作系统、汇编、编译原理</td></tr>
+  <tr><td>局部变量</td><td>常放在栈帧里</td><td>操作系统/编译原理</td></tr>
+</table>
+<div class="box deep"><span class="label">具体路径</span>CPU 执行 call 指令 → 保存返回地址 → PC 改成函数入口地址 → 函数使用栈保存局部变量 → 执行 ret → 取回返回地址 → PC 回到调用后的下一条指令。</div>
+<div class="box ok"><span class="label">你该怎么办</span>现在先把“栈在主存里、返回地址是指令地址、PC决定下一条指令”记住。后面学指令系统和操作系统时再补细节。</div>
+</section>
+
+<section class="chapter ch11" id="q11">
+<h2><span class="num">11</span> 弹幕说这是很早期的计算机结构，对吗？</h2>
+<p>对一半。王道讲的是<strong>经典抽象模型</strong>，不是现代 CPU 的完整真实结构。</p>
+<table>
+  <tr><th>教材模型</th><th>现代计算机实际更复杂的地方</th><th>为什么还要学教材模型</th></tr>
+  <tr><td>CPU 取指-分析-执行</td><td>流水线、乱序执行、分支预测、多核</td><td>复杂优化仍然围绕“执行指令”展开</td></tr>
+  <tr><td>主存 + MAR + MDR</td><td>Cache、MMU、内存控制器、多通道内存</td><td>最终还是要按地址读写数据</td></tr>
+  <tr><td>I/O设备</td><td>DMA、中断、驱动、总线协议</td><td>最终还是外设和主机交换信息</td></tr>
+</table>
+<div class="box note"><span class="label">准确说法</span>冯·诺依曼模型是现代计算机的骨架；现代计算机是在骨架上加了大量加速、缓存、并行和保护机制。</div>
+</section>
+
+<section class="chapter ch12" id="q12">
+<h2><span class="num">12</span> 应用软件就是 App，系统软件就是驱动吗？</h2>
+<p>应用软件可以粗略理解为 App；系统软件不只是驱动。</p>
+<table>
+  <tr><th>类型</th><th>包括什么</th><th>职责</th></tr>
+  <tr><td>应用软件</td><td>微信、浏览器、游戏、办公软件、你写的业务程序</td><td>直接解决用户问题</td></tr>
+  <tr><td>系统软件</td><td>操作系统、编译器、数据库系统、语言运行时、驱动程序</td><td>管理硬件资源，给应用软件提供环境</td></tr>
+  <tr><td>驱动程序</td><td>显卡驱动、声卡驱动、网卡驱动</td><td>系统软件的一类，负责操作系统和设备通信</td></tr>
+</table>
+<div class="box ok"><span class="label">一句话</span>驱动是系统软件，但系统软件不只有驱动。操作系统本身才是最核心的系统软件。</div>
+</section>
+
+<section class="chapter ch13" id="q13">
+<h2><span class="num">13</span> 软件和硬件的逻辑功能等价性怎么理解？</h2>
+<p>你说“软件本身也是通过硬件实现的”，完全对。所以这里的“等价”不是说软件脱离硬件，而是说：</p>
+<div class="formula">同一个功能，可以做成专门硬件电路，也可以用通用硬件执行一段软件来完成。</div>
+<table>
+  <tr><th>功能</th><th>软件实现</th><th>硬件实现</th><th>取舍</th></tr>
+  <tr><td>乘法</td><td>循环加法、库函数</td><td>乘法器电路</td><td>硬件快，软件灵活</td></tr>
+  <tr><td>加密</td><td>CPU跑加密算法</td><td>AES专用指令/加速器</td><td>硬件快且省电</td></tr>
+  <tr><td>图像处理</td><td>CPU逐像素处理</td><td>GPU并行处理</td><td>GPU更适合大量并行</td></tr>
+</table>
+<div class="box ok"><span class="label">本质</span>软件实现 = 用通用硬件做；硬件实现 = 做专用硬件直接干。二者最终都离不开硬件，只是“硬件专用程度”不同。</div>
+</section>
+
+<section class="chapter ch14" id="q14">
+<h2><span class="num">14</span> 指令集体系结构 ISA 是什么？不会乘法为什么 C 不报错？</h2>
+<p><strong>ISA</strong> 是 Instruction Set Architecture，指令集体系结构。它规定了软件能使用的机器级接口。</p>
+<table>
+  <tr><th>ISA规定什么</th><th>例子</th></tr>
+  <tr><td>有哪些机器指令</td><td>加、减、跳转、访存、乘法等</td></tr>
+  <tr><td>有哪些寄存器</td><td>x86-64 的 RAX/RBX，ARM 的 X0/X1</td></tr>
+  <tr><td>指令格式</td><td>操作码在哪里，寄存器编号在哪里</td></tr>
+  <tr><td>寻址方式</td><td>立即数、寄存器、内存地址偏移等</td></tr>
+</table>
+<p>如果硬件没有乘法指令，C 程序仍然可以写 <code>a*b</code>，因为编译器会翻译。</p>
+<div class="code"><span class="cm">// 你写的 C</span>
+c = a * b;
+
+<span class="cm">// 如果 ISA 有乘法指令</span>
+MUL a, b
+
+<span class="cm">// 如果 ISA 没有乘法指令，编译器可以生成类似：</span>
+result = 0
+repeat b times:
+    result = result + a</div>
+<div class="box fix"><span class="label">关键</span>C 语言表达的是“我要乘法这个语义”；具体翻译成一条乘法指令，还是一串加法/移位指令，是编译器和目标 ISA 的事。</div>
+</section>
+
+<section class="chapter ch15" id="q15">
+<h2><span class="num">15</span> 汇编语言、ISA、ISR：你看到的可能是 ISA 不是 ISR</h2>
+<p>你写“换一个 isr 就变了”，这里大概率弹幕说的是 <strong>ISA</strong>，不是 ISR。</p>
+<table>
+  <tr><th>缩写</th><th>全称</th><th>意思</th><th>是否和汇编变化有关</th></tr>
+  <tr><td>ISA</td><td>Instruction Set Architecture</td><td>指令集体系结构</td><td class="good">有关。换 ISA，汇编通常就变</td></tr>
+  <tr><td>ISR</td><td>Interrupt Service Routine</td><td>中断服务程序</td><td class="bad">不是这里的主角</td></tr>
+</table>
+<div class="box fix"><span class="label">汇编不是“直接控制地址”那么简单</span>汇编是机器指令的助记符。它可以操作寄存器、立即数、内存地址、跳转目标等。不同 ISA 的寄存器名、指令名、寻址方式都不同，所以不用死背某一种汇编语法。</div>
+<table>
+  <tr><th>ISA</th><th>汇编风格</th></tr>
+  <tr><td>x86-64</td><td><code>mov rax, [rbx]</code></td></tr>
+  <tr><td>ARM</td><td><code>LDR X0, [X1]</code></td></tr>
+  <tr><td>RISC-V</td><td><code>lw x1, 0(x2)</code></td></tr>
+</table>
+</section>
+
+<section class="chapter ch16" id="q16">
+<h2><span class="num">16</span> M0、M1、操作系统机器、M2、M3 到底是什么联系？</h2>
+<p>这里的“机器”不是都指物理机器，而是指<strong>某一层用户看到的可用功能集合</strong>。</p>
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a16" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <rect x="270" y="25" width="360" height="55" rx="8" fill="#1f2a1f" stroke="#58d68d" stroke-width="2"/><text x="450" y="58" text-anchor="middle" fill="#58d68d" font-size="15" font-weight="bold">M3：高级语言机器（C / Java / Python 视角）</text>
+  <line x1="450" y1="80" x2="450" y2="110" stroke="#888" marker-end="url(#a16)"/>
+  <rect x="270" y="110" width="360" height="55" rx="8" fill="#1a2e3a" stroke="#5dade2" stroke-width="2"/><text x="450" y="143" text-anchor="middle" fill="#5dade2" font-size="15" font-weight="bold">M2：汇编语言机器（汇编程序视角）</text>
+  <line x1="450" y1="165" x2="450" y2="195" stroke="#888" marker-end="url(#a16)"/>
+  <rect x="270" y="195" width="360" height="55" rx="8" fill="#1f1f18" stroke="#ffe66d" stroke-width="2"/><text x="450" y="228" text-anchor="middle" fill="#ffe66d" font-size="15" font-weight="bold">操作系统机器（文件/进程/内存/设备）</text>
+  <line x1="450" y1="250" x2="450" y2="280" stroke="#888" marker-end="url(#a16)"/>
+  <rect x="270" y="280" width="360" height="55" rx="8" fill="#1f1a35" stroke="#a37ef0" stroke-width="2"/><text x="450" y="313" text-anchor="middle" fill="#a37ef0" font-size="15" font-weight="bold">M1：传统机器（机器语言/ISA）</text>
+  <line x1="450" y1="335" x2="450" y2="365" stroke="#888" marker-end="url(#a16)"/>
+  <rect x="270" y="365" width="360" height="55" rx="8" fill="#2a1a1a" stroke="#ff6b6b" stroke-width="2"/><text x="450" y="398" text-anchor="middle" fill="#ff6b6b" font-size="15" font-weight="bold">M0：微程序机器（微指令/硬件控制）</text>
+</svg>
+<h3>操作系统机器为什么插在中间？</h3>
+<p>因为操作系统不是“又一种编程语言”，它是把裸机扩展成更好用的机器。</p>
+<table>
+  <tr><th>裸机器 M1 提供</th><th>操作系统机器额外提供</th></tr>
+  <tr><td>加减、跳转、访存、I/O指令</td><td>文件、目录、进程、线程、虚拟内存、系统调用、设备抽象</td></tr>
+  <tr><td>直接面对硬件细节</td><td>把硬盘包装成文件，把 CPU 包装成进程，把内存包装成地址空间</td></tr>
+</table>
+<div class="box deep"><span class="label">例子：printf为什么需要操作系统机器</span><code>printf("hello")</code> 不是 CPU 自带的“打印到屏幕”指令。它会经过 C 库、系统调用、操作系统内核、设备驱动，最终让显示设备输出内容。操作系统机器就是把这些复杂硬件控制包装成“可以调用的能力”。</div>
+<div class="box ok"><span class="label">最终理解</span>M1 是硬件能执行的机器指令；操作系统机器是在 M1 上加了资源管理和系统调用；M2/M3 是更接近人的语言层。</div>
+</section>
+
+<section class="chapter ch17" id="q17">
+<h2><span class="num">17</span> 数据通路带宽、总线宽度、CPU位数、MAR/MDR到底怎么分？</h2>
+<p>你觉得“数据通路带宽很像 CPU 位数”，这个直觉对，但要拆开。</p>
+<table>
+  <tr><th>名词</th><th>它问的是</th><th>例子</th><th>和其它概念关系</th></tr>
+  <tr><td>CPU位数/机器字长</td><td>CPU 一次自然处理多少位</td><td>64位CPU</td><td>偏运算能力</td></tr>
+  <tr><td>数据通路宽度</td><td>CPU内部或部件之间一次能并行传多少位</td><td>64位数据通路</td><td>偏传输路径宽度，可能等于机器字长</td></tr>
+  <tr><td>数据总线宽度</td><td>总线一次并行传多少位</td><td>64位总线</td><td>偏外部传输宽度</td></tr>
+  <tr><td>总线带宽</td><td>单位时间能传多少数据</td><td>800MB/s</td><td>总线宽度 × 频率</td></tr>
+  <tr><td>MDR位数</td><td>一次和主存交换多少位</td><td>64位MDR</td><td>常与数据总线/存储字长相关</td></tr>
+  <tr><td>MAR位数</td><td>能表示多少地址</td><td>32位MAR</td><td>只管寻址范围，不管一次传多少数据</td></tr>
+</table>
+<div class="formula">总线带宽 = 总线宽度 × 总线频率</div>
+<div class="formula">寻址范围 = 2^(MAR位数) × 每个地址对应的存储单元大小</div>
+<div class="box fix"><span class="label">最关键纠偏</span>“能访问多大内存”看 MAR/地址总线；“一次搬多少数据”看 MDR/数据总线/数据通路；“一次自然算多少数据”看 CPU位数/机器字长。这三类问题不能互相替代。</div>
+<h3>一张最终总表</h3>
+<table>
+  <tr><th>你问的问题</th><th>应该看谁</th><th>不要误看谁</th></tr>
+  <tr><td>这台机器一次自然处理多少位？</td><td>CPU位数/机器字长</td><td>不要看 MAR</td></tr>
+  <tr><td>最多能给多少个内存单元编号？</td><td>MAR位数/地址总线宽度</td><td>不要看 MDR</td></tr>
+  <tr><td>一次从主存读写多少位？</td><td>MDR位数/数据总线宽度</td><td>不要看 MAR</td></tr>
+  <tr><td>一个地址对应多大空间？</td><td>编址方式</td><td>不要看 CPU 是不是64位</td></tr>
+  <tr><td>一个字多大？</td><td>机器字长/题目定义</td><td>不要默认所有机器一样</td></tr>
+</table>
+</section>
+
+<section class="chapter ch17" id="q18">
+<h2><span class="num">18</span> 3.6 虚拟存储器 + 磁盘 / 主存 / Flash 的地址怎么统一？</h2>
+<p>你这次问的核心，其实是：<strong>不同存储层的“地址”不是同一种东西</strong>。虚拟存储器之所以能工作，就是因为操作系统和硬件把这些不同层次的地址翻译起来了。</p>
+
+<h3>18.1 三种常见存储层的地址长什么样</h3>
+<table>
+  <tr><th>存储层</th><th>典型地址样子</th><th>地址代表什么</th><th>访问方式</th></tr>
+  <tr><td>主存 RAM</td><td>物理地址 / 虚拟地址</td><td>一个可寻址单元，现代常按字节编址</td><td>CPU 直接寻址，MMU 可能先翻译</td></tr>
+  <tr><td>磁盘 / SSD</td><td>逻辑块号 LBA，文件系统还会再映射</td><td>块地址，不是按主存那种“一个字节一个地址”的模型</td><td>通过磁盘控制器、I/O、文件系统访问</td></tr>
+  <tr><td>Flash / SSD 内部</td><td>块 / 页 / 逻辑页地址</td><td>按 NAND 组织方式定位</td><td>先页读，再块擦，页写受限制</td></tr>
+</table>
+
+<div class="box ok">
+  <span class="label">一句话先定住</span>
+  <p><strong>主存的地址用于 CPU 按字节/按字访问；磁盘的地址常是块地址；Flash 的地址常是页/块层次的地址。它们不是一个层面的同类东西。</strong></p>
+</div>
+
+<h3>18.2 主存：译码器矩阵 + 存储元阵列</h3>
+<p>你前面理解得很接近：主存常可以画成行列译码器控制下的阵列。每个地址最终选中一组存储元，形成一个存储单元。</p>
+<div class="formula">主存：地址 → 行/列译码 → 选中存储单元 → 数据通过位线送到 MDR</div>
+
+<h3>18.3 磁盘是什么“整体”</h3>
+<p>磁盘不是像主存那样“按地址线直接选中一个字节”。磁盘是机械/电磁存储设备，常见结构是：</p>
+<table>
+  <tr><th>名词</th><th>含义</th></tr>
+  <tr><td>磁道 Track</td><td>盘面上的同心圆轨迹</td></tr>
+  <tr><td>扇区 Sector</td><td>磁道被切分成的小段，传统上是基本读写单位</td></tr>
+  <tr><td>柱面 Cylinder</td><td>多个盘面上同半径磁道的集合</td></tr>
+  <tr><td>LBA</td><td>逻辑块地址，操作系统和硬盘控制器常用的统一地址方式</td></tr>
+</table>
+<svg viewBox="0 0 980 360" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="a18" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0,10 3.5,0 7" fill="#888"/></marker></defs>
+  <text x="490" y="30" text-anchor="middle" fill="#fff" font-size="17" font-weight="bold">磁盘的整体：盘面、磁道、扇区、LBA</text>
+  <circle cx="230" cy="190" r="125" fill="#1a1a2e" stroke="#4ecdc4" stroke-width="3"/>
+  <circle cx="230" cy="190" r="95" fill="none" stroke="#5dade2" stroke-width="3"/>
+  <circle cx="230" cy="190" r="65" fill="none" stroke="#58d68d" stroke-width="3"/>
+  <circle cx="230" cy="190" r="30" fill="none" stroke="#ffe66d" stroke-width="3"/>
+  <circle cx="230" cy="190" r="8" fill="#fff"/>
+  <text x="360" y="120" fill="#4ecdc4" font-size="14">外圈磁道</text>
+  <text x="320" y="165" fill="#5dade2" font-size="14">中圈磁道</text>
+  <text x="300" y="215" fill="#58d68d" font-size="14">内圈磁道</text>
+  <text x="270" y="250" fill="#ffe66d" font-size="14">扇区是磁道切分后的段</text>
+  <rect x="510" y="100" width="400" height="165" rx="8" fill="#151528" stroke="#2a2a45" stroke-width="2"/>
+  <text x="710" y="135" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold">磁盘访问常见路径</text>
+  <text x="710" y="165" text-anchor="middle" fill="#ccc" font-size="12">文件系统 → LBA → 硬盘控制器 → 磁盘扇区</text>
+  <text x="710" y="190" text-anchor="middle" fill="#ccc" font-size="12">寻道 / 旋转延迟 / 传输</text>
+  <text x="710" y="215" text-anchor="middle" fill="#ccc" font-size="12">这和主存“按地址直接访问”不是一回事</text>
+</svg>
+
+<h3>18.4 Flash / NAND 的地址层次</h3>
+<p>Flash 常不是“按字节随便写”，而是有块/页结构。你说的“多个存储体、多个行块、每个块多个页”这思路接近，但要稍微改一下术语：</p>
+<table>
+  <tr><th>层次</th><th>更常见的 NAND Flash 组织</th><th>动作特点</th></tr>
+  <tr><td>Block 块</td><td>若干页组成一个块</td><td>擦除通常按块进行</td></tr>
+  <tr><td>Page 页</td><td>若干字节组成一页</td><td>读/写通常按页进行</td></tr>
+  <tr><td>Cell / 存储单元</td><td>最小存储电荷单元</td><td>物理上保存 0/1 或多比特信息</td></tr>
+</table>
+<div class="box warn">
+  <span class="label">纠偏</span>
+  <p>Flash 不是像主存那样“一个地址直接对应一个字节”的简单模型。它更像“页读、块擦、页写受限”的层次结构，所以它的地址翻译和主存完全不同。</p>
+</div>
+
+<h3>18.5 虚拟存储器怎么把这些地址统一起来</h3>
+<p>虚拟存储器主要管的是：<strong>程序看到的地址</strong> 和 <strong>主存物理地址</strong> 的转换，不直接管理磁盘的磁道扇区，也不直接把 Flash 页当主存字节用。</p>
+<div class="formula">虚拟地址 → 页表/段表 → 物理地址 → 主存 RAM<br>若缺页 → 操作系统把辅存中的页调入主存</div>
+<p>磁盘和 Flash 更像虚拟存储器的“后备库”：当主存不够时，操作系统把不常用的数据放到辅存里。</p>
+
+<h3>18.6 页式 / 段式 / 段页式 再复习一次</h3>
+<table>
+  <tr><th>方式</th><th>地址拆分</th><th>优点</th><th>缺点</th></tr>
+  <tr><td>页式</td><td>页号 + 页内地址</td><td>固定大小，减少外部碎片</td><td>页表大，可能有内部碎片</td></tr>
+  <tr><td>段式</td><td>段号 + 段内地址</td><td>符合程序逻辑，便于共享保护</td><td>外部碎片明显</td></tr>
+  <tr><td>段页式</td><td>段号 + 页号 + 页内地址</td><td>兼顾逻辑性和碎片控制</td><td>结构复杂</td></tr>
+</table>
+
+<div class="box deep">
+  <span class="label">总结一句</span>
+  <p><strong>主存、磁盘、Flash 的“地址”不是同一类地址；虚拟存储器只负责把“程序看到的地址”映射到主存物理地址。辅存是后备库，虚拟地址最终还是要落到 RAM 上运行。</strong></p>
+</div>
+</section>
+
+<p style="text-align:center;color:var(--dim);font-size:.86rem;margin-top:3rem">END · 王道计组第一章逐问精讲版</p>
+</main>
+<script>
+const sections=[...document.querySelectorAll(".chapter")];
+const links=[...document.querySelectorAll("nav a")];
+window.addEventListener("scroll",()=>{let current="";for(const section of sections){if(scrollY>=section.offsetTop-135)current=section.id}for(const link of links){link.classList.toggle("active",link.getAttribute("href")==="#"+current)}});
+</script>
+</body>
+</html>

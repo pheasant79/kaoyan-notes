@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" style="max-width:100%;height:auto" role="img" aria-labelledby="title desc">
+  <title id="title">折半查找的候选区间收缩</title>
+  <desc id="desc">在有序表中查找 31，依次比较 25、37、31，候选区间逐步缩小。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#269c72"/>
+    </marker>
+  </defs>
+  <rect width="900" height="430" fill="#FFFFFF"/>
+  <style>
+    .cell{stroke:#4b8ee8;stroke-width:2}
+    .out{fill:#F3F4F6;stroke:#9CA3AF}
+    .in{fill:#EFF6FF}
+    .mid{fill:#DCFCE7;stroke:#269c72;stroke-width:2.5}
+    .hit{fill:#EDE9FE;stroke:#a079ce;stroke-width:2.5}
+    .label{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:20px;fill:#1F2937}
+    .small{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:17px;fill:#4B5563}
+    .center{text-anchor:middle}
+  </style>
+  <text x="32" y="34" class="label">查找目标 31：每次只保留仍可能命中的区间</text>
+  <g transform="translate(155 72)">
+    <text x="0" y="0" class="small">① 比较中点 25，保留右半区</text>
+    <g transform="translate(0 22)">
+      <rect x="0" y="0" width="70" height="48" class="in cell"/><text x="35" y="31" class="label center">4</text>
+      <rect x="70" y="0" width="70" height="48" class="in cell"/><text x="105" y="31" class="label center">9</text>
+      <rect x="140" y="0" width="70" height="48" class="out cell"/><text x="175" y="31" class="small center">13</text>
+      <rect x="210" y="0" width="70" height="48" class="out cell"/><text x="245" y="31" class="small center">18</text>
+      <rect x="280" y="0" width="70" height="48" class="mid cell"/><text x="315" y="31" class="label center">25</text>
+      <rect x="350" y="0" width="70" height="48" class="in cell"/><text x="385" y="31" class="label center">31</text>
+      <rect x="420" y="0" width="70" height="48" class="in cell"/><text x="455" y="31" class="label center">37</text>
+      <rect x="490" y="0" width="70" height="48" class="in cell"/><text x="525" y="31" class="label center">42</text>
+      <rect x="560" y="0" width="70" height="48" class="in cell"/><text x="595" y="31" class="label center">56</text>
+      <text x="315" y="78" class="small center">mid</text>
+      <text x="350" y="104" class="small">候选下标 6～9</text>
+    </g>
+  </g>
+  <path d="M450 190 C450 215 450 225 450 245" fill="none" stroke="#269c72" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <g transform="translate(155 258)">
+    <text x="0" y="0" class="small">② 比较中点 37，保留左侧候选</text>
+    <g transform="translate(0 22)">
+      <rect x="0" y="0" width="70" height="48" class="out cell"/><text x="35" y="31" class="small center">4</text>
+      <rect x="70" y="0" width="70" height="48" class="out cell"/><text x="105" y="31" class="small center">9</text>
+      <rect x="140" y="0" width="70" height="48" class="out cell"/><text x="175" y="31" class="small center">13</text>
+      <rect x="210" y="0" width="70" height="48" class="out cell"/><text x="245" y="31" class="small center">18</text>
+      <rect x="280" y="0" width="70" height="48" class="out cell"/><text x="315" y="31" class="small center">25</text>
+      <rect x="350" y="0" width="70" height="48" class="in cell"/><text x="385" y="31" class="label center">31</text>
+      <rect x="420" y="0" width="70" height="48" class="mid cell"/><text x="455" y="31" class="label center">37</text>
+      <rect x="490" y="0" width="70" height="48" class="out cell"/><text x="525" y="31" class="small center">42</text>
+      <rect x="560" y="0" width="70" height="48" class="out cell"/><text x="595" y="31" class="small center">56</text>
+      <text x="455" y="78" class="small center">mid</text>
+      <text x="350" y="104" class="small">候选下标 6～6</text>
+    </g>
+  </g>
+  <path d="M450 376 C450 390 450 396 450 408" fill="none" stroke="#a079ce" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="610" y="406" class="small">③ 最后比较 31，命中</text>
+</svg>
+

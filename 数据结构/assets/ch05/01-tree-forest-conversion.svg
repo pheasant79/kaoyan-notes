@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" role="img" aria-labelledby="title desc">
+  <title id="title">一般树和森林的孩子—兄弟表示</title>
+  <desc id="desc">左侧是一棵有序树，右侧是同一棵树的孩子—兄弟二叉链接表示。蓝线表示最左孩子，绿虚线表示下一个兄弟；两侧使用相同的结点 A 到 G。</desc>
+  <rect width="720" height="330" fill="#FFFFFF"/>
+  <text x="175" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">一般有序树</text>
+  <text x="535" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">孩子—兄弟二叉表示</text>
+  <line x1="360" y1="18" x2="360" y2="290" stroke="#D1D5DB" stroke-width="1"/>
+
+  <g fill="none" stroke="#6B7280" stroke-width="2">
+    <path d="M175 74 L82 137 M175 74 L175 137 M175 74 L268 137"/>
+    <path d="M82 165 L48 225 M82 165 L116 225"/>
+    <path d="M268 165 L268 225"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="175" cy="62" r="19"/><circle cx="82" cy="153" r="19"/><circle cx="175" cy="153" r="19"/><circle cx="268" cy="153" r="19"/>
+    <circle cx="48" cy="241" r="19"/><circle cx="116" cy="241" r="19"/><circle cx="268" cy="241" r="19"/>
+  </g>
+  <g font-family="sans-serif" font-size="17" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="175" y="62">A</text><text x="82" y="153">B</text><text x="175" y="153">C</text><text x="268" y="153">D</text>
+    <text x="48" y="241">E</text><text x="116" y="241">F</text><text x="268" y="241">G</text>
+  </g>
+
+  <g fill="none" stroke-width="2.5">
+    <path d="M535 74 L447 137 M447 165 L421 225 M621 165 L621 225" stroke="#4b8ee8"/>
+    <path d="M466 153 L516 153 M552 153 L602 153 M440 241 L490 241" stroke="#269c72" stroke-dasharray="6 4"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="535" cy="62" r="19"/><circle cx="447" cy="153" r="19"/><circle cx="535" cy="153" r="19"/><circle cx="621" cy="153" r="19"/>
+    <circle cx="421" cy="241" r="19"/><circle cx="507" cy="241" r="19"/><circle cx="621" cy="241" r="19"/>
+  </g>
+  <g font-family="sans-serif" font-size="17" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="535" y="62">A</text><text x="447" y="153">B</text><text x="535" y="153">C</text><text x="621" y="153">D</text>
+    <text x="421" y="241">E</text><text x="507" y="241">F</text><text x="621" y="241">G</text>
+  </g>
+
+  <line x1="55" y1="291" x2="92" y2="291" stroke="#4b8ee8" stroke-width="3"/>
+  <text x="101" y="297" font-family="sans-serif" font-size="16" fill="#374151">最左孩子</text>
+  <line x1="215" y1="291" x2="252" y2="291" stroke="#269c72" stroke-width="3" stroke-dasharray="6 4"/>
+  <text x="261" y="297" font-family="sans-serif" font-size="16" fill="#374151">下一个兄弟</text>
+  <text x="535" y="297" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#6B7280">右链接不是原树的右孩子</text>
+</svg>
+

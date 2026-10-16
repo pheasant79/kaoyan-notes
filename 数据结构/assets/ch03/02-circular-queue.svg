@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="390" viewBox="0 0 760 390" role="img" aria-labelledby="title desc">
+  <title id="title">循环队列的取模复用与留空位判定</title>
+  <desc id="desc">容量为6的循环队列采用保留一个空位的约定。上图 front为1、rear为4，队列中有A、B、C；下图出队A和B并入队D、E、F后，front为3、rear为1，元素按逻辑顺序为C、D、E、F。</desc>
+  <rect width="760" height="390" fill="#ffffff"/>
+  <style>
+    .cell{fill:#eef5ff;stroke:#4b8ee8;stroke-width:2}.free{fill:#f8fafc;stroke:#a9b5c5;stroke-width:2}.front{fill:#e3f5eb;stroke:#269c72;stroke-width:2.5}.rear{fill:#fef2f2;stroke:#d55263;stroke-width:2.5}
+    .t{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:19px;fill:#1f2937;text-anchor:middle}.s{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:16px;fill:#475569;text-anchor:middle}.note{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:16px;fill:#d55263;text-anchor:start}
+  </style>
+  <text x="380" y="28" class="t">容量 N=6，保留一个空位：空 front=rear，满 (rear+1) mod N=front</text>
+  <g transform="translate(35 55)">
+    <text x="245" y="0" class="s">普通状态：front=1，rear=4，逻辑元素 A→B→C</text>
+    <g transform="translate(25 24)">
+      <rect x="0" y="0" width="70" height="52" class="free"/><text x="35" y="33" class="s">空</text><text x="35" y="76" class="s">0</text>
+      <rect x="70" y="0" width="70" height="52" class="front"/><text x="105" y="33" class="t">A</text><text x="105" y="76" class="s">1</text>
+      <rect x="140" y="0" width="70" height="52" class="cell"/><text x="175" y="33" class="t">B</text><text x="175" y="76" class="s">2</text>
+      <rect x="210" y="0" width="70" height="52" class="cell"/><text x="245" y="33" class="t">C</text><text x="245" y="76" class="s">3</text>
+      <rect x="280" y="0" width="70" height="52" class="rear"/><text x="315" y="33" class="s">rear</text><text x="315" y="76" class="s">4</text>
+      <rect x="350" y="0" width="70" height="52" class="free"/><text x="385" y="33" class="s">空</text><text x="385" y="76" class="s">5</text>
+    </g>
+    <text x="245" y="122" class="s">front 指向队头元素；rear 指向下一次入队的位置（不是队尾元素）</text>
+  </g>
+  <path d="M380 174 V204" stroke="#269c72" stroke-width="3"/>
+  <text x="405" y="193" class="s" text-anchor="start" fill="#269c72">出队 A、B；入队 D、E、F</text>
+  <g transform="translate(35 225)">
+    <text x="245" y="0" class="s">绕回后：front=3，rear=1，逻辑元素 C→D→E→F</text>
+    <g transform="translate(25 24)">
+      <rect x="0" y="0" width="70" height="52" class="cell"/><text x="35" y="33" class="t">F</text><text x="35" y="76" class="s">0</text>
+      <rect x="70" y="0" width="70" height="52" class="rear"/><text x="105" y="33" class="s">rear</text><text x="105" y="76" class="s">1</text>
+      <rect x="140" y="0" width="70" height="52" class="free"/><text x="175" y="33" class="s">空</text><text x="175" y="76" class="s">2</text>
+      <rect x="210" y="0" width="70" height="52" class="front"/><text x="245" y="33" class="t">C</text><text x="245" y="76" class="s">3</text>
+      <rect x="280" y="0" width="70" height="52" class="cell"/><text x="315" y="33" class="t">D</text><text x="315" y="76" class="s">4</text>
+      <rect x="350" y="0" width="70" height="52" class="cell"/><text x="385" y="33" class="t">E</text><text x="385" y="76" class="s">5</text>
+    </g>
+    <text x="500" y="52" class="note">留空的是 rear 所在的下一入队位置，</text>
+    <text x="500" y="78" class="note">不是固定保留数组最后一格。</text>
+  </g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" style="max-width:100%;height:auto" role="img" aria-labelledby="title desc">
+  <title id="title">外部排序的初始段与多路归并</title>
+  <desc id="desc">文件分块排序得到初始归并段，败者树从多个段选择下一条记录，逐趟归并得到最终文件。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#269c72"/>
+    </marker>
+  </defs>
+  <rect width="900" height="520" fill="#FFFFFF"/>
+  <style>
+    .file{fill:#EFF6FF;stroke:#4b8ee8;stroke-width:2}
+    .work{fill:#DCFCE7;stroke:#269c72;stroke-width:2}
+    .tree{fill:#EDE9FE;stroke:#a079ce;stroke-width:2}
+    .out{fill:#FEF2F2;stroke:#d55263;stroke-width:2}
+    .edge{stroke:#6B7280;stroke-width:2;fill:none}
+    .label{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:19px;fill:#1F2937;text-anchor:middle}
+    .small{font-family:"Microsoft YaHei","Noto Sans CJK SC",sans-serif;font-size:17px;fill:#4B5563}
+  </style>
+  <text x="35" y="34" class="small">外部排序的中心目标：减少文件被反复读写的次数，同时让内存工作区持续输出有序记录</text>
+  <text x="42" y="83" class="small">① 文件分批读入，排序后写成初始归并段</text>
+  <g transform="translate(55 105)">
+    <rect x="0" y="0" width="145" height="54" class="file"/><text x="72" y="34" class="label">输入文件</text>
+    <path d="M145 27 L210 27" class="edge" marker-end="url(#arrow)"/>
+    <rect x="225" y="0" width="145" height="54" class="work"/><text x="297" y="34" class="label">内存工作区</text>
+    <path d="M370 27 L435 27" class="edge" marker-end="url(#arrow)"/>
+    <rect x="450" y="-15" width="112" height="40" class="file"/><text x="506" y="11" class="label">R1</text>
+    <rect x="450" y="33" width="112" height="40" class="file"/><text x="506" y="59" class="label">R2</text>
+    <rect x="450" y="81" width="112" height="40" class="file"/><text x="506" y="107" class="label">R3</text>
+    <text x="590" y="32" class="small">置换-选择可让段长依输入分布变化</text>
+  </g>
+  <text x="42" y="275" class="small">② 多路归并：败者树维护各段当前记录的比较结果</text>
+  <g transform="translate(105 295)">
+    <rect x="0" y="0" width="100" height="48" class="file"/><text x="50" y="31" class="label">R1: 4</text>
+    <rect x="0" y="66" width="100" height="48" class="file"/><text x="50" y="97" class="label">R2: 1</text>
+    <rect x="0" y="132" width="100" height="48" class="file"/><text x="50" y="163" class="label">R3: 3</text>
+    <path d="M100 24 L185 90 M100 90 L185 90 M100 156 L185 90" class="edge"/>
+    <circle cx="220" cy="90" r="34" class="tree"/><text x="220" y="97" class="label">败者树</text>
+    <path d="M254 90 L340 90" class="edge" marker-end="url(#arrow)"/>
+    <rect x="360" y="66" width="150" height="48" class="out"/><text x="435" y="97" class="label">输出 1、3、4…</text>
+    <text x="555" y="97" class="small">每输出一条，只更新取出记录所在的路径</text>
+  </g>
+  <text x="42" y="485" class="small">③ 继续按最佳归并树安排合并次序，直到得到一个有序文件；主要代价是总 I/O。</text>
+</svg>
+

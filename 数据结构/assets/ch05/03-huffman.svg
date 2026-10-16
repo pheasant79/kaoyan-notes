@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" role="img" aria-labelledby="title desc">
+  <title id="title">哈夫曼树的合并过程与带权路径长度</title>
+  <desc id="desc">权值 2、3、4、7 的叶结点按最小权值两两合并，得到权值 5、9 和根权值 16 的树；叶路径权值乘积之和为 30。</desc>
+  <rect width="720" height="430" fill="#FFFFFF"/>
+  <text x="360" y="30" text-anchor="middle" font-family="sans-serif" font-size="19" fill="#1F2937">每次取当前最小的两棵树合并</text>
+  <g fill="none" stroke="#9CA3AF" stroke-width="2.2">
+    <path d="M365 86 L230 160 M365 86 L500 160"/>
+    <path d="M500 198 L430 270 M500 198 L570 270"/>
+    <path d="M430 308 L390 365 M430 308 L470 365"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#4b8ee8">
+    <text x="281" y="116">0</text><text x="450" y="116">1</text>
+    <text x="447" y="233">0</text><text x="544" y="233">1</text>
+    <text x="397" y="340">0</text><text x="459" y="340">1</text>
+  </g>
+  <g fill="#EFF6FF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="365" cy="72" r="23"/><circle cx="500" cy="184" r="23"/><circle cx="430" cy="296" r="23"/>
+  </g>
+  <g fill="#F0FDF4" stroke="#269c72" stroke-width="2">
+    <circle cx="230" cy="184" r="22"/><circle cx="570" cy="296" r="22"/>
+    <circle cx="390" cy="389" r="22"/><circle cx="470" cy="389" r="22"/>
+  </g>
+  <g font-family="sans-serif" font-size="17" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="365" y="72">16</text><text x="500" y="184">9</text><text x="430" y="296">5</text>
+    <text x="230" y="184">7</text><text x="570" y="296">4</text><text x="390" y="389">2</text><text x="470" y="389">3</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="34" y="93">合并：2 + 3 = 5</text>
+    <text x="34" y="122">再合并：4 + 5 = 9</text>
+    <text x="34" y="151">最后：7 + 9 = 16</text>
+    <text x="33" y="221">WPL</text>
+    <text x="33" y="249">= 7×1 + 4×2</text>
+    <text x="33" y="277">+ 2×3 + 3×3</text>
+    <text x="33" y="305">= 30</text>
+    <text x="602" y="89">叶码示意</text>
+    <text x="602" y="119">7：0</text>
+    <text x="602" y="147">4：11</text>
+    <text x="602" y="175">2：100</text>
+    <text x="602" y="203">3：101</text>
+  </g>
+</svg>
+

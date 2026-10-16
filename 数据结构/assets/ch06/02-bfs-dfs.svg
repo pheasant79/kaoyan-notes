@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 350" role="img" aria-labelledby="title desc">
+  <title id="title">同一张图的广度优先和深度优先遍历</title>
+  <desc id="desc">从 A 出发，邻接点按字母顺序访问。左侧 BFS 次序为 A、B、C、D、E；右侧 DFS 次序为 A、B、D、E、C。浅灰边是原图中未用于对应遍历树的边。</desc>
+  <rect width="720" height="350" fill="#FFFFFF"/>
+  <line x1="360" y1="18" x2="360" y2="318" stroke="#D1D5DB"/>
+  <text x="180" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">BFS：先扩展近层</text>
+  <text x="540" y="28" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1F2937">DFS：深入后回退</text>
+
+  <g stroke="#D1D5DB" stroke-width="2" fill="none">
+    <path d="M180 91 L103 156 M180 91 L257 156 M103 178 L75 245 M103 178 L180 245 M257 178 L180 245"/>
+  </g>
+  <g stroke="#4b8ee8" stroke-width="3" fill="none">
+    <path d="M180 91 L103 156 M180 91 L257 156 M103 178 L75 245 M103 178 L180 245"/>
+  </g>
+  <g stroke="#D1D5DB" stroke-width="2" fill="none">
+    <path d="M540 91 L463 156 M540 91 L617 156 M463 178 L435 245 M463 178 L540 245 M617 178 L540 245"/>
+  </g>
+  <g stroke="#269c72" stroke-width="3" fill="none">
+    <path d="M540 91 L463 156 M463 178 L435 245 M463 178 L540 245 M540 245 L617 178"/>
+  </g>
+
+  <g fill="#FFFFFF" stroke="#4b8ee8" stroke-width="2">
+    <circle cx="180" cy="80" r="22"/><circle cx="103" cy="167" r="22"/><circle cx="257" cy="167" r="22"/>
+    <circle cx="75" cy="256" r="22"/><circle cx="180" cy="256" r="22"/>
+  </g>
+  <g fill="#FFFFFF" stroke="#269c72" stroke-width="2">
+    <circle cx="540" cy="80" r="22"/><circle cx="463" cy="167" r="22"/><circle cx="617" cy="167" r="22"/>
+    <circle cx="435" cy="256" r="22"/><circle cx="540" cy="256" r="22"/>
+  </g>
+  <g font-family="sans-serif" font-size="16" text-anchor="middle" dominant-baseline="central" fill="#111827">
+    <text x="180" y="76">A</text><text x="103" y="163">B</text><text x="257" y="163">C</text><text x="75" y="252">D</text><text x="180" y="252">E</text>
+    <text x="540" y="76">A</text><text x="463" y="163">B</text><text x="617" y="163">C</text><text x="435" y="252">D</text><text x="540" y="252">E</text>
+  </g>
+  <g font-family="sans-serif" font-size="16" fill="#374151">
+    <text x="55" y="305">次序：A → B → C → D → E</text>
+    <text x="415" y="305">次序：A → B → D → E → C</text>
+  </g>
+  <line x1="185" y1="331" x2="222" y2="331" stroke="#4b8ee8" stroke-width="3"/>
+  <text x="231" y="337" font-family="sans-serif" font-size="16" fill="#374151">该遍历的树边</text>
+  <line x1="411" y1="331" x2="448" y2="331" stroke="#D1D5DB" stroke-width="3"/>
+  <text x="457" y="337" font-family="sans-serif" font-size="16" fill="#374151">原图其他边</text>
+</svg>
+

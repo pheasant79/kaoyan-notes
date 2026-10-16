@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" role="img" aria-labelledby="title desc">
+  <title id="title">幂级数收敛区间与端点检查</title>
+  <desc id="desc">先由比值法得到开区间，再分别检查两个端点。</desc>
+  <rect width="820" height="340" fill="#ffffff"/>
+  <line x1="110" y1="190" x2="710" y2="190" stroke="#64748B" stroke-width="3"/>
+  <line x1="260" y1="165" x2="260" y2="215" stroke="#2563EB" stroke-width="4"/>
+  <line x1="560" y1="165" x2="560" y2="215" stroke="#2563EB" stroke-width="4"/>
+  <circle cx="260" cy="190" r="9" fill="#ffffff" stroke="#DC2626" stroke-width="4"/>
+  <circle cx="560" cy="190" r="9" fill="#ffffff" stroke="#DC2626" stroke-width="4"/>
+  <line x1="260" y1="190" x2="560" y2="190" stroke="#16A34A" stroke-width="12" opacity="0.35"/>
+  <g font-family="Segoe UI, Microsoft YaHei, sans-serif" font-size="17" fill="#334155">
+    <text x="220" y="145">x₀−R</text>
+    <text x="540" y="145">x₀+R</text>
+    <text x="365" y="145" fill="#16A34A">比值/根值法：开区间</text>
+    <text x="170" y="245" fill="#DC2626">端点 1：单独代入</text>
+    <text x="505" y="245" fill="#DC2626">端点 2：单独代入</text>
+    <text x="300" y="285" fill="#2563EB">收敛半径只确定内部范围，不决定端点</text>
+  </g>
+  <path d="M260 105 C290 70 330 70 365 105" fill="none" stroke="#9333EA" stroke-width="3"/>
+  <path d="M560 105 C590 70 630 70 665 105" fill="none" stroke="#9333EA" stroke-width="3"/>
+</svg>

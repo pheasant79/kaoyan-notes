@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第1章 计算机系统概述｜结构图谱</title>
+  <style>
+    :root {
+      --paper: #f6f7f4; --ink: #17202a; --muted: #64717d; --line: #334155; --soft-line: #c8d1d7;
+      --cpu: #c9822a; --cpu-soft: #fff1d9; --mem: #238878; --mem-soft: #dff5ee;
+      --io: #3977a8; --io-soft: #e1effb; --control: #c6535f; --control-soft: #fbe8eb;
+      --address: #ad6f18; --data: #147b78; --shadow: 0 14px 32px rgba(24,38,50,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif; line-height: 1.55; }
+    .shell { max-width: 1540px; margin: 0 auto; padding: 24px 28px 80px; }
+    .topbar { display: flex; gap: 18px; align-items: end; justify-content: space-between; border-bottom: 1px solid var(--soft-line); padding-bottom: 16px; margin-bottom: 16px; }
+    h1 { font-size: clamp(1.45rem, 2.6vw, 2.4rem); line-height: 1.15; margin: 0; letter-spacing: .01em; }
+    .kicker { color: var(--mem); font-size: .8rem; letter-spacing: .12em; font-weight: 800; margin-bottom: 6px; }
+    .meta { color: var(--muted); font-size: .88rem; text-align: right; white-space: nowrap; }
+    .controlbar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 12px 0 20px; }
+    .control-group { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+    .control-label { color: var(--muted); font-size: .78rem; margin-right: 4px; }
+    button { border: 1px solid var(--soft-line); background: white; color: var(--ink); border-radius: 5px; padding: 6px 11px; font: inherit; font-size: .82rem; cursor: pointer; }
+    button:hover, button:focus-visible { border-color: var(--mem); outline: 2px solid rgba(35,136,120,.18); outline-offset: 1px; }
+    button.active { background: var(--ink); color: white; border-color: var(--ink); }
+    .zoom button { min-width: 32px; width: auto; padding: 5px 8px; font-weight: 700; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 265px; gap: 18px; align-items: start; min-width: 0; }
+    main { min-width: 0; }
+    .figure-wrap { background: white; border: 1px solid var(--soft-line); box-shadow: var(--shadow); }
+    .figure-head { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px 9px; border-bottom: 1px solid #e5e9eb; }
+    .figure-head h2 { margin: 0; font-size: 1rem; }
+    .figure-head p { margin: 0; color: var(--muted); font-size: .77rem; text-align: right; }
+    .canvas { overflow: auto; padding: 8px; background: #fbfcfa; min-width: 0; }
+    svg { display: block; width: 100%; height: auto; min-width: 0; }
+    .hero svg { min-width: 0; }
+    .side { position: sticky; top: 14px; display: grid; gap: 12px; }
+    .side-panel { background: white; border: 1px solid var(--soft-line); padding: 14px; }
+    .side-panel h3 { font-size: .92rem; margin: 0 0 7px; }
+    .side-panel p { margin: 0; color: #44515d; font-size: .82rem; }
+    .legend { display: grid; gap: 7px; margin-top: 10px; }
+    .legend-row { display: flex; align-items: center; gap: 8px; color: #4b5863; font-size: .77rem; }
+    .swatch { width: 28px; height: 4px; border-radius: 4px; display: inline-block; }
+    .swatch.address { background: var(--address); } .swatch.data { background: var(--data); }
+    .swatch.control { border-top: 2px dashed var(--control); height: 0; } .swatch.boundary { border-top: 2px dashed var(--line); height: 0; }
+    section { margin-top: 24px; scroll-margin-top: 16px; }
+    .section-title { display: flex; gap: 10px; align-items: baseline; margin: 0 0 8px; }
+    .section-title .id { color: var(--mem); font-size: .78rem; font-weight: 800; letter-spacing: .05em; }
+    .section-title h2 { margin: 0; font-size: 1.25rem; }
+    .caption { color: var(--muted); font-size: .86rem; margin: 0 0 10px; }
+    .triad { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .triad .figure-wrap { box-shadow: none; } .triad .figure-head { display: block; } .triad .figure-head p { text-align: left; margin-top: 3px; } .triad svg { min-width: 0; width: 100%; }
+    details { background: white; border: 1px solid var(--soft-line); padding: 11px 14px; }
+    details + details { margin-top: 8px; } summary { cursor: pointer; font-weight: 700; font-size: .9rem; }
+    details p, details ul { margin: 9px 0 0; color: #4b5863; font-size: .83rem; }
+    code { font-family: Consolas, "Cascadia Code", monospace; font-size: .9em; background: #eef2f1; padding: 1px 4px; }
+    .svg-text { fill: var(--ink); font-family: "Microsoft YaHei", "PingFang SC", sans-serif; }
+    .svg-muted { fill: #697780; } .svg-small { font-size: 16px; } .svg-label { font-size: 19px; font-weight: 800; } .svg-title { font-size: 25px; font-weight: 800; }
+    .hardware { fill: #fff; stroke: var(--line); stroke-width: 3; } .host { fill: #fbfdfb; stroke: var(--line); stroke-width: 3; stroke-dasharray: 11 8; }
+    .cpu { fill: var(--cpu-soft); stroke: var(--cpu); stroke-width: 3; } .mem { fill: var(--mem-soft); stroke: var(--mem); stroke-width: 3; }
+    .io { fill: var(--io-soft); stroke: var(--io); stroke-width: 3; } .ctrl { fill: var(--control-soft); stroke: var(--control); stroke-width: 2.5; }
+    .array { fill: url(#memory-grid); stroke: var(--mem); stroke-width: 2; }
+    .bus-address { stroke: var(--address); stroke-width: 10; fill: none; marker-end: url(#arrow-address); }
+    .bus-data { stroke: var(--data); stroke-width: 13; fill: none; marker-start: url(#arrow-data-start); marker-end: url(#arrow-data); }
+    .bus-control { stroke: var(--control); stroke-width: 4; stroke-dasharray: 13 8; fill: none; marker-end: url(#arrow-control); }
+    .tap { fill: var(--line); } .callout { stroke: #83909a; stroke-width: 2; stroke-dasharray: 6 6; fill: none; }
+    .device { fill: white; stroke: var(--io); stroke-width: 2.5; } .subtle { opacity: .34; }
+    .active-path { opacity: 1 !important; stroke-width: 14 !important; } .active-control { opacity: 1 !important; stroke-width: 6 !important; }
+    body[data-mode="structure"] .bus-address, body[data-mode="structure"] .bus-data, body[data-mode="structure"] .bus-control { marker-end: none; marker-start: none; }
+    #g1-01-main-memory > rect.ctrl, #g1-01-main-memory > rect.mem[style*="effaf6"], #g1-01-main-memory > text:nth-of-type(3), #g1-01-main-memory > text:nth-of-type(4) { transform: translate(-390px, 0); }
+    #fig-g1-03 [marker-end="url(#c-arrow)"] { marker-end: url(#arrow-data); }
+    #fig-g1-03 [marker-start="url(#c-arrow)"] { marker-start: url(#arrow-data-start); }
+    #fig-g1-03 [marker-end="url(#c-arrow-red)"] { marker-end: url(#arrow-control) !important; }
+    #fig-g1-04 [marker-end="url(#m-address)"] { marker-end: url(#arrow-address); }
+    #fig-g1-04 [marker-end="url(#m-data)"] { marker-end: url(#arrow-data); }
+    #fig-g1-04 [marker-end="url(#m-data-start)"] { marker-end: url(#arrow-data-start); }
+    [data-part] { cursor: pointer; } [data-part]:hover, [data-part].selected { filter: drop-shadow(0 0 5px rgba(35,136,120,.45)); }
+    .model-note { display: none; }
+    body[data-model="408"] .model-note.model-408, body[data-model="classic"] .model-note.model-classic, body[data-model="modern"] .model-note.model-modern { display: block; }
+    .mode-legend { color: var(--muted); font-size: .77rem; }
+    .part-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .part-note { background: #fff; border: 1px solid var(--soft-line); border-top: 3px solid var(--cpu); padding: 9px 10px; min-height: 76px; }
+    .part-note strong { display: block; color: var(--ink); font-size: .84rem; margin-bottom: 3px; }
+    .part-note span { display: block; color: #4b5863; font-size: .76rem; line-height: 1.45; }
+    .layer-map { background: #fff; border: 1px solid var(--soft-line); padding: 10px; }
+    .layer-map svg { min-width: 0; }
+    .map-note { color: var(--muted); font-size: .82rem; margin: 8px 0 0; }
+    .scope-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+    .scope-card { border: 1px solid var(--soft-line); padding: 12px; background: #fff; }
+    .scope-card h3 { margin: 0 0 4px; font-size: .96rem; }
+    .scope-card p { margin: 0; color: #4b5863; font-size: .8rem; }
+    .figure-zoom { display: flex; align-items: center; justify-content: flex-end; gap: 4px; padding: 6px 10px; border-bottom: 1px solid #e5e9eb; background: #f8faf9; }
+    .figure-zoom span { color: var(--muted); font-size: .74rem; margin-right: 3px; }
+    .figure-zoom button { padding: 4px 8px; font-size: .74rem; }
+    @media (max-width: 1050px) { .layout { grid-template-columns: 1fr; } .side { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); } .side-panel:last-child { grid-column: 1 / -1; } }
+    @media (max-width: 720px) { .shell { padding: 15px 10px 50px; } .topbar { display: block; } .meta { text-align: left; margin-top: 8px; } .side { grid-template-columns: 1fr; } .triad { grid-template-columns: 1fr; } .part-strip, .scope-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 470px) { .part-strip, .scope-grid { grid-template-columns: 1fr; } }
+    @media print { .controlbar, .side { display: none; } .layout { display: block; } .figure-wrap { box-shadow: none; break-inside: avoid; } }
+  </style>
+</head>
+<body data-model="408" data-mode="structure">
+  <div class="shell">
+    <header class="topbar">
+      <div><div class="kicker">COMPUTER ORGANIZATION · FIGURE ATLAS</div><h1>第1章 计算机系统概述</h1></div>
+      <div class="meta">图谱草案 v0.3 · 离线单文件<br>首要任务：先看结构，再看动作</div>
+    </header>
+    <div class="controlbar" aria-label="图谱控制">
+      <div class="control-group"><span class="control-label">模型</span><button class="model-btn active" data-model="408">408 抽象</button><button class="model-btn" data-model="classic">经典实现</button><button class="model-btn" data-model="modern">现代映射</button></div>
+      <div class="control-group"><span class="control-label">路径叠层</span><button class="mode-btn active" data-mode="structure">结构</button><button class="mode-btn" data-mode="fetch">取指</button><button class="mode-btn" data-mode="read">读内存</button><button class="mode-btn" data-mode="write">写内存</button><button class="mode-btn" data-mode="io">I/O</button></div>
+      <div class="control-group zoom"><span class="control-label">母图视图</span><button id="zoom-fit" title="适应画布宽度">适配</button><button id="zoom-out" title="缩小">−</button><button id="zoom-reset" title="按 SVG 逻辑尺寸显示">100%</button><button id="zoom-in" title="放大">+</button></div>
+    </div>
+    <div class="layout">
+      <main>
+        <!-- FIG:G1-01 START -->
+        <section id="g1-01" class="hero"><div class="figure-wrap"><div class="figure-head"><h2>G1-01 · 完整计算机逻辑剖面</h2><p>母图：后续章节在这里增添 Cache、DMA、中断和流水线层</p></div><div class="canvas" id="hero-canvas">
+          <svg id="fig-g1-01" viewBox="0 0 1600 900" role="img" aria-labelledby="g101-title g101-desc">
+            <title id="g101-title">完整计算机逻辑剖面</title><desc id="g101-desc">外层是硬件系统，虚线内是408意义上的主机，左侧CPU、右侧主存、下方I/O接口，三条总线作为贯穿整机的导轨。</desc>
+            <defs><pattern id="memory-grid" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#dff5ee"></rect><path d="M22 0H0V22" fill="none" stroke="#86cdbc" stroke-width="1"></path></pattern><marker id="arrow-address" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="12" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M0 0L12 6L0 12Z" fill="#ad6f18"></path></marker><marker id="arrow-data" markerUnits="userSpaceOnUse" markerWidth="19" markerHeight="19" refX="12" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M0 0L12 6L0 12Z" fill="#147b78"></path></marker><marker id="arrow-data-start" markerUnits="userSpaceOnUse" markerWidth="19" markerHeight="19" refX="0" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M12 0L0 6L12 12Z" fill="#147b78"></path></marker><marker id="arrow-control" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="12" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M0 0L12 6L0 12Z" fill="#c6535f"></path></marker></defs>
+            <rect x="35" y="28" width="1530" height="835" rx="18" class="hardware"></rect><text x="70" y="70" class="svg-text svg-title">计算机硬件系统</text><text x="70" y="100" class="svg-text svg-muted svg-small">结构边界：部件是空间中的实体，总线是穿过实体的连接导轨</text>
+            <rect x="120" y="142" width="1120" height="555" rx="18" class="host"></rect><text x="150" y="180" class="svg-text svg-label">主机（408 抽象）</text><text x="150" y="207" class="svg-text svg-muted svg-small">CPU + 主存；I/O 接口跨越主机边界，设备在外部</text>
+            <g id="g1-01-cpu" data-part="cpu" tabindex="0"><rect x="185" y="252" width="440" height="278" rx="14" class="cpu"></rect><text x="215" y="292" class="svg-text svg-title">CPU</text><text x="215" y="320" class="svg-text svg-muted svg-small">中央处理器：控制器 + 运算器 + 寄存器/数据通路</text><rect x="215" y="350" width="170" height="125" rx="9" class="ctrl"></rect><text x="300" y="385" text-anchor="middle" class="svg-text svg-label">控制器 CU</text><text x="300" y="416" text-anchor="middle" class="svg-text svg-small">PC · IR · 时序/控制</text><text x="300" y="444" text-anchor="middle" class="svg-text svg-muted svg-small">决定“何时做什么”</text><rect x="415" y="350" width="175" height="125" rx="9" class="cpu" style="fill:#fff8ed"></rect><text x="502" y="385" text-anchor="middle" class="svg-text svg-label">运算器</text><text x="502" y="416" text-anchor="middle" class="svg-text svg-small">ALU · ACC · MQ · X</text><text x="502" y="444" text-anchor="middle" class="svg-text svg-muted svg-small">处理数据与状态</text><path d="M385 412H415" class="bus-control" style="marker-end:none"></path><circle cx="385" cy="412" r="6" class="tap"></circle></g>
+            <g id="g1-01-main-memory" data-part="memory" tabindex="0"><rect x="790" y="242" width="400" height="298" rx="14" class="mem"></rect><text x="825" y="282" class="svg-text svg-title">主存储器</text><text x="825" y="310" class="svg-text svg-muted svg-small">存储体；MAR/MDR 位于访存接口边界</text><rect x="825" y="340" width="235" height="145" rx="7" class="array"></rect><g class="svg-text svg-small"><text x="845" y="371">指令区</text><text x="845" y="401">数据区</text><text x="845" y="431">地址…</text><text x="845" y="461">字节/字</text></g><rect x="1080" y="340" width="75" height="62" rx="6" class="ctrl"></rect><text x="1117" y="377" text-anchor="middle" class="svg-text svg-small">MAR</text><rect x="1080" y="420" width="75" height="62" rx="6" class="mem" style="fill:#effaf6"></rect><text x="1117" y="457" text-anchor="middle" class="svg-text svg-small">MDR</text></g>
+            <g id="g1-01-bus-address" data-path="address" class="bus-layer"><path d="M195 604H1188" class="bus-address"></path><path d="M275 530V604" stroke="#ad6f18" stroke-width="8" fill="none"></path><path d="M865 540V604" stroke="#ad6f18" stroke-width="8" fill="none"></path><circle cx="275" cy="604" r="7" class="tap"></circle><circle cx="865" cy="604" r="7" class="tap"></circle><text x="210" y="584" class="svg-text svg-small" fill="#ad6f18">地址总线 · CPU/主设备 → 目标</text></g>
+            <g id="g1-01-bus-data" data-path="data" class="bus-layer"><path d="M195 646H1188" class="bus-data"></path><path d="M420 530V646" stroke="#147b78" stroke-width="10" fill="none"></path><path d="M990 540V646" stroke="#147b78" stroke-width="10" fill="none"></path><circle cx="420" cy="646" r="7" class="tap"></circle><circle cx="990" cy="646" r="7" class="tap"></circle><text x="210" y="676" class="svg-text svg-small" fill="#147b78">数据总线 · 双向数据/指令</text></g>
+            <g id="g1-01-bus-control" data-path="control" class="bus-layer"><path d="M195 688H1188" class="bus-control"></path><path d="M570 530V688" stroke="#c6535f" stroke-width="4" stroke-dasharray="10 7" fill="none"></path><path d="M1120 540V688" stroke="#c6535f" stroke-width="4" stroke-dasharray="10 7" fill="none"></path><circle cx="570" cy="688" r="6" class="tap"></circle><circle cx="1120" cy="688" r="6" class="tap"></circle><text x="210" y="718" class="svg-text svg-small" fill="#c6535f">控制总线 · 读/写/中断/时序等控制信号</text></g>
+            <g id="g1-01-io" data-part="io" tabindex="0"><rect x="430" y="748" width="420" height="74" rx="10" class="io"></rect><text x="640" y="780" text-anchor="middle" class="svg-text svg-label">I/O 接口与控制器</text><text x="640" y="806" text-anchor="middle" class="svg-text svg-small">把外部设备接入总线，不等于设备直接接入 CPU</text></g>
+            <path d="M720 748V688" stroke="#c6535f" stroke-width="4" stroke-dasharray="10 7" fill="none"></path><path d="M640 748V646" stroke="#147b78" stroke-width="10" fill="none"></path><path d="M560 748V604" stroke="#ad6f18" stroke-width="8" fill="none"></path><circle cx="720" cy="688" r="6" class="tap"></circle><circle cx="640" cy="646" r="7" class="tap"></circle><circle cx="560" cy="604" r="7" class="tap"></circle>
+            <g id="g1-01-devices" data-part="devices"><rect x="138" y="748" width="220" height="74" rx="10" class="device"></rect><text x="248" y="782" text-anchor="middle" class="svg-text svg-label">输入设备</text><text x="248" y="807" text-anchor="middle" class="svg-text svg-small">键盘 · 传感器</text><rect x="905" y="748" width="220" height="74" rx="10" class="device"></rect><text x="1015" y="782" text-anchor="middle" class="svg-text svg-label">输出设备</text><text x="1015" y="807" text-anchor="middle" class="svg-text svg-small">显示器 · 打印机</text><rect x="1200" y="330" width="260" height="92" rx="12" class="device"></rect><text x="1330" y="370" text-anchor="middle" class="svg-text svg-label">辅存</text><text x="1330" y="398" text-anchor="middle" class="svg-text svg-small">SSD/硬盘：经 I/O 路径访问</text><rect x="1200" y="462" width="260" height="92" rx="12" class="device"></rect><text x="1330" y="502" text-anchor="middle" class="svg-text svg-label">网络接口</text><text x="1330" y="530" text-anchor="middle" class="svg-text svg-small">网卡/DMA 等后续层</text></g>
+            <path d="M850 785H905" stroke="#147b78" stroke-width="9" fill="none"></path><path d="M358 785H430" stroke="#147b78" stroke-width="9" fill="none"></path><path d="M1188 646H1490V376H1460" stroke="#147b78" stroke-width="9" fill="none"></path><path d="M1490 508H1460" stroke="#147b78" stroke-width="9" fill="none"></path><text x="1510" y="595" transform="rotate(-90 1510 595)" class="svg-text svg-small" fill="#3977a8">I/O 互连</text><path d="M625 270L705 225" class="callout"></path><text x="715" y="222" class="svg-text svg-small">放大到 G1-03</text><path d="M1190 270L1260 225" class="callout"></path><text x="1270" y="222" class="svg-text svg-small">放大到 G1-04</text>
+            <g class="model-note model-408"><rect x="1260" y="635" width="260" height="70" rx="8" fill="#eef7f4" stroke="#9fcfc4"></rect><text x="1390" y="664" text-anchor="middle" class="svg-text svg-small">408 先把它看成</text><text x="1390" y="688" text-anchor="middle" class="svg-text svg-label">功能结构图</text></g><g class="model-note model-classic"><rect x="1260" y="635" width="260" height="70" rx="8" fill="#fff7e9" stroke="#e4bb79"></rect><text x="1390" y="664" text-anchor="middle" class="svg-text svg-small">经典机器中常见</text><text x="1390" y="688" text-anchor="middle" class="svg-text svg-label">共享总线 + 寄存器通路</text></g><g class="model-note model-modern"><rect x="1260" y="635" width="260" height="70" rx="8" fill="#eaf1fa" stroke="#9bb7d4"></rect><text x="1390" y="664" text-anchor="middle" class="svg-text svg-small">现代实现会再展开</text><text x="1390" y="688" text-anchor="middle" class="svg-text svg-label">Cache/MMU/互连/控制器</text></g>
+          </svg></div></div><p class="caption">读图顺序：先看边界和空间位置，再看三条总线，最后用路径叠层观察一次具体动作。结构图不是时间流程图。</p></section>
+        <!-- FIG:G1-01 END -->
+        <!-- FIG:G1-02 START -->
+        <section id="g1-02"><div class="section-title"><span class="id">G1-02</span><h2>程序放在哪里，机器如何得到下一步动作</h2></div><p class="caption">三个快照使用同一空间骨架；变化只发生在“程序控制源”和“存储层次”，不是简单的年代替换。</p><div class="triad">
+          <div class="figure-wrap"><div class="figure-head"><h2>外部编程代表模型</h2><p>程序控制源与数据存储分离</p></div><div class="canvas"><svg viewBox="0 0 480 320" role="img" aria-label="外部编程代表模型"><rect x="20" y="18" width="440" height="284" rx="12" class="hardware"></rect><rect x="42" y="56" width="170" height="76" rx="8" class="ctrl"></rect><text x="127" y="90" text-anchor="middle" class="svg-text svg-label">程序控制源</text><text x="127" y="114" text-anchor="middle" class="svg-text svg-small">接线盘/纸带/控制面板</text><rect x="268" y="56" width="170" height="76" rx="8" class="mem"></rect><text x="353" y="90" text-anchor="middle" class="svg-text svg-label">数据存储</text><text x="353" y="114" text-anchor="middle" class="svg-text svg-small">累加器/延迟线等</text><rect x="132" y="190" width="215" height="70" rx="8" class="cpu"></rect><text x="239" y="222" text-anchor="middle" class="svg-text svg-label">控制 + 运算</text><text x="239" y="246" text-anchor="middle" class="svg-text svg-small">没有统一指令主存</text><path d="M127 132V190" class="bus-control"></path><path d="M353 132V190" class="bus-data"></path><path d="M347 225H420" class="bus-data"></path><text x="386" y="215" class="svg-text svg-muted svg-small">结果</text></svg></div></div>
+          <div class="figure-wrap"><div class="figure-head"><h2>冯·诺依曼抽象</h2><p>指令与数据进入同一主存</p></div><div class="canvas"><svg viewBox="0 0 480 320" role="img" aria-label="冯诺依曼存储程序模型"><rect x="20" y="18" width="440" height="284" rx="12" class="hardware"></rect><rect x="42" y="52" width="160" height="86" rx="8" class="cpu"></rect><text x="122" y="88" text-anchor="middle" class="svg-text svg-label">CPU</text><text x="122" y="113" text-anchor="middle" class="svg-text svg-small">CU + 运算器 + 寄存器</text><rect x="260" y="42" width="170" height="150" rx="8" class="mem"></rect><text x="345" y="72" text-anchor="middle" class="svg-text svg-label">同一主存</text><rect x="280" y="90" width="130" height="35" rx="5" fill="#c9eee3" stroke="#238878"></rect><text x="345" y="113" text-anchor="middle" class="svg-text svg-small">指令区</text><rect x="280" y="137" width="130" height="35" rx="5" fill="#b4e3d5" stroke="#238878"></rect><text x="345" y="160" text-anchor="middle" class="svg-text svg-small">数据区</text><path d="M202 88H260" class="bus-address"></path><path d="M202 115H260" class="bus-data"></path><path d="M202 142H260" class="bus-control"></path><path d="M345 192V250H122V138" class="bus-data"></path><text x="238" y="277" text-anchor="middle" class="svg-text svg-muted svg-small">取指与取数共享主存体系</text></svg></div></div>
+          <div class="figure-wrap"><div class="figure-head"><h2>现代实现映射</h2><p>仍是存储程序，内部实现细化</p></div><div class="canvas"><svg viewBox="0 0 480 320" role="img" aria-label="现代计算机实现映射"><rect x="20" y="18" width="440" height="284" rx="12" class="hardware"></rect><rect x="42" y="47" width="205" height="145" rx="8" class="cpu"></rect><text x="144" y="76" text-anchor="middle" class="svg-text svg-label">处理器封装</text><rect x="60" y="96" width="78" height="38" rx="5" class="ctrl"></rect><text x="99" y="120" text-anchor="middle" class="svg-text svg-small">核心/CU</text><rect x="153" y="96" width="76" height="38" rx="5" class="cpu" style="fill:#fff8ed"></rect><text x="191" y="120" text-anchor="middle" class="svg-text svg-small">ALU/寄存器</text><rect x="60" y="148" width="78" height="28" rx="4" fill="#f8d9ae" stroke="#c9822a"></rect><text x="99" y="167" text-anchor="middle" class="svg-text svg-small">I-Cache</text><rect x="153" y="148" width="76" height="28" rx="4" fill="#f8d9ae" stroke="#c9822a"></rect><text x="191" y="167" text-anchor="middle" class="svg-text svg-small">D-Cache</text><rect x="294" y="56" width="135" height="93" rx="8" class="mem"></rect><text x="361" y="88" text-anchor="middle" class="svg-text svg-label">DRAM</text><text x="361" y="114" text-anchor="middle" class="svg-text svg-small">统一主存</text><rect x="294" y="170" width="135" height="43" rx="8" class="io"></rect><text x="361" y="197" text-anchor="middle" class="svg-text svg-small">I/O 互连</text><path d="M247 90H294" class="bus-data"></path><path d="M247 122H294" class="bus-address"></path><path d="M247 154H294" class="bus-control"></path><path d="M361 149V170" class="bus-data"></path><text x="240" y="252" text-anchor="middle" class="svg-text svg-muted svg-small">I/D Cache 可分离，但最终仍映射到统一地址空间</text></svg></div></div>
+        </div></section>
+        <!-- FIG:G1-02 END -->
+        <!-- FIG:G1-03 START -->
+        <section id="g1-03-cpu"><div class="section-title"><span class="id">G1-03</span><h2>CPU 局部放大：控制器和运算器不是同一个东西</h2></div><p class="caption">这是经典教材数据通路的剖面图。ACC、MQ、X 只在相应模型下成立；MAR/MDR 放在接口边界，强调它们的逻辑语义。</p><div class="figure-wrap"><div class="canvas"><svg id="fig-g1-03" viewBox="0 0 1200 520" role="img" aria-label="CPU局部剖面"><defs><marker id="c-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#147b78"></path></marker><marker id="c-arrow-red" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#c6535f"></path></marker></defs><rect x="24" y="28" width="790" height="450" rx="16" class="cpu"></rect><text x="55" y="70" class="svg-text svg-title">CPU</text><text x="55" y="96" class="svg-text svg-muted svg-small">同一外框内至少要区分“控制”和“运算”两种职责</text><rect x="55" y="130" width="245" height="270" rx="12" class="ctrl"></rect><text x="177" y="169" text-anchor="middle" class="svg-text svg-label">控制器</text><rect x="85" y="198" width="185" height="47" rx="7" fill="#fff" stroke="#c6535f" stroke-width="2"></rect><text x="177" y="228" text-anchor="middle" class="svg-text svg-label">PC</text><text x="177" y="248" text-anchor="middle" class="svg-text svg-muted svg-small">下一条指令地址</text><rect x="85" y="265" width="185" height="47" rx="7" fill="#fff" stroke="#c6535f" stroke-width="2"></rect><text x="177" y="295" text-anchor="middle" class="svg-text svg-label">IR</text><text x="177" y="315" text-anchor="middle" class="svg-text svg-muted svg-small">当前指令</text><rect x="85" y="332" width="185" height="47" rx="7" fill="#f5c8cd" stroke="#c6535f" stroke-width="2"></rect><text x="177" y="362" text-anchor="middle" class="svg-text svg-label">CU</text><text x="177" y="382" text-anchor="middle" class="svg-text svg-muted svg-small">译码/时序/控制信号</text><path d="M300 265H370" class="bus-control" style="marker-end:url(#c-arrow-red)"></path><text x="330" y="251" text-anchor="middle" class="svg-text svg-muted svg-small">控制</text><rect x="370" y="130" width="410" height="270" rx="12" class="cpu" style="fill:#fff8ed"></rect><text x="575" y="169" text-anchor="middle" class="svg-text svg-label">经典运算器数据通路</text><path d="M430 258H720" stroke="#147b78" stroke-width="15" marker-end="url(#c-arrow)" marker-start="url(#c-arrow)" fill="none"></path><text x="575" y="239" text-anchor="middle" class="svg-text svg-muted svg-small">内部数据总线</text><rect x="410" y="190" width="90" height="48" rx="7" class="cpu"></rect><text x="455" y="221" text-anchor="middle" class="svg-text svg-label">X</text><rect x="520" y="185" width="110" height="58" rx="7" class="cpu"></rect><text x="575" y="221" text-anchor="middle" class="svg-text svg-label">ALU</text><rect x="660" y="190" width="90" height="48" rx="7" class="cpu"></rect><text x="705" y="221" text-anchor="middle" class="svg-text svg-label">ACC</text><rect x="410" y="300" width="120" height="50" rx="7" class="cpu"></rect><text x="470" y="332" text-anchor="middle" class="svg-text svg-label">MQ</text><rect x="570" y="300" width="150" height="50" rx="7" class="cpu"></rect><text x="645" y="332" text-anchor="middle" class="svg-text svg-label">寄存器组/PSW</text><path d="M455 238V258" stroke="#147b78" stroke-width="6"></path><path d="M575 243V258" stroke="#147b78" stroke-width="6"></path><path d="M705 238V258" stroke="#147b78" stroke-width="6"></path><path d="M470 300V273" stroke="#147b78" stroke-width="6"></path><path d="M645 300V273" stroke="#147b78" stroke-width="6"></path><rect x="852" y="90" width="300" height="130" rx="12" class="mem"></rect><text x="1002" y="126" text-anchor="middle" class="svg-text svg-label">教材逻辑接口</text><rect x="880" y="150" width="100" height="46" rx="6" class="ctrl"></rect><text x="930" y="179" text-anchor="middle" class="svg-text svg-label">MAR</text><rect x="1020" y="150" width="100" height="46" rx="6" class="mem" style="fill:#effaf6"></rect><text x="1070" y="179" text-anchor="middle" class="svg-text svg-label">MDR</text><path d="M814 174H852" class="bus-address"></path><path d="M814 198H852" class="bus-data"></path><text x="852" y="250" class="svg-text svg-muted svg-small">MAR：本次访问地址</text><text x="852" y="274" class="svg-text svg-muted svg-small">MDR：读出/待写数据</text><text x="852" y="298" class="svg-text svg-muted svg-small">物理归属依实现而异</text><g class="mode-layer" data-cpu-mode="fetch"><path d="M177 222V174H820" stroke="#c6535f" stroke-width="6" stroke-dasharray="11 7" fill="none" opacity="0"></path><path d="M930 150V110H177V198" stroke="#ad6f18" stroke-width="8" fill="none" opacity="0"></path><path d="M1070 196V240H177V265" stroke="#147b78" stroke-width="10" fill="none" opacity="0"></path></g><text x="55" y="447" class="svg-text svg-muted svg-small">路径叠层：选择“取指/读/写”时，只高亮动作经过的线路；底图仍保持空间结构。</text></svg></div></div></section>
+        <!-- FIG:G1-03 END -->
+        <div class="part-strip" aria-label="CPU部件速查">
+          <div class="part-note"><strong>ACC · 累加器</strong><span>保存一个操作数、累加结果或中间结果，不只是“做加法”。</span></div>
+          <div class="part-note"><strong>MQ · 乘商寄存器</strong><span>经典乘除法模型中保存乘数、商或中间结果。</span></div>
+          <div class="part-note"><strong>X · 操作数暂存</strong><span>408 教材抽象中的临时寄存器，不是所有现代 CPU 的固定寄存器。</span></div>
+          <div class="part-note"><strong>ALU · 算术逻辑单元</strong><span>完成加减、逻辑、移位等运算；具体能力由实现决定。</span></div>
+          <div class="part-note"><strong>CU · 控制单元</strong><span>根据指令产生时序与控制信号，组织各部件协作。</span></div>
+          <div class="part-note"><strong>PC · 程序计数器</strong><span>保存下一条将取指的指令地址。</span></div>
+          <div class="part-note"><strong>IR · 指令寄存器</strong><span>保存当前指令；具体保存整条还是操作码取决于模型。</span></div>
+          <div class="part-note"><strong>MAR / MDR · 访存接口</strong><span>MAR 装地址；MDR 装读出或待写数据，绝不装物理地址。</span></div>
+        </div>
+        <!-- FIG:G1-04 START -->
+        <section id="g1-04-memory"><div class="section-title"><span class="id">G1-04</span><h2>主存局部放大：地址进来，数据出去</h2></div><p class="caption">左半边是 408 逻辑模型；右下角的现代扩展把虚拟地址、物理地址和内存控制器分层放置，避免混成“内存条编号格式”。</p><div class="figure-wrap"><div class="canvas"><svg id="fig-g1-04" viewBox="0 0 1280 650" role="img" aria-label="主存局部剖面与现代地址扩展"><defs><pattern id="array-grid-large" width="28" height="28" patternUnits="userSpaceOnUse"><rect width="28" height="28" fill="#dff5ee"></rect><path d="M28 0H0V28" fill="none" stroke="#79c4b2" stroke-width="1.2"></path></pattern><marker id="m-address" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#ad6f18"></path></marker><marker id="m-data" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#147b78"></path></marker><marker id="m-data-start" markerWidth="12" markerHeight="12" refX="2" refY="6" orient="auto"><path d="M12 0L0 6L12 12Z" fill="#147b78"></path></marker></defs><rect x="25" y="30" width="735" height="560" rx="16" class="hardware"></rect><text x="55" y="73" class="svg-text svg-title">408 主存逻辑剖面</text><text x="55" y="100" class="svg-text svg-muted svg-small">MAR 承载地址；MDR 只承载数据</text><rect x="60" y="155" width="118" height="70" rx="8" class="ctrl"></rect><text x="119" y="198" text-anchor="middle" class="svg-text svg-label">MAR</text><path d="M178 190H260" stroke="#ad6f18" stroke-width="10" fill="none" marker-end="url(#m-address)"></path><text x="217" y="173" text-anchor="middle" class="svg-text svg-small" fill="#ad6f18">地址</text><rect x="260" y="110" width="170" height="180" rx="10" class="mem"></rect><text x="345" y="147" text-anchor="middle" class="svg-text svg-label">译码区</text><text x="345" y="180" text-anchor="middle" class="svg-text svg-small">片选</text><text x="345" y="207" text-anchor="middle" class="svg-text svg-small">行译码</text><text x="345" y="234" text-anchor="middle" class="svg-text svg-small">列译码</text><path d="M430 200H465" stroke="#ad6f18" stroke-width="10" fill="none" marker-end="url(#m-address)"></path><rect x="465" y="110" width="245" height="180" rx="10" fill="url(#array-grid-large)" stroke="#238878" stroke-width="3"></rect><text x="587" y="145" text-anchor="middle" class="svg-text svg-label">存储阵列</text><text x="587" y="176" text-anchor="middle" class="svg-text svg-small">被选中的行/列</text><circle cx="605" cy="232" r="12" fill="#c9822a" stroke="#9a5d0e" stroke-width="3"></circle><text x="587" y="265" text-anchor="middle" class="svg-text svg-muted svg-small">真正保存 0/1 的位置</text><rect x="260" y="345" width="170" height="82" rx="10" class="mem"></rect><text x="345" y="380" text-anchor="middle" class="svg-text svg-label">读写/感应电路</text><text x="345" y="405" text-anchor="middle" class="svg-text svg-small">放大、恢复、写回</text><path d="M587 290V385H430" stroke="#147b78" stroke-width="12" fill="none" marker-end="url(#m-data)"></path><rect x="60" y="345" width="118" height="82" rx="8" class="mem" style="fill:#effaf6"></rect><text x="119" y="382" text-anchor="middle" class="svg-text svg-label">MDR</text><text x="119" y="405" text-anchor="middle" class="svg-text svg-small">读/写数据</text><path d="M260 385H178" stroke="#147b78" stroke-width="12" fill="none" marker-end="url(#m-data)"></path><path d="M60 385H20" stroke="#147b78" stroke-width="12" fill="none" marker-end="url(#m-data-start)"></path><rect x="55" y="475" width="650" height="78" rx="10" fill="#fff7e9" stroke="#dcae61" stroke-width="2"></rect><text x="80" y="508" class="svg-text svg-label">直接纠偏</text><text x="80" y="536" class="svg-text svg-small">MDR 不是物理地址寄存器；它只装读出的数据、待写入的数据或取回的指令。</text><rect x="795" y="30" width="460" height="560" rx="16" class="hardware"></rect><text x="825" y="73" class="svg-text svg-title">现代地址扩展层</text><text x="825" y="100" class="svg-text svg-muted svg-small">不要把虚拟地址画成“内存条编号 + 条内地址”</text><rect x="830" y="142" width="180" height="67" rx="8" fill="#edf0f2" stroke="#8a969e" stroke-width="2"></rect><text x="920" y="172" text-anchor="middle" class="svg-text svg-label">虚拟地址 VA</text><text x="920" y="194" text-anchor="middle" class="svg-text svg-small">VPN | 页内偏移</text><path d="M1010 176H1060" stroke="#8a969e" stroke-width="7" fill="none" marker-end="url(#m-address)"></path><rect x="1060" y="142" width="155" height="67" rx="8" fill="#edf0f2" stroke="#8a969e" stroke-width="2"></rect><text x="1137" y="172" text-anchor="middle" class="svg-text svg-label">MMU / TLB</text><text x="1137" y="194" text-anchor="middle" class="svg-text svg-small">页表转换</text><path d="M1137 209V258" stroke="#8a969e" stroke-width="7" fill="none" marker-end="url(#m-address)"></path><rect x="830" y="258" width="180" height="67" rx="8" fill="#edf0f2" stroke="#8a969e" stroke-width="2"></rect><text x="920" y="288" text-anchor="middle" class="svg-text svg-label">物理地址 PA</text><text x="920" y="310" text-anchor="middle" class="svg-text svg-small">PFN | 同一页内偏移</text><path d="M1010 291H1060" stroke="#ad6f18" stroke-width="9" fill="none" marker-end="url(#m-address)"></path><rect x="1060" y="258" width="155" height="67" rx="8" class="mem"></rect><text x="1137" y="288" text-anchor="middle" class="svg-text svg-label">内存控制器</text><text x="1137" y="310" text-anchor="middle" class="svg-small svg-text">译码到通道/Bank/行列</text><path d="M1137 325V378" stroke="#147b78" stroke-width="11" fill="none" marker-end="url(#m-data)"></path><rect x="830" y="378" width="385" height="80" rx="9" class="mem"></rect><text x="1022" y="412" text-anchor="middle" class="svg-text svg-label">DRAM 物理组织</text><text x="1022" y="438" text-anchor="middle" class="svg-text svg-small">channel · DIMM · rank · bank · row · column</text><rect x="830" y="490" width="385" height="63" rx="9" fill="#fbe8eb" stroke="#c6535f" stroke-width="2"></rect><text x="1022" y="519" text-anchor="middle" class="svg-text svg-label">边界</text><text x="1022" y="541" text-anchor="middle" class="svg-text svg-small">这是实现相关的物理字段，不是通用 VA 格式</text></svg></div></div></section>
+        <!-- FIG:G1-04 END -->
+
+        <!-- FIG:G1-05 START -->
+        <section id="g1-05-layers">
+          <div class="section-title"><span class="id">G1-05</span><h2>计算机系统层次：从用户操作到晶体管</h2></div>
+          <p class="caption">这是一张“抽象千层饼”。上层只使用下层提供的能力；ISA 位于软硬件交界，规定软件可见的机器，而不是存放在控制器里的一张表。</p>
+          <div class="figure-wrap">
+            <div class="canvas">
+              <svg id="fig-g1-05" viewBox="0 0 1300 760" role="img" aria-labelledby="g105-title g105-desc">
+                <title id="g105-title">计算机系统层次结构</title>
+                <desc id="g105-desc">左侧大括号区分软件、ISA接口和硬件，中央逐层展示应用、高级语言、系统软件、ISA、微体系结构、RTL和电路器件，右侧标出主要使用者与设计者。</desc>
+                <rect x="22" y="22" width="1256" height="700" rx="16" class="hardware"></rect>
+                <text x="650" y="58" text-anchor="middle" class="svg-text svg-title">每一层看到的都是下一层提供的“机器”</text>
+
+                <g id="g1-05-app-layer">
+                  <rect x="280" y="82" width="700" height="62" rx="7" class="io"></rect>
+                  <text x="630" y="110" text-anchor="middle" class="svg-text svg-label">应用与最终用户操作</text>
+                  <text x="630" y="133" text-anchor="middle" class="svg-text svg-small">点击 App、输入数据、获得结果</text>
+                </g>
+                <g id="g1-05-language-layer">
+                  <rect x="280" y="158" width="700" height="62" rx="7" fill="#edf3f8" stroke="#6b8dad" stroke-width="2.5"></rect>
+                  <text x="630" y="186" text-anchor="middle" class="svg-text svg-label">高级语言 · 算法 · 应用架构</text>
+                  <text x="630" y="209" text-anchor="middle" class="svg-text svg-small">程序员描述“要解决什么问题”</text>
+                </g>
+                <g id="g1-05-system-software-layer">
+                  <rect x="280" y="234" width="700" height="62" rx="7" fill="#e8eef3" stroke="#697b8a" stroke-width="2.5"></rect>
+                  <text x="630" y="262" text-anchor="middle" class="svg-text svg-label">系统软件</text>
+                  <text x="630" y="285" text-anchor="middle" class="svg-text svg-small">操作系统 · 编译器 · 汇编器 · 运行时 / 虚拟机</text>
+                </g>
+
+                <g id="g1-05-isa-layer">
+                  <rect x="260" y="318" width="740" height="72" rx="8" class="ctrl"></rect>
+                  <text x="630" y="348" text-anchor="middle" class="svg-text svg-title">ISA · 指令集体系结构</text>
+                  <text x="630" y="376" text-anchor="middle" class="svg-text svg-small">指令、寄存器、数据类型、寻址与可见行为的软硬件契约</text>
+                </g>
+
+                <g id="g1-05-microarchitecture-layer">
+                  <rect x="280" y="412" width="700" height="62" rx="7" class="cpu"></rect>
+                  <text x="630" y="440" text-anchor="middle" class="svg-text svg-label">微体系结构</text>
+                  <text x="630" y="463" text-anchor="middle" class="svg-text svg-small">流水线、Cache、执行单元、总线和控制组织</text>
+                </g>
+                <g id="g1-05-rtl-layer">
+                  <rect x="280" y="488" width="700" height="62" rx="7" fill="#fff7e9" stroke="#c9822a" stroke-width="2.5"></rect>
+                  <text x="630" y="516" text-anchor="middle" class="svg-text svg-label">功能部件 / RTL</text>
+                  <text x="630" y="539" text-anchor="middle" class="svg-text svg-small">寄存器传送、ALU、控制器、状态机与数据通路</text>
+                </g>
+                <g id="g1-05-circuit-layer">
+                  <rect x="280" y="564" width="700" height="62" rx="7" class="mem"></rect>
+                  <text x="630" y="592" text-anchor="middle" class="svg-text svg-label">电路与器件</text>
+                  <text x="630" y="615" text-anchor="middle" class="svg-text svg-small">逻辑门、晶体管、存储元、连线与时钟</text>
+                </g>
+
+                <path d="M252 82C212 82 238 174 198 188C238 202 212 296 252 296" fill="none" stroke="#3977a8" stroke-width="4"></path>
+                <text x="92" y="184" class="svg-text svg-title" fill="#3977a8">软件</text>
+                <path d="M252 412C212 412 238 502 198 519C238 536 212 626 252 626" fill="none" stroke="#c9822a" stroke-width="4"></path>
+                <text x="92" y="526" class="svg-text svg-title" fill="#c9822a">硬件</text>
+                <path d="M252 318H220V390H252" fill="none" stroke="#c6535f" stroke-width="4"></path>
+                <text x="66" y="346" class="svg-text svg-label" fill="#c6535f">软硬件</text>
+                <text x="82" y="373" class="svg-text svg-label" fill="#c6535f">交界面</text>
+
+                <path d="M1008 82C1048 82 1022 335 1062 354C1022 373 1048 626 1008 626" fill="none" stroke="#334155" stroke-width="4"></path>
+                <text x="1090" y="58" class="svg-text svg-label">主要使用者 / 设计者</text>
+                <g class="svg-text svg-small">
+                  <text x="1090" y="119">最终用户</text>
+                  <text x="1090" y="195">应用程序员</text>
+                  <text x="1090" y="271">系统软件开发者</text>
+                  <text x="1090" y="360">ISA 架构师</text>
+                  <text x="1090" y="449">微体系结构设计者</text>
+                  <text x="1090" y="525">RTL / 逻辑设计者</text>
+                  <text x="1090" y="601">电子与电路工程师</text>
+                </g>
+                <text x="650" y="680" text-anchor="middle" class="svg-text svg-muted svg-small">层次表示抽象与实现关系，不表示这些内容在机器里按物理高度堆放。</text>
+              </svg>
+            </div>
+          </div>
+          <div class="scope-grid">
+            <div class="scope-card"><h3>应用软件与系统软件</h3><p>应用软件直接解决用户任务；系统软件管理硬件并为应用提供运行环境，例如操作系统、编译器和汇编器。</p></div>
+            <div class="scope-card"><h3>软硬件逻辑等价性</h3><p>同一功能可能由软件过程或专用硬件完成，但性能、成本、功耗和灵活性并不等价。</p></div>
+          </div>
+          <p class="map-note">教材中的 M0、M1、M2、M3 编号可能因版本而异；在看到原教材图前，本图只固定层次含义，不强行固定编号。</p>
+        </section>
+        <!-- FIG:G1-05 END -->
+
+        <!-- FIG:G1-06 START -->
+        <section id="g1-06-languages">
+          <div class="section-title"><span class="id">G1-06</span><h2>高级语言、汇编语言与机器语言：都是程序表示</h2></div>
+          <p class="caption">机器码和汇编并不是硬件。二者都依赖 ISA；CPU 的硬件负责取出、译码并执行机器码。</p>
+          <div class="figure-wrap">
+            <div class="canvas">
+              <svg id="fig-g1-06" viewBox="0 0 1300 590" role="img" aria-labelledby="g106-title g106-desc">
+                <title id="g106-title">三种语言到CPU执行的关系</title>
+                <desc id="g106-desc">高级语言经编译器形成汇编或目标码，汇编经汇编器形成机器码，机器码作为软件字节存入主存，CPU依据ISA进行取指和译码。</desc>
+                <defs><marker id="lang-arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="12" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M0 0L12 6L0 12Z" fill="#64717d"></path></marker></defs>
+                <rect x="22" y="22" width="1256" height="540" rx="16" class="hardware"></rect>
+
+                <g id="g1-06-high-level">
+                  <rect x="48" y="92" width="225" height="142" rx="10" class="io"></rect>
+                  <text x="160" y="126" text-anchor="middle" class="svg-text svg-label">高级语言</text>
+                  <text x="160" y="164" text-anchor="middle" class="svg-text svg-title">c = a * b;</text>
+                  <text x="160" y="199" text-anchor="middle" class="svg-text svg-small">软件 · 更接近问题表达</text>
+                </g>
+                <rect x="312" y="126" width="135" height="72" rx="8" fill="#edf0f2" stroke="#8a969e" stroke-width="2"></rect>
+                <text x="379" y="157" text-anchor="middle" class="svg-text svg-label">编译器</text><text x="379" y="181" text-anchor="middle" class="svg-text svg-small">翻译 / 优化</text>
+                <path d="M273 163H312" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#lang-arrow)"></path>
+
+                <g id="g1-06-assembly">
+                  <rect x="486" y="92" width="225" height="142" rx="10" class="ctrl"></rect>
+                  <text x="598" y="126" text-anchor="middle" class="svg-text svg-label">汇编语言</text>
+                  <text x="598" y="164" text-anchor="middle" class="svg-text svg-title">MUL R0,R1,R2</text>
+                  <text x="598" y="199" text-anchor="middle" class="svg-text svg-small">软件 · ISA 相关的符号表示</text>
+                </g>
+                <path d="M447 163H486" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#lang-arrow)"></path>
+                <rect x="750" y="126" width="135" height="72" rx="8" fill="#edf0f2" stroke="#8a969e" stroke-width="2"></rect>
+                <text x="817" y="157" text-anchor="middle" class="svg-text svg-label">汇编器</text><text x="817" y="181" text-anchor="middle" class="svg-text svg-small">符号 → 编码</text>
+                <path d="M711 163H750" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#lang-arrow)"></path>
+
+                <g id="g1-06-machine-code">
+                  <rect x="924" y="92" width="300" height="142" rx="10" class="mem"></rect>
+                  <text x="1074" y="126" text-anchor="middle" class="svg-text svg-label">机器语言 / 机器码</text>
+                  <text x="1074" y="164" text-anchor="middle" class="svg-text svg-title">0110 0001 0010 …</text>
+                  <text x="1074" y="199" text-anchor="middle" class="svg-text svg-small">软件的二进制指令表示 · ISA 相关</text>
+                </g>
+                <path d="M885 163H924" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#lang-arrow)"></path>
+
+                <rect x="530" y="292" width="694" height="76" rx="9" class="ctrl"></rect>
+                <text x="877" y="322" text-anchor="middle" class="svg-text svg-label">ISA 规定对应关系</text>
+                <text x="877" y="350" text-anchor="middle" class="svg-text svg-small">助记符 ↔ 二进制编码 ↔ 指令语义与软件可见状态</text>
+                <path d="M598 234V292" stroke="#c6535f" stroke-width="4" stroke-dasharray="10 7" fill="none"></path>
+                <path d="M1074 234V292" stroke="#c6535f" stroke-width="4" stroke-dasharray="10 7" fill="none"></path>
+
+                <rect x="690" y="420" width="230" height="82" rx="9" class="mem"></rect>
+                <text x="805" y="453" text-anchor="middle" class="svg-text svg-label">主存中的指令字节</text>
+                <text x="805" y="480" text-anchor="middle" class="svg-text svg-small">仍然是软件内容</text>
+                <rect x="984" y="410" width="240" height="102" rx="9" class="cpu"></rect>
+                <text x="1104" y="445" text-anchor="middle" class="svg-text svg-label">CPU 取指 / 译码 / 执行</text>
+                <text x="1104" y="473" text-anchor="middle" class="svg-text svg-small">译码器与控制逻辑是硬件</text>
+                <path d="M1074 234V382H805V420" stroke="#147b78" stroke-width="8" fill="none" marker-end="url(#lang-arrow)"></path>
+                <path d="M920 461H984" stroke="#147b78" stroke-width="8" fill="none" marker-end="url(#lang-arrow)"></path>
+                <text x="48" y="467" class="svg-text svg-label">关键纠偏</text>
+                <text x="48" y="495" class="svg-text svg-small">机器码不是“硬件本身”；它是按照 CPU 所实现 ISA 编码的软件。</text>
+                <text x="48" y="523" class="svg-text svg-small">编译器也可能直接生成目标码，图中链路是便于理解的常见教学路径。</text>
+              </svg>
+            </div>
+          </div>
+        </section>
+        <!-- FIG:G1-06 END -->
+
+        <!-- FIG:G1-07 START -->
+        <section id="g1-07-isa-microarchitecture">
+          <div class="section-title"><span class="id">G1-07</span><h2>ISA 规定“做什么”，微体系结构决定“怎么做”</h2></div>
+          <p class="caption">前提：该 ISA 定义了 MUL 指令。两颗 CPU 必须给程序相同的可见结果，但内部可以采用完全不同的实现。</p>
+          <div class="figure-wrap">
+            <div class="canvas">
+              <svg id="fig-g1-07" viewBox="0 0 1300 650" role="img" aria-labelledby="g107-title g107-desc">
+                <title id="g107-title">ISA与微体系结构的区别</title>
+                <desc id="g107-desc">同一条MUL指令由ISA规定输入输出和行为，微体系结构A使用专用乘法器，微体系结构B使用移位加法迭代实现，两者对软件给出相同结果。</desc>
+                <defs><marker id="isa-arrow" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="12" refY="6" orient="auto" viewBox="0 0 12 12"><path d="M0 0L12 6L0 12Z" fill="#64717d"></path></marker></defs>
+                <rect x="22" y="22" width="1256" height="600" rx="16" class="hardware"></rect>
+                <g id="g1-07-isa-contract">
+                  <rect x="250" y="62" width="800" height="128" rx="12" class="ctrl"></rect>
+                  <text x="650" y="96" text-anchor="middle" class="svg-text svg-label">ISA 对软件承诺的指令</text>
+                  <text x="650" y="134" text-anchor="middle" class="svg-text svg-title">MUL rd, rs1, rs2</text>
+                  <text x="650" y="166" text-anchor="middle" class="svg-text svg-small">规定操作数、结果、状态变化与异常等可见语义；不规定内部电路形状</text>
+                </g>
+
+                <g id="g1-07-direct-multiplier">
+                  <rect x="70" y="260" width="515" height="250" rx="12" class="cpu"></rect>
+                  <text x="327" y="296" text-anchor="middle" class="svg-text svg-label">微体系结构 A · 专用乘法器</text>
+                  <rect x="112" y="342" width="125" height="62" rx="7" fill="#fff" stroke="#c9822a" stroke-width="2"></rect>
+                  <text x="174" y="378" text-anchor="middle" class="svg-text svg-small">源寄存器</text>
+                  <rect x="280" y="328" width="145" height="90" rx="8" fill="#ffe5bd" stroke="#c9822a" stroke-width="3"></rect>
+                  <text x="352" y="365" text-anchor="middle" class="svg-text svg-label">乘法器</text>
+                  <text x="352" y="392" text-anchor="middle" class="svg-text svg-small">并行/流水实现</text>
+                  <rect x="468" y="342" width="80" height="62" rx="7" fill="#fff" stroke="#c9822a" stroke-width="2"></rect>
+                  <text x="508" y="378" text-anchor="middle" class="svg-text svg-small">rd</text>
+                  <path d="M237 373H280M425 373H468" stroke="#c9822a" stroke-width="7" fill="none" marker-end="url(#isa-arrow)"></path>
+                  <text x="327" y="464" text-anchor="middle" class="svg-text svg-small">通常更快，但电路面积与设计成本可能更高</text>
+                </g>
+
+                <g id="g1-07-iterative-multiplier">
+                  <rect x="715" y="260" width="515" height="250" rx="12" class="mem"></rect>
+                  <text x="972" y="296" text-anchor="middle" class="svg-text svg-label">微体系结构 B · 移位加法迭代</text>
+                  <rect x="758" y="334" width="112" height="70" rx="7" fill="#fff" stroke="#238878" stroke-width="2"></rect>
+                  <text x="814" y="363" text-anchor="middle" class="svg-text svg-small">部分积</text><text x="814" y="387" text-anchor="middle" class="svg-text svg-small">寄存器</text>
+                  <rect x="916" y="334" width="112" height="70" rx="7" fill="#fff" stroke="#238878" stroke-width="2"></rect>
+                  <text x="972" y="363" text-anchor="middle" class="svg-text svg-small">加法器</text><text x="972" y="387" text-anchor="middle" class="svg-text svg-small">+ ALU</text>
+                  <rect x="1072" y="334" width="112" height="70" rx="7" fill="#fff" stroke="#238878" stroke-width="2"></rect>
+                  <text x="1128" y="363" text-anchor="middle" class="svg-text svg-small">移位器</text><text x="1128" y="387" text-anchor="middle" class="svg-text svg-small">/ 控制</text>
+                  <path d="M870 369H916M1028 369H1072" stroke="#238878" stroke-width="7" fill="none" marker-end="url(#isa-arrow)"></path>
+                  <path d="M1128 404V438H814V404" stroke="#238878" stroke-width="5" stroke-dasharray="10 7" fill="none" marker-end="url(#isa-arrow)"></path>
+                  <text x="972" y="474" text-anchor="middle" class="svg-text svg-small">复用加法与移位资源，可能需要多个周期</text>
+                </g>
+
+                <path d="M470 190V236H327V260" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#isa-arrow)"></path>
+                <path d="M830 190V236H972V260" stroke="#64717d" stroke-width="6" fill="none" marker-end="url(#isa-arrow)"></path>
+                <rect x="250" y="548" width="800" height="48" rx="8" fill="#eef7f4" stroke="#238878" stroke-width="2"></rect>
+                <text x="650" y="579" text-anchor="middle" class="svg-text svg-label">对程序可见的结果相同；延迟、吞吐率、面积、功耗可以不同</text>
+              </svg>
+            </div>
+          </div>
+          <div class="scope-grid">
+            <div class="scope-card"><h3>ISA 是规范，不是软件</h3><p>它定义软件可见的机器。汇编器、编译器和操作系统遵守它，处理器硬件实现它。</p></div>
+            <div class="scope-card"><h3>控制器如何“认识”指令</h3><p>取到指令后，译码器、硬连线控制或微码按编码生成具体控制信号；不是把整份 ISA 当数据表逐条比较。</p></div>
+          </div>
+        </section>
+        <!-- FIG:G1-07 END -->
+        <section id="boundaries"><div class="section-title"><span class="id">边界</span><h2>模型边界与后续修改入口</h2></div><details open><summary>本章先固定的结论</summary><ul><li>CPU 不是控制器；考试简化口径下，CPU 至少包含控制器、运算器和寄存器/数据通路。</li><li>MAR 装本次访问地址，MDR 装读出或待写入的数据。</li><li>现代计算机通常仍是存储程序体系；Cache、MMU、内存控制器和片上互连是实现细化，不是把冯·诺依曼结构完全替换掉。</li><li>“内存条编号 + 条内地址”只能作为自定义教学类比，不能直接当作通用虚拟地址格式。</li></ul></details><details><summary>本页图谱 registry（供后续章节引用）</summary><p><code>G1-01</code> 完整计算机逻辑剖面；<code>G1-02</code> 程序控制源同构对照；<code>G1-03</code> CPU 局部放大；<code>G1-04</code> 主存与地址层次。后续修改应定位到对应 SVG 的稳定 <code>id</code> 或 <code>data-part</code>。</p></details><details><summary>本轮修订记录</summary><p>v0.2：删除 Mermaid 流程图；以 G1-01 母图重建空间结构；把总线改为贯穿整机的三条导轨；将三代模型改为同骨架对照；补充 CPU、MAR/MDR、现代地址转换的局部剖面。</p></details></section>
+        <section id="revision-v03">
+          <div class="section-title"><span class="id">v0.3</span><h2>本轮新增图谱与修订</h2></div>
+          <details open><summary>新增图号</summary><p><code>G1-05</code> 计算机系统层次；<code>G1-06</code> 高级语言、汇编与机器码；<code>G1-07</code> ISA 与微体系结构。完整 registry 现为 <code>G1-01</code> 至 <code>G1-07</code>。</p></details>
+          <details><summary>版式与说明修订</summary><p>所有 SVG 默认适配容器宽度；G1-03 至 G1-07 提供独立的适配、缩小、100% 和放大控制；G1-03 下增加 ACC、MQ、X、ALU、CU、PC、IR、MAR/MDR 部件速查。</p></details>
+        </section>
+      </main>
+      <aside class="side" aria-label="读图辅助"><div class="side-panel"><h3>当前图层</h3><div id="model-readout" class="mode-legend">408 抽象：功能结构图</div><div id="mode-readout" class="mode-legend">结构：不强调先后，只看组成与连接</div></div><div class="side-panel"><h3>连线语义</h3><div class="legend"><div class="legend-row"><span class="swatch address"></span>地址：单向送往目标</div><div class="legend-row"><span class="swatch data"></span>数据：双向传递</div><div class="legend-row"><span class="swatch control"></span>控制：虚线信号</div><div class="legend-row"><span class="swatch boundary"></span>边界：包含关系</div></div></div><div class="side-panel"><h3>点击部件</h3><p id="part-readout">点击首屏中的 CPU、主存或 I/O，右侧会给出最短解释；再跳到对应放大图。</p></div></aside>
+    </div>
+  </div>
+  <script>
+    const modelText={"408":"408 抽象：功能结构图",classic:"经典实现：共享总线与经典寄存器通路",modern:"现代映射：Cache/MMU/互连/控制器展开"};
+    const modeText={structure:"结构：不强调先后，只看组成与连接",fetch:"取指：PC → MAR → 主存 → MDR → IR",read:"读内存：地址进入，数据经 MDR 返回",write:"写内存：地址与待写数据同时到达主存",io:"I/O：设备经接口挂到总线，不直接塞进 CPU"};
+    const body=document.body, modelReadout=document.getElementById("model-readout"), modeReadout=document.getElementById("mode-readout"), partReadout=document.getElementById("part-readout");
+    function setModel(model){body.dataset.model=model;document.querySelectorAll(".model-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.model===model));modelReadout.textContent=modelText[model];}
+    function setMode(mode){body.dataset.mode=mode;document.querySelectorAll(".mode-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.mode===mode));modeReadout.textContent=modeText[mode];document.querySelectorAll("[data-path]").forEach(el=>{el.classList.remove("subtle","active-path","active-control");if(mode!=="structure"&&el.dataset.path!=="control")el.classList.add("subtle");});if(mode!=="structure"){document.querySelectorAll('[data-path="address"],[data-path="data"]').forEach(el=>el.classList.add("active-path"));document.querySelectorAll('[data-path="control"]').forEach(el=>el.classList.add("active-control"));}if(mode==="io")document.querySelectorAll('[data-part="io"],[data-part="devices"],[data-path="data"],[data-path="control"]').forEach(el=>el.classList.add("active-path"));}
+    document.querySelectorAll(".model-btn").forEach(btn=>btn.addEventListener("click",()=>setModel(btn.dataset.model)));document.querySelectorAll(".mode-btn").forEach(btn=>btn.addEventListener("click",()=>setMode(btn.dataset.mode)));
+    document.querySelectorAll("[data-part]").forEach(part=>{const explain={cpu:"CPU 是主机中的处理核心；控制器负责组织动作，运算器负责处理数据。",memory:"主存保存当前可直接访问的指令和数据；MAR/MDR 是访问接口的逻辑寄存器。",io:"I/O 接口把设备协议和总线连接起来；辅存、网卡等不应画成 CPU 的内部部件。",devices:"设备在硬件系统边界外，通过 I/O 接口进入主机。"};const jump={cpu:"#g1-03-cpu",memory:"#g1-04-memory",io:"#g1-01",devices:"#g1-01"};function selectPart(){document.querySelectorAll("[data-part]").forEach(el=>el.classList.remove("selected"));document.querySelectorAll(`[data-part="${part.dataset.part}"]`).forEach(el=>el.classList.add("selected"));partReadout.textContent=explain[part.dataset.part];}part.addEventListener("click",()=>{selectPart();window.location.hash=jump[part.dataset.part];});part.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();selectPart();}});});
+    function naturalWidth(svg){return svg.viewBox.baseVal.width||1200;}
+    function fitSvg(svg,status){svg.style.width="100%";svg.style.maxWidth="none";if(status)status.textContent="适配";}
+    function naturalSvg(svg,status){svg.style.width=`${naturalWidth(svg)}px`;svg.style.maxWidth="none";if(status)status.textContent="100%";}
+    function stepSvg(svg,factor,status){const current=svg.getBoundingClientRect().width;const natural=naturalWidth(svg);const next=Math.max(300,Math.min(natural*2,current*factor));svg.style.width=`${Math.round(next)}px`;svg.style.maxWidth="none";if(status)status.textContent=`${Math.round(next/natural*100)}%`;}
+    function installFigureZoom(){document.querySelectorAll("#fig-g1-03,#fig-g1-04,#fig-g1-05,#fig-g1-06,#fig-g1-07").forEach(svg=>{const canvas=svg.closest(".canvas"),wrap=svg.closest(".figure-wrap");if(!canvas||!wrap||wrap.querySelector(".figure-zoom"))return;const bar=document.createElement("div");bar.className="figure-zoom";bar.innerHTML='<span>适配</span><button type="button" data-action="fit">适配宽度</button><button type="button" data-action="out">−</button><button type="button" data-action="natural">100%</button><button type="button" data-action="in">+</button>';const status=bar.querySelector("span");bar.addEventListener("click",event=>{const action=event.target.dataset.action;if(action==="fit")fitSvg(svg,status);if(action==="out")stepSvg(svg,.85,status);if(action==="natural")naturalSvg(svg,status);if(action==="in")stepSvg(svg,1.15,status);});wrap.insertBefore(bar,canvas);fitSvg(svg,status);});}
+    const hero=document.getElementById("fig-g1-01");document.getElementById("zoom-fit").addEventListener("click",()=>fitSvg(hero));document.getElementById("zoom-in").addEventListener("click",()=>stepSvg(hero,1.15));document.getElementById("zoom-out").addEventListener("click",()=>stepSvg(hero,.85));document.getElementById("zoom-reset").addEventListener("click",()=>naturalSvg(hero));installFigureZoom();fitSvg(hero);setModel("408");setMode("structure");
+  </script>
+</body>
+</html>
+

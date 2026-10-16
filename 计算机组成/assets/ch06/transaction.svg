@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="260" viewBox="0 0 980 260" role="img" aria-labelledby="title desc">
+  <title id="title">总线事务阶段</title><desc id="desc">总线事务依次经历请求、授权、地址控制、数据、完成或等待以及释放。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#334155"/></marker></defs>
+  <rect width="980" height="260" fill="#ffffff"/>
+  <text x="30" y="30" font-size="20" font-family="sans-serif" fill="#1e3a8a">一次总线事务的阶段关系</text>
+  <g font-family="sans-serif" font-size="15" text-anchor="middle">
+    <rect x="35" y="90" width="125" height="58" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="97" y="124">请求</text>
+    <rect x="185" y="90" width="125" height="58" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="247" y="124">授权</text>
+    <rect x="335" y="90" width="145" height="58" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="2"/><text x="407" y="124">地址 + 控制</text>
+    <rect x="505" y="90" width="125" height="58" rx="6" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/><text x="567" y="124">数据</text>
+    <rect x="655" y="90" width="125" height="58" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/><text x="717" y="124">完成/等待</text>
+    <rect x="805" y="90" width="125" height="58" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/><text x="867" y="124">释放</text>
+  </g>
+  <g stroke="#334155" stroke-width="2" marker-end="url(#arrow)"><line x1="160" y1="119" x2="185" y2="119"/><line x1="310" y1="119" x2="335" y2="119"/><line x1="480" y1="119" x2="505" y2="119"/><line x1="630" y1="119" x2="655" y2="119"/><line x1="780" y1="119" x2="805" y2="119"/></g>
+  <text x="490" y="205" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">主设备只有在授权后才能驱动共享总线；等待阶段保持事务状态，完成后释放控制权</text>
+</svg>

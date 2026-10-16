@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="260" viewBox="0 0 960 260" role="img" aria-labelledby="title desc">
+  <title id="title">中断响应与返回</title><desc id="desc">设备提出中断请求，CPU 响应、保存现场、执行服务程序、恢复现场并返回原程序。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#334155"/></marker></defs>
+  <rect width="960" height="260" fill="#ffffff"/>
+  <text x="30" y="30" font-size="20" font-family="sans-serif" fill="#1e3a8a">中断响应与返回过程</text>
+  <g font-family="sans-serif" font-size="15" text-anchor="middle">
+    <rect x="35" y="90" width="125" height="60" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/><text x="97" y="126">设备请求</text>
+    <rect x="190" y="90" width="125" height="60" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="252" y="126">CPU 响应</text>
+    <rect x="345" y="90" width="145" height="60" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="2"/><text x="417" y="126">保存现场</text>
+    <rect x="520" y="90" width="145" height="60" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="592" y="126">执行服务程序</text>
+    <rect x="695" y="90" width="125" height="60" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/><text x="757" y="126">恢复现场</text>
+    <rect x="850" y="90" width="80" height="60" rx="6" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/><text x="890" y="126">返回</text>
+  </g>
+  <g stroke="#334155" stroke-width="2" marker-end="url(#arrow)"><line x1="160" y1="120" x2="190" y2="120"/><line x1="315" y1="120" x2="345" y2="120"/><line x1="490" y1="120" x2="520" y2="120"/><line x1="665" y1="120" x2="695" y2="120"/><line x1="820" y1="120" x2="850" y2="120"/></g>
+  <text x="480" y="205" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">请求来自设备，服务程序由 CPU 执行；现场保存和恢复保证原程序可继续运行</text>
+</svg>

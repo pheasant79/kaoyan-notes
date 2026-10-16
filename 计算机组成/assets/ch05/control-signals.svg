@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img" aria-labelledby="title desc">
+  <title id="title">控制信号与数据通路</title><desc id="desc">控制器通过选择和写使能信号安排寄存器、选择器和 ALU 的一次数据通路动作。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L9,3 L0,6 z" fill="#334155"/></marker></defs>
+  <rect width="960" height="280" fill="#ffffff"/>
+  <text x="30" y="30" font-size="20" font-family="sans-serif" fill="#1e3a8a">控制信号与一次数据通路动作</text>
+  <rect x="40" y="80" width="170" height="70" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="125" y="110" text-anchor="middle" font-size="17" font-family="sans-serif">寄存器组</text><text x="125" y="132" text-anchor="middle" font-size="13" font-family="sans-serif">提供源操作数</text>
+  <rect x="295" y="70" width="190" height="90" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="390" y="108" text-anchor="middle" font-size="17" font-family="sans-serif">多路选择器 + ALU</text><text x="390" y="132" text-anchor="middle" font-size="13" font-family="sans-serif">选择输入并运算</text>
+  <rect x="570" y="80" width="170" height="70" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="2"/><text x="655" y="110" text-anchor="middle" font-size="17" font-family="sans-serif">目标寄存器</text><text x="655" y="132" text-anchor="middle" font-size="13" font-family="sans-serif">装入结果</text>
+  <rect x="790" y="70" width="125" height="90" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/><text x="852" y="105" text-anchor="middle" font-size="16" font-family="sans-serif">控制器</text><text x="852" y="128" text-anchor="middle" font-size="12" font-family="sans-serif">选择/写使能</text><text x="852" y="146" text-anchor="middle" font-size="12" font-family="sans-serif">ALU 控制</text>
+  <line x1="210" y1="115" x2="295" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/><line x1="485" y1="115" x2="570" y2="115" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="790" y1="100" x2="485" y2="100" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrow)"/><line x1="790" y1="135" x2="655" y2="150" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrow)"/>
+  <text x="480" y="220" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">实线表示数据流，虚线表示控制流；控制器不搬运数据，而是决定数据通路如何动作</text>
+</svg>

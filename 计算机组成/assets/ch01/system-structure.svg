@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">计算机系统整机结构</title>
+  <desc id="desc">CPU、主存和输入输出通过地址、数据和控制总线连接。</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#64748B"/></marker></defs>
+  <rect width="1200" height="560" fill="#F8FAFC"/>
+  <text x="60" y="55" font-size="28" fill="#1E3A8A" font-weight="700">G1-01 计算机系统的空间关系</text>
+  <rect x="70" y="105" width="390" height="300" rx="8" fill="#DBEAFE" stroke="#2563EB" stroke-width="3"/>
+  <text x="265" y="145" text-anchor="middle" font-size="25" fill="#1E40AF" font-weight="700">CPU</text>
+  <rect x="105" y="180" width="145" height="90" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="177" y="230" text-anchor="middle" font-size="23" fill="#1E3A8A">控制器</text>
+  <rect x="280" y="180" width="145" height="90" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="2"/>
+  <text x="352" y="230" text-anchor="middle" font-size="23" fill="#1E3A8A">运算器</text>
+  <text x="265" y="335" text-anchor="middle" font-size="20" fill="#475569">PC · IR · MAR · MDR · ALU</text>
+  <rect x="530" y="105" width="300" height="300" rx="8" fill="#DCFCE7" stroke="#16A34A" stroke-width="3"/>
+  <text x="680" y="155" text-anchor="middle" font-size="26" fill="#166534" font-weight="700">主存</text>
+  <rect x="585" y="200" width="190" height="125" fill="#F0FDF4" stroke="#16A34A" stroke-width="2"/>
+  <line x1="585" y1="242" x2="775" y2="242" stroke="#86EFAC" stroke-width="2"/><line x1="585" y1="284" x2="775" y2="284" stroke="#86EFAC" stroke-width="2"/>
+  <text x="680" y="228" text-anchor="middle" font-size="19" fill="#166534">程序</text><text x="680" y="270" text-anchor="middle" font-size="19" fill="#166534">数据</text><text x="680" y="312" text-anchor="middle" font-size="19" fill="#166534">结果</text>
+  <rect x="900" y="105" width="230" height="125" rx="8" fill="#FEF3C7" stroke="#CA8A04" stroke-width="3"/>
+  <text x="1015" y="155" text-anchor="middle" font-size="25" fill="#854D0E" font-weight="700">输入设备</text><text x="1015" y="195" text-anchor="middle" font-size="18" fill="#854D0E">键盘、传感器等</text>
+  <rect x="900" y="280" width="230" height="125" rx="8" fill="#FCE7F3" stroke="#DB2777" stroke-width="3"/>
+  <text x="1015" y="330" text-anchor="middle" font-size="25" fill="#9D174D" font-weight="700">输出设备</text><text x="1015" y="370" text-anchor="middle" font-size="18" fill="#9D174D">显示器、打印机等</text>
+  <line x1="460" y1="185" x2="530" y2="185" stroke="#F59E0B" stroke-width="6" marker-end="url(#arrow)"/><text x="495" y="168" text-anchor="middle" font-size="16" fill="#B45309">地址</text>
+  <line x1="530" y1="240" x2="460" y2="240" stroke="#0F766E" stroke-width="6" marker-end="url(#arrow)"/><text x="495" y="225" text-anchor="middle" font-size="16" fill="#0F766E">数据</text>
+  <line x1="460" y1="300" x2="530" y2="300" stroke="#DC2626" stroke-width="4" stroke-dasharray="10 7" marker-end="url(#arrow)"/><text x="495" y="292" text-anchor="middle" font-size="16" fill="#B91C1C">控制</text>
+  <line x1="830" y1="165" x2="900" y2="165" stroke="#0F766E" stroke-width="5" marker-end="url(#arrow)"/><line x1="900" y1="345" x2="830" y2="345" stroke="#0F766E" stroke-width="5" marker-end="url(#arrow)"/>
+  <text x="865" y="145" text-anchor="middle" font-size="15" fill="#0F766E">I/O 数据</text><text x="865" y="330" text-anchor="middle" font-size="15" fill="#0F766E">I/O 数据</text>
+  <text x="70" y="485" font-size="20" fill="#475569">地址线：定位哪里　 数据线：传送什么　 控制线：何时读写/响应</text>
+</svg>

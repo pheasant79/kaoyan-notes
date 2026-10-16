@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 210">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#475569"/></marker></defs>
+  <rect width="760" height="210" fill="#fff"/>
+  <text x="380" y="24" text-anchor="middle" font-size="18" font-weight="700" fill="#2563eb">用户态—内核态—硬件关系</text>
+  <rect x="35" y="65" width="190" height="80" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="130" y="99" text-anchor="middle" font-size="16">用户程序</text><text x="130" y="123" text-anchor="middle" font-size="13">普通指令 / 系统调用</text>
+  <rect x="285" y="65" width="190" height="80" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/><text x="380" y="99" text-anchor="middle" font-size="16">内核</text><text x="380" y="123" text-anchor="middle" font-size="13">调度 / 内存 / 文件 / I/O</text>
+  <rect x="535" y="65" width="190" height="80" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="630" y="99" text-anchor="middle" font-size="16">硬件资源</text><text x="630" y="123" text-anchor="middle" font-size="13">CPU / 主存 / 设备</text>
+  <path d="M225 105 H280" stroke="#475569" stroke-width="2" marker-end="url(#a)"/><path d="M475 105 H530" stroke="#475569" stroke-width="2" marker-end="url(#a)"/><path d="M530 135 H475" stroke="#16a34a" stroke-width="2" marker-end="url(#a)"/><path d="M280 135 H225" stroke="#7c3aed" stroke-width="2" marker-end="url(#a)"/>
+  <text x="255" y="92" text-anchor="middle" font-size="12" fill="#475569">陷入</text><text x="505" y="92" text-anchor="middle" font-size="12" fill="#475569">受控访问</text><text x="380" y="180" text-anchor="middle" font-size="12" fill="#64748b">中断/异常使控制流进入内核，处理后返回或改变进程状态</text>
+</svg>

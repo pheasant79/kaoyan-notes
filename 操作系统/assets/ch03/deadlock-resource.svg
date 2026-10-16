@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 285">
+  <defs>
+    <marker id="request-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/></marker>
+    <marker id="assignment-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#16a34a"/></marker>
+  </defs>
+  <rect width="760" height="285" fill="#fff"/>
+  <text x="380" y="24" text-anchor="middle" font-size="18" font-weight="700" fill="#2563eb">资源分配图中的循环等待</text>
+  <g font-size="14" text-anchor="middle">
+    <circle cx="170" cy="105" r="38" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="170" y="110">P1</text>
+    <circle cx="590" cy="105" r="38" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="590" y="110">P2</text>
+    <rect x="330" y="65" width="100" height="80" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="380" y="110">R1</text>
+    <rect x="330" y="165" width="100" height="60" fill="#fef3c7" stroke="#d97706" stroke-width="2"/><text x="380" y="200">R2</text>
+  </g>
+  <path d="M208 105 H325" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#request-arrow)"/>
+  <path d="M435 85 H552" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#assignment-arrow)"/>
+  <path d="M552 135 L435 185" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#request-arrow)"/>
+  <path d="M325 185 L208 130" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#assignment-arrow)"/>
+  <text x="265" y="92" text-anchor="middle" font-size="12" fill="#b91c1c">P1 请求 R1</text>
+  <text x="494" y="75" text-anchor="middle" font-size="12" fill="#15803d">R1 分配给 P2</text>
+  <text x="495" y="164" text-anchor="middle" font-size="12" fill="#b91c1c">P2 请求 R2</text>
+  <text x="265" y="176" text-anchor="middle" font-size="12" fill="#15803d">R2 分配给 P1</text>
+  <text x="380" y="260" text-anchor="middle" font-size="12" fill="#64748b">请求边：进程 → 资源；分配边：资源 → 进程</text>
+  <text x="380" y="278" text-anchor="middle" font-size="12" fill="#dc2626">P1 → R1 → P2 → R2 → P1，单实例资源下形成死锁</text>
+</svg>

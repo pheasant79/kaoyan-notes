@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 320">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker>
+  </defs>
+  <rect width="860" height="320" fill="#ffffff"/>
+  <text x="430" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">最长前缀匹配：选择最具体的路由</text>
+  <text x="60" y="70" font-size="15" fill="#1e293b">目的地址：10.1.2.37</text>
+  <g font-size="14">
+    <rect x="60" y="92" width="300" height="38" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="78" y="116">0.0.0.0/0</text><text x="315" y="116" text-anchor="end">R0</text>
+    <rect x="60" y="140" width="300" height="38" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="78" y="164">10.0.0.0/8</text><text x="315" y="164" text-anchor="end">R1</text>
+    <rect x="60" y="188" width="300" height="38" rx="5" fill="#f0fdf4" stroke="#16a34a"/>
+    <text x="78" y="212">10.1.0.0/16</text><text x="315" y="212" text-anchor="end">R2</text>
+    <rect x="60" y="236" width="300" height="38" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="78" y="260" font-weight="700">10.1.2.0/24</text><text x="315" y="260" text-anchor="end" font-weight="700">R3</text>
+    <g stroke="#64748b" stroke-width="1.7" marker-end="url(#arrow)">
+      <line x1="365" y1="111" x2="505" y2="111"/>
+      <line x1="365" y1="159" x2="505" y2="159"/>
+      <line x1="365" y1="207" x2="505" y2="207"/>
+      <line x1="365" y1="255" x2="505" y2="255"/>
+    </g>
+    <text x="590" y="94" text-anchor="middle" fill="#64748b">匹配前缀长度</text>
+    <text x="590" y="132" text-anchor="middle">0 位</text>
+    <text x="590" y="180" text-anchor="middle">8 位</text>
+    <text x="590" y="228" text-anchor="middle">16 位</text>
+    <text x="590" y="276" text-anchor="middle" fill="#2563eb" font-weight="700">24 位 → 最终选择</text>
+  </g>
+  <text x="430" y="307" text-anchor="middle" font-size="13" fill="#dc2626">多个表项都匹配时，前缀越长，地址范围越具体，优先级越高</text>
+</svg>

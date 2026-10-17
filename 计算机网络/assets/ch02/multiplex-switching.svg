@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 310">
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker></defs>
+  <rect width="900" height="310" fill="#fff"/>
+  <text x="450" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">复用共享介质，交换转发数据</text>
+  <g font-size="14" text-anchor="middle">
+    <rect x="35" y="75" width="175" height="185" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="122" y="101" font-weight="700">复用：多路合一</text>
+    <text x="122" y="137">用户 A ─┐</text><text x="122" y="165">用户 B ─┼→ 同一介质</text><text x="122" y="193">用户 C ─┘</text>
+    <text x="122" y="235" fill="#64748b">频率/时隙/波长/码</text>
+    <rect x="265" y="75" width="175" height="185" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="352" y="101" font-weight="700">电路交换</text><text x="352" y="145">建立专用通路</text><text x="352" y="175">持续占用资源</text><text x="352" y="223" fill="#16a34a">路径先建立</text>
+    <rect x="475" y="75" width="175" height="185" rx="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+    <text x="562" y="101" font-weight="700">报文交换</text><text x="562" y="145">整条报文</text><text x="562" y="175">存储后转发</text><text x="562" y="223" fill="#64748b">缓存需求较大</text>
+    <rect x="685" y="75" width="180" height="185" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="775" y="101" font-weight="700">分组交换</text><text x="775" y="145">切成分组</text><text x="775" y="175">逐跳存储转发</text><text x="775" y="223" fill="#dc2626">共享链路效率高</text>
+  </g>
+  <text x="450" y="292" text-anchor="middle" font-size="13" fill="#64748b">复用回答“如何共享一条介质”，交换回答“数据如何通过转发节点”</text>
+</svg>

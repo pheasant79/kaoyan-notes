@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 300">
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker></defs>
+  <rect width="860" height="300" fill="#fff"/>
+  <text x="430" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">从比特到物理信号</text>
+  <g font-size="14" text-anchor="middle">
+    <rect x="44" y="96" width="150" height="62" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="119" y="122" font-weight="700">比特序列</text><text x="119" y="145">1 0 1 1 0</text>
+    <rect x="270" y="96" width="175" height="62" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="357" y="122" font-weight="700">编码 / 调制</text><text x="357" y="145">选择映射规则</text>
+    <rect x="520" y="96" width="150" height="62" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="595" y="122" font-weight="700">信号</text><text x="595" y="145">电 / 光 / 电磁波</text>
+    <rect x="720" y="96" width="105" height="62" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+    <text x="772" y="122" font-weight="700">信道</text><text x="772" y="145">传输介质</text>
+    <g stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"><line x1="194" y1="127" x2="262" y2="127"/><line x1="445" y1="127" x2="512" y2="127"/><line x1="670" y1="127" x2="712" y2="127"/></g>
+  </g>
+  <line x1="62" y1="213" x2="800" y2="213" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="120" y="242" text-anchor="middle" font-size="13" fill="#64748b">信息单位</text>
+  <text x="357" y="242" text-anchor="middle" font-size="13" fill="#16a34a">表示规则</text>
+  <text x="595" y="242" text-anchor="middle" font-size="13" fill="#dc2626">物理表现</text>
+  <text x="772" y="242" text-anchor="middle" font-size="13" fill="#64748b">传播环境</text>
+</svg>

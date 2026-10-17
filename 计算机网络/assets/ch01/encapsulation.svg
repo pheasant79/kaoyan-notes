@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 310">
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker></defs>
+  <rect width="920" height="310" fill="#fff"/>
+  <text x="460" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">封装与解封装</text>
+  <g font-size="14" text-anchor="middle">
+    <rect x="32" y="92" width="145" height="62" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="104" y="119" font-weight="700">应用数据</text><text x="104" y="140">HTTP 内容</text>
+    <rect x="212" y="92" width="145" height="62" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="284" y="119" font-weight="700">报文段</text><text x="284" y="140">TCP/UDP 头 + 数据</text>
+    <rect x="392" y="92" width="145" height="62" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="464" y="119" font-weight="700">IP 数据报</text><text x="464" y="140">IP 头 + 报文段</text>
+    <rect x="572" y="92" width="145" height="62" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="644" y="119" font-weight="700">帧</text><text x="644" y="140">链路层头/尾 + 数据报</text>
+    <rect x="752" y="92" width="135" height="62" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/><text x="820" y="119" font-weight="700">比特/信号</text><text x="820" y="140">物理层传输</text>
+    <g stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"><line x1="177" y1="123" x2="205" y2="123"/><line x1="357" y1="123" x2="385" y2="123"/><line x1="537" y1="123" x2="565" y2="123"/><line x1="717" y1="123" x2="745" y2="123"/></g>
+  </g>
+  <path d="M820 190 C820 258 104 258 104 190" fill="none" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="460" y="233" text-anchor="middle" font-size="14" fill="#9333ea">接收端按相反方向逐层去除控制信息</text>
+  <text x="460" y="285" text-anchor="middle" font-size="13" fill="#dc2626">中间路由器通常处理到网络层和链路层，不读取远端应用语义</text>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 330">
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker></defs>
+  <rect width="940" height="330" fill="#fff"/>
+  <text x="470" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">浏览器访问网站：名称解析到应用响应</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="40" y="90" width="150" height="64" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="115" y="117" font-weight="700">浏览器/主机</text><text x="115" y="140">已有网络配置</text>
+    <rect x="270" y="90" width="150" height="64" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="345" y="117" font-weight="700">DNS</text><text x="345" y="140">域名 → IP</text>
+    <rect x="500" y="90" width="170" height="64" rx="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/><text x="585" y="117" font-weight="700">TCP / TLS</text><text x="585" y="140">连接与安全协商</text>
+    <rect x="750" y="90" width="150" height="64" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="825" y="117" font-weight="700">Web 服务器</text><text x="825" y="140">HTTP 响应</text>
+  </g>
+  <g stroke="#64748b" stroke-width="1.8" marker-end="url(#arrow)">
+    <line x1="190" y1="110" x2="263" y2="110"/><line x1="420" y1="110" x2="493" y2="110"/><line x1="670" y1="110" x2="743" y2="110"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#64748b"><text x="228" y="95">查询</text><text x="456" y="95">目标地址</text><text x="707" y="95">HTTP请求</text></g>
+  <path d="M825 170 C825 245 115 245 115 170" fill="none" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="470" y="228" text-anchor="middle" font-size="13" fill="#9333ea">响应沿网络返回；具体路径与连接复用取决于网络和协议版本</text>
+  <text x="470" y="290" text-anchor="middle" font-size="12" fill="#dc2626">DNS、运输层连接、TLS 和 HTTP 是不同层次的步骤；缓存或已有连接可能跳过部分过程</text>
+</svg>

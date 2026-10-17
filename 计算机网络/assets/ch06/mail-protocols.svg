@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300">
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#64748b"/></marker></defs>
+  <rect width="900" height="300" fill="#fff"/>
+  <text x="450" y="28" text-anchor="middle" font-size="19" font-weight="700" fill="#2563eb">电子邮件发送与收取协议</text>
+  <g font-size="13" text-anchor="middle">
+    <rect x="45" y="100" width="165" height="68" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="127" y="128" font-weight="700">发送者客户端</text><text x="127" y="151">用户代理</text>
+    <rect x="365" y="100" width="170" height="68" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/><text x="450" y="128" font-weight="700">邮件服务器</text><text x="450" y="151">存储/转发</text>
+    <rect x="690" y="100" width="165" height="68" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="772" y="128" font-weight="700">接收者客户端</text><text x="772" y="151">用户代理</text>
+  </g>
+  <line x1="210" y1="120" x2="358" y2="120" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="284" y="106" text-anchor="middle" font-size="13" fill="#16a34a">SMTP 提交</text>
+  <line x1="535" y1="120" x2="683" y2="120" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="609" y="106" text-anchor="middle" font-size="13" fill="#16a34a">SMTP 转发/投递</text>
+  <line x1="690" y1="190" x2="535" y2="190" stroke="#9333ea" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="612" y="216" text-anchor="middle" font-size="13" fill="#9333ea">POP3 下载或 IMAP 管理邮箱</text>
+  <text x="450" y="270" text-anchor="middle" font-size="13" fill="#dc2626">SMTP 负责发送方向；POP3/IMAP 负责收件客户端读取或管理</text>
+</svg>
